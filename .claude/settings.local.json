@@ -11,7 +11,8 @@
       "Bash(refreshenv)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" --version)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth status)",
-      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" repo create startuplab-partner-presentation --description \"StartupLab Partner Program Presentation - Interactive web presentation with comprehensive brand assets and partner program information\" --public --source=. --remote=origin --push)"
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" repo create startuplab-partner-presentation --description \"StartupLab Partner Program Presentation - Interactive web presentation with comprehensive brand assets and partner program information\" --public --source=. --remote=origin --push)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
