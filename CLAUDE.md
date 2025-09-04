@@ -103,3 +103,61 @@ cat docs/brand-assets-inventory.md
 3. **Accessibility**: Ensure keyboard navigation and semantic structure
 4. **Cross-platform Compatibility**: Test across browsers and devices
 5. **Content Quality**: Align all messaging with StartupLab's professional standards
+
+## Auto-Deployment Workflow
+
+### GitHub Integration & Vercel Auto-Deploy
+This repository is configured for automatic deployment to Vercel via GitHub integration.
+
+**Repository**: https://github.com/christinawiig-ai/startuplab-partner-presentation
+
+### CRITICAL DEPLOYMENT RULE
+**Every time you successfully make changes to this project, you MUST automatically push to GitHub using the following workflow:**
+
+```bash
+# Stage all changes
+git add .
+
+# Create commit with descriptive message
+git commit -m "Brief description of changes
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+
+# Push to GitHub (triggers Vercel auto-deploy)
+git push origin master
+```
+
+### Standard Git Commands
+```bash
+# Check current status
+git status
+
+# View recent commits
+git log --oneline -5
+
+# View diff of changes
+git diff
+
+# Check remote repository info
+git remote -v
+```
+
+### Vercel Configuration
+- **Root Directory**: `/` (project root)
+- **Build Command**: None required (static site)
+- **Output Directory**: `web-presentation/`
+- **Node.js Version**: Latest LTS
+
+### Auto-Deploy Verification
+After each push, verify deployment at:
+- **Production URL**: [Auto-assigned by Vercel]
+- **Deployment Status**: Monitor in Vercel dashboard
+
+### Troubleshooting Deployment
+If deployment fails:
+1. Check `vercel.json` configuration
+2. Verify all asset paths use relative URLs
+3. Ensure no build errors in brand assets
+4. Test locally with `python -m http.server 8000`
