@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartupLab - Empowering Tech Founders to Go Further</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Gelasio secondary font -->
+    <link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="presentation-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="startup-text">STARTUP</span>
+                <span class="lab-text">LAB</span>
+            </div>
+            <div class="nav-controls">
+                <button id="prev-btn" class="nav-btn">←</button>
+                <span id="slide-counter">1 / 14</span>
+                <button id="next-btn" class="nav-btn">→</button>
+                <button id="fullscreen-btn" class="nav-btn">⛶</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Presentation Container -->
+    <main class="presentation-container">
+        
+        <!-- Slide 1: Title Slide -->
+        <section class="slide active" data-slide="1">
+            <div class="slide-content hero-slide dark-bg">
+                <div class="text-content">
+                    <h1 class="startup-logo">
+                        <span class="startup-text">STARTUP</span>
+                        <span class="lab-text">LAB</span>
+                    </h1>
+                    <p class="tagline">Empowering Tech Founders to Go Further</p>
+                </div>
+                <div class="hero-image">
+                    <div class="startup-office-mockup">
+                        <div class="office-scene">
+                            <div class="pink-lighting"></div>
+                            <div class="workspace">
+                                <div class="desk"></div>
+                                <div class="people"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: About StartupLab -->
+        <section class="slide" data-slide="2">
+            <div class="slide-content two-column dark-bg">
+                <div class="text-side">
+                    <h2 class="section-header red-text">ABOUT STARTUPLAB</h2>
+                    <div class="about-content">
+                        <p class="main-text highlight-text">Norway's leading incubator, accelerator, and early-stage investor for the country's most ambitious tech startups.</p>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <span class="stat-number">200+</span>
+                                <span class="stat-label">Startups</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number">2</span>
+                                <span class="stat-label">Locations</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                        </div>
+                        <div class="locations">
+                            <span class="location-badge">Oslo</span>
+                            <span class="location-badge">Bergen</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-side">
+                    <div class="brand-showcase">
+                        <img src="brand-profile/logo/svg/SL_signature_red.svg" alt="StartupLab Logo" class="main-logo">
+                        <div class="tagline-box">
+                            <p class="brand-tagline">Empowering Tech Founders to Go Further</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Agenda -->
+        <section class="slide" data-slide="3">
+            <div class="slide-content two-column dark-bg">
+                <div class="text-side">
+                    <h2 class="large-title">AGENDA</h2>
+                </div>
+                <div class="agenda-side">
+                    <div class="agenda-item">
+                        <h3 class="red-text">INTRODUCTION</h3>
+                        <p>History of our company</p>
+                    </div>
+                    <div class="agenda-item">
+                        <h3 class="red-text">TEAM</h3>
+                        <p>Who's in the team</p>
+                    </div>
+                    <div class="agenda-item">
+                        <h3 class="red-text">DATA</h3>
+                        <p>What the numbers say</p>
+                    </div>
+                    <div class="agenda-item">
+                        <h3 class="red-text">PARTNERSHIP</h3>
+                        <p>What our partners say</p>
+                    </div>
+                    <div class="agenda-item">
+                        <h3 class="red-text">NEXT STEPS</h3>
+                        <p>How we'll proceed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Program Schedule -->
+        <section class="slide" data-slide="4">
+            <div class="slide-content two-column dark-bg">
+                <div class="text-side">
+                    <h2 class="large-title red-text">PROGRAM</h2>
+                </div>
+                <div class="schedule-side">
+                    <div class="schedule-item">
+                        <span class="time">08.30</span> — Doors open
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">09.00</span> — Introduction
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">09.30</span> — First speaker
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">10:30</span> — Second speaker
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">12.00</span> — Lunch
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">13:30</span> — Mingling
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">14:30</span> — Discussion
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">16.00</span> — End
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Content Slide Template -->
+        <section class="slide" data-slide="5">
+            <div class="slide-content image-grid dark-bg">
+                <div class="text-section">
+                    <h2 class="red-text">HEADLINE, TWO LINES MAXIMUM</h2>
+                    <p>Keep text as short as possible; if necessary, add more information to a separate slide that's only visible in downloaded version</p>
+                </div>
+                <div class="image-grid-container">
+                    <div class="grid-image founders-mug">
+                        <div class="image-placeholder">WE ❤️ FOUNDERS</div>
+                    </div>
+                    <div class="grid-image meeting-room">
+                        <div class="image-placeholder">Team Meeting</div>
+                    </div>
+                    <div class="grid-image startup-office">
+                        <div class="image-placeholder startup-lab-badge">STARTUP LAB</div>
+                    </div>
+                    <div class="grid-image remote-work">
+                        <div class="image-placeholder">Remote Work</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Statistics -->
+        <section class="slide" data-slide="6">
+            <div class="slide-content stats-slide dark-bg">
+                <div class="stats-visual">
+                    <div class="puzzle-piece"></div>
+                </div>
+                <div class="stats-content">
+                    <div class="stat-item">
+                        <span class="stat-number red-text">89%</span>
+                        <p class="stat-text">feel existing solutions don't meet their needs</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number red-text">53%</span>
+                        <p class="stat-text">are actively looking for a solution</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number red-text">92%</span>
+                        <p class="stat-text">of all humans have this problem</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Timeline -->
+        <section class="slide" data-slide="7">
+            <div class="slide-content timeline-slide dark-bg">
+                <div class="timeline-visual">
+                    <div class="puzzle-piece"></div>
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-item">
+                        <span class="year red-text">2032</span>
+                        <p class="timeline-text">LOREM IPSUM</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="year red-text">2033</span>
+                        <p class="timeline-text">LOREM IPSUM</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="year red-text">2034</span>
+                        <p class="timeline-text">LOREM IPSUM</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Summer Pitch Party -->
+        <section class="slide" data-slide="8">
+            <div class="slide-content full-image-slide dark-bg">
+                <div class="slide-title">
+                    <h2 class="red-text">SUMMER PITCH PARTY 2023</h2>
+                </div>
+                <div class="event-image">
+                    <div class="pitch-party-scene">
+                        <div class="presentation-setup">
+                            <div class="presenter"></div>
+                            <div class="audience"></div>
+                            <div class="screen"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Full Screen Title -->
+        <section class="slide" data-slide="9">
+            <div class="slide-content full-screen-title dark-bg">
+                <div class="title-overlay">
+                    <h1 class="massive-title">
+                        Empowering<br>
+                        Tech Founders<br>
+                        to Go Further
+                    </h1>
+                </div>
+                <div class="background-scene">
+                    <div class="startup-workspace">
+                        <div class="team-working"></div>
+                        <div class="tech-setup"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Our Ecosystem -->
+        <section class="slide" data-slide="10">
+            <div class="slide-content full-width dark-bg">
+                <div class="ecosystem-header">
+                    <h2 class="large-title red-text">OUR ECOSYSTEM</h2>
+                    <p class="ecosystem-subtitle">A comprehensive innovation network supporting tech founders</p>
+                </div>
+                <div class="ecosystem-grid">
+                    <div class="ecosystem-card">
+                        <div class="card-icon funding"></div>
+                        <h3>Funding</h3>
+                        <p>Pre-seed to Series A investment opportunities</p>
+                    </div>
+                    <div class="ecosystem-card">
+                        <div class="card-icon mentorship"></div>
+                        <h3>Mentorship</h3>
+                        <p>Expert guidance from industry leaders</p>
+                    </div>
+                    <div class="ecosystem-card">
+                        <div class="card-icon workspace"></div>
+                        <h3>Workspace</h3>
+                        <p>Modern offices in Oslo and Bergen</p>
+                    </div>
+                    <div class="ecosystem-card">
+                        <div class="card-icon network"></div>
+                        <h3>Network</h3>
+                        <p>Connect with founders, investors, and partners</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Industry Programs -->
+        <section class="slide" data-slide="11">
+            <div class="slide-content full-width dark-bg">
+                <div class="programs-header">
+                    <h2 class="large-title red-text">INDUSTRY PROGRAMS</h2>
+                    <p class="programs-subtitle">Specialized expertise across key technology sectors</p>
+                </div>
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <div class="program-logo">
+                            <img src="brand-profile/industry-programs/SL_programs_hardware/svg/SL_pro_hardware_red.svg" alt="Hardware Program">
+                        </div>
+                        <h3>Hardware</h3>
+                        <p>IoT, robotics, and physical products</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-logo">
+                            <img src="brand-profile/industry-programs/SL_programs_datascience/svg/SL_pro_datascience_red.svg" alt="Data Science Program">
+                        </div>
+                        <h3>Data Science</h3>
+                        <p>AI, ML, and data-driven solutions</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-logo">
+                            <img src="brand-profile/industry-programs/SL_programs_energy/svg/SL_pro_energy_red.svg" alt="Energy Program">
+                        </div>
+                        <h3>Energy</h3>
+                        <p>Clean tech and sustainable solutions</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-logo">
+                            <img src="brand-profile/industry-programs/SL_programs_fintech/svg/SL_fintech_red.svg" alt="Fintech Program">
+                        </div>
+                        <h3>Fintech</h3>
+                        <p>Financial technology and payments</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-logo">
+                            <img src="brand-profile/industry-programs/SL_programs_mobility/svg/SL_pro_mobility_red.svg" alt="Mobility Program">
+                        </div>
+                        <h3>Mobility</h3>
+                        <p>Transportation and logistics tech</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-logo">
+                            <img src="brand-profile/industry-programs/SL_programs_construction/svg/SL_construction_red.svg" alt="Construction Program">
+                        </div>
+                        <h3>Construction</h3>
+                        <p>PropTech and building innovation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Partnership Opportunities -->
+        <section class="slide" data-slide="12">
+            <div class="slide-content two-column dark-bg">
+                <div class="text-side">
+                    <h2 class="large-title red-text">PARTNERSHIP<br>OPPORTUNITIES</h2>
+                    <div class="partnership-content">
+                        <div class="partnership-type">
+                            <h3 class="partnership-title">Corporate Innovation</h3>
+                            <p>Co-develop solutions with our startups</p>
+                        </div>
+                        <div class="partnership-type">
+                            <h3 class="partnership-title">Investment Partners</h3>
+                            <p>Co-invest in promising companies</p>
+                        </div>
+                        <div class="partnership-type">
+                            <h3 class="partnership-title">Strategic Mentorship</h3>
+                            <p>Share expertise with founders</p>
+                        </div>
+                        <div class="partnership-type">
+                            <h3 class="partnership-title">Market Access</h3>
+                            <p>Pilot programs and customer validation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-side">
+                    <div class="partnership-visual">
+                        <div class="partnership-network">
+                            <div class="network-node central">
+                                <span>YOU</span>
+                            </div>
+                            <div class="network-node startup">Startups</div>
+                            <div class="network-node investor">Investors</div>
+                            <div class="network-node mentor">Mentors</div>
+                            <div class="network-node market">Market</div>
+                            <div class="connection-line line-1"></div>
+                            <div class="connection-line line-2"></div>
+                            <div class="connection-line line-3"></div>
+                            <div class="connection-line line-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: Success Stories -->
+        <section class="slide" data-slide="13">
+            <div class="slide-content full-width dark-bg">
+                <div class="success-header">
+                    <h2 class="large-title red-text">SUCCESS STORIES</h2>
+                    <p class="success-subtitle">Partnerships that drive innovation forward</p>
+                </div>
+                <div class="success-grid">
+                    <div class="success-card featured">
+                        <div class="success-metric">
+                            <span class="big-number">€50M+</span>
+                            <span class="metric-label">Total funding raised by portfolio</span>
+                        </div>
+                        <div class="success-content">
+                            <h3>Portfolio Success</h3>
+                            <p>Our startups have raised over €50M in follow-on funding from leading VCs and corporate partners.</p>
+                        </div>
+                    </div>
+                    <div class="success-card">
+                        <div class="success-metric">
+                            <span class="number">25+</span>
+                            <span class="metric-label">Corporate partnerships</span>
+                        </div>
+                        <div class="success-content">
+                            <h3>Corporate Innovation</h3>
+                            <p>Strategic partnerships driving mutual value creation.</p>
+                        </div>
+                    </div>
+                    <div class="success-card">
+                        <div class="success-metric">
+                            <span class="number">15+</span>
+                            <span class="metric-label">Successful exits</span>
+                        </div>
+                        <div class="success-content">
+                            <h3>Market Validation</h3>
+                            <p>Proven track record of successful market entries.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: Thank You / Contact -->
+        <section class="slide" data-slide="14">
+            <div class="slide-content contact-slide red-bg">
+                <div class="contact-content">
+                    <h1 class="startup-logo white-text">
+                        <span class="startup-text">STARTUP</span>
+                        <span class="lab-text">LAB</span>
+                    </h1>
+                    <div class="contact-info">
+                        <p class="tagline white-text">Empowering Tech Founders to Go Further</p>
+                        <div class="contact-details">
+                            <p>Oslo • Bergen</p>
+                            <p>startuplab.no</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
