@@ -707,6 +707,9 @@ body {
 
 .text-content.left-aligned {
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .text-content.left-aligned .hero-logo {
