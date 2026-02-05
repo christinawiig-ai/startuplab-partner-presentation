@@ -652,6 +652,34 @@ body {
     text-align: center;
 }
 
+.logo-partnership {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.partner-logo-large {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+}
+
+.plus-sign {
+    font-size: 4rem;
+    font-weight: 300;
+    color: white;
+}
+
+.section-label {
+    font-size: 1rem;
+    color: var(--startup-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+}
+
 .section-divider {
     justify-content: center;
     align-items: center;
