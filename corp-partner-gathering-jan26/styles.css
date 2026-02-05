@@ -1267,8 +1267,9 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1.5rem;
     font-size: 1.3rem;
+    max-width: 85%;
 }
 
 .upcoming-callout .label {
