@@ -705,6 +705,22 @@ body {
     z-index: 2;
 }
 
+.text-content.left-aligned {
+    text-align: left;
+}
+
+.text-content.left-aligned .hero-logo {
+    margin: 0 0 1.5rem 0;
+}
+
+.text-content.left-aligned .tagline {
+    text-align: left;
+}
+
+.text-content.left-aligned .event-date {
+    text-align: left;
+}
+
 .event-date {
     font-size: 1.25rem;
     color: var(--startup-gray);
