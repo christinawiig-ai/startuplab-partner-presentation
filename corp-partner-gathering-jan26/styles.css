@@ -320,6 +320,24 @@ body {
     margin-bottom: 1rem;
 }
 
+.summit-logo-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.summit-logo-part {
+    height: 45px;
+    width: auto;
+}
+
+.summit-logo-part.summit-script {
+    filter: brightness(0) invert(1);
+    height: 35px;
+    margin-bottom: 4px;
+}
+
 .nordic-cards {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
