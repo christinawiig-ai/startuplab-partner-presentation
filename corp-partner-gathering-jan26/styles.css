@@ -522,17 +522,31 @@ body {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-.text-side-right {
+.text-side-right,
+.text-side-left {
     padding: 2rem;
     min-width: 0; /* Prevents grid blowout */
 }
 
-.text-side-right .section-header {
+.text-side-left {
+    order: -1; /* Put text on left side */
+}
+
+.text-side-right .section-header,
+.text-side-left .section-header {
     font-size: clamp(1.8rem, 3vw, 2.5rem);
     margin-bottom: 0.5rem;
 }
 
-.text-side-right .program-label {
+.lead-text-large {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.text-side-right .program-label,
+.text-side-left .program-label {
     font-size: 1rem;
     color: var(--startup-gray);
     margin-bottom: 2rem;
