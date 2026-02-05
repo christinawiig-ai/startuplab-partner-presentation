@@ -668,6 +668,10 @@ body {
     object-fit: contain;
 }
 
+.partner-logo-large.transparent-logo {
+    mix-blend-mode: multiply;
+}
+
 .plus-sign {
     font-size: 4rem;
     font-weight: 300;
