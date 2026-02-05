@@ -260,6 +260,109 @@ body {
     opacity: 0.85;
 }
 
+/* Summit Slide Layout */
+.summit-slide {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.summit-header {
+    width: 100%;
+}
+
+.summit-header .program-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.summit-header .section-header {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0;
+}
+
+.summit-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.summit-logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+.summit-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.summit-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.summit-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.summit-card-content {
+    padding: 1.25rem;
+}
+
+.summit-card-content h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--startup-white);
+}
+
+.summit-card-content p {
+    font-size: 0.95rem;
+    color: var(--startup-gray);
+    line-height: 1.4;
+}
+
+/* Partner Logos at Bottom of Slide */
+.partner-logos-bottom {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: auto;
+    padding-top: 2rem;
+}
+
+.bottom-partner-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+}
+
+/* Event Details */
+.event-details {
+    margin-top: 1.5rem;
+}
+
+.event-location {
+    font-size: 1.1rem;
+    color: var(--startup-gray);
+    font-weight: 500;
+}
+
 .photo-grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
