@@ -296,12 +296,19 @@ body {
     object-fit: contain;
 }
 
+.summit-logo-img-large {
+    height: 250px;
+    width: auto;
+    object-fit: contain;
+}
+
 .summit-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 
 .summit-card {
@@ -309,30 +316,37 @@ body {
     border-radius: 12px;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 1;
+    max-width: 650px;
 }
 
 .summit-card-img {
-    width: 100%;
-    height: 180px;
+    width: 260px;
+    min-width: 260px;
+    height: auto;
     object-fit: cover;
 }
 
 .summit-card-content {
-    padding: 1.25rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .summit-card-content h3 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     color: var(--startup-white);
 }
 
 .summit-card-content p {
-    font-size: 0.95rem;
-    color: var(--startup-gray);
-    line-height: 1.4;
+    font-size: 1.1rem;
+    color: var(--startup-light-gray);
+    line-height: 1.5;
 }
 
 /* Partner Logos at Bottom of Slide */
@@ -350,6 +364,30 @@ body {
     object-fit: contain;
     filter: brightness(0) invert(1);
     opacity: 0.8;
+}
+
+.partner-logos-image {
+    max-width: 90%;
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 16px;
+    margin-top: 2rem;
+}
+
+.bottom-partner-logo-large {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 1;
+}
+
+.ocean-logos {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 1.5rem;
+    gap: 1.5rem;
 }
 
 /* Event Details */
@@ -475,6 +513,11 @@ body {
     width: auto;
 }
 
+.summit-logo-part-large {
+    height: 180px;
+    width: auto;
+}
+
 .summit-logo-part.summit-script {
     filter: brightness(0) invert(1);
     height: 35px;
@@ -585,10 +628,12 @@ body {
     gap: 2rem;
     align-items: start;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .strategic-text-side {
-    padding-top: 1rem;
+    padding-top: 2rem;
 }
 
 .strategic-text-side .program-label {
@@ -610,13 +655,17 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 0.75rem;
-    height: 70vh;
-    max-height: 600px;
+    height: 65vh;
+    max-height: 550px;
+    width: 100%;
+    max-width: 700px;
+    overflow: hidden;
 }
 
 .strategic-photos-grid img {
     width: 100%;
     height: 100%;
+    min-height: 0;
     object-fit: cover;
     border-radius: 8px;
 }
@@ -2316,6 +2365,127 @@ body {
     .program-visual-card {
         aspect-ratio: 1/1;
     }
+}
+
+/* MEET Case Study Slide */
+.meet-case-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 3rem;
+}
+
+.meet-header {
+    margin-bottom: 1rem;
+}
+
+.meet-header .large-title {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+}
+
+.case-subtitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.funnel-flow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+    margin: 1.5rem 0;
+}
+
+.funnel-step {
+    background: var(--startup-white);
+    color: var(--startup-dark);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    min-width: 140px;
+    transition: transform 0.2s ease;
+}
+
+.funnel-step:hover {
+    transform: translateY(-3px);
+}
+
+.funnel-step.highlight-step {
+    background: var(--startup-red);
+    color: var(--startup-white);
+}
+
+.step-number {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.step-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.funnel-arrow {
+    width: 30px;
+    height: 2px;
+    background: var(--startup-red);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.funnel-arrow::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-left: 8px solid var(--startup-red);
+}
+
+.funnel-result {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--startup-red);
+    font-style: italic;
+    margin: 1rem 0;
+}
+
+.result-arrow {
+    font-size: 2.5rem;
+    font-style: normal;
+}
+
+.result-text strong {
+    color: var(--startup-white);
+}
+
+.key-success {
+    margin-top: 1.5rem;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    max-width: 90%;
+}
+
+.key-success p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--startup-white);
+}
+
+.key-success strong {
+    font-weight: 700;
 }
 
 /* Print / Export styles */
