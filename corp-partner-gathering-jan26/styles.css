@@ -881,6 +881,10 @@ body {
     mix-blend-mode: multiply;
 }
 
+.partner-logo-large.red-logo {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(5000%) hue-rotate(354deg) brightness(101%) contrast(107%);
+}
+
 .plus-sign {
     font-size: 4rem;
     font-weight: 300;
