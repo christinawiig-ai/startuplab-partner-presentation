@@ -185,24 +185,70 @@ class StartupLabPresentation {
         const slide = document.querySelector(`[data-slide="${slideNumber}"]`);
         if (!slide) return;
 
-        // Get animatable elements
-        const elements = slide.querySelectorAll(
-            'h1, h2, h3, .tagline, .subtitle, .lead-text, ' +
-            '.agenda-item, .team-member, .big-stat, .highlight-item, ' +
-            '.program-card, .feature-item, .event-item, .option-card, ' +
-            '.offering-item, .offering-tag, .case-stat, .pillar'
+        // Text elements - fade up
+        const textElements = slide.querySelectorAll(
+            'h1, h2, h3, .tagline, .subtitle, .lead-text, .lead-text-large, ' +
+            '.program-label, .feature-label, .feature-label-large, ' +
+            '.case-badge, .new-badge, .offering-badge, .section-label, ' +
+            '.case-subtitle, .partner-label, .date-label'
         );
 
-        // Stagger animations
-        elements.forEach((el, index) => {
+        // Card/block elements - fade up with slightly more travel
+        const cardElements = slide.querySelectorAll(
+            '.agenda-item, .team-member, .team-card, .big-stat, .highlight-item, ' +
+            '.program-card, .program-visual-card, .feature-item, .event-item, ' +
+            '.option-card, .offering-item, .offering-tag, .case-stat, .pillar, ' +
+            '.recap-card, .summit-card, .nordic-card, .competence-areas .tag, ' +
+            '.case-insight, .upcoming-callout, .big-impact, ' +
+            '.offering-details, .benefits, .how-it-works, .eir-services, ' +
+            '.core-pillars, .nordic-description-box'
+        );
+
+        // Visual elements - fade in (no vertical movement)
+        const visualElements = slide.querySelectorAll(
+            '.slide-photo, .slide-photo-half, .slide-photo-quarter, .grid-photo, ' +
+            '.board-photo-container, .photo-side, ' +
+            '.sponsor-logos-row, .partner-logos-bottom, .partner-logos-inline, ' +
+            '.summit-logo-row, .logo-partnership, .video-frame, ' +
+            '.contact-content, .closing-logo, .hero-logo'
+        );
+
+        // Animate text first
+        textElements.forEach((el, index) => {
             el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
+            el.style.transform = 'translateY(15px)';
 
             setTimeout(() => {
                 el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                 el.style.opacity = '1';
                 el.style.transform = 'translateY(0)';
-            }, 50 + (index * 40));
+            }, 50 + (index * 50));
+        });
+
+        // Animate cards with offset
+        const textDelay = Math.min(textElements.length * 50, 200);
+        cardElements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, textDelay + 30 + (index * 45));
+        });
+
+        // Animate visuals - smooth fade, no vertical shift
+        const cardDelay = textDelay + Math.min(cardElements.length * 45, 150);
+        visualElements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'scale(1)';
+            }, cardDelay + (index * 60));
         });
     }
 
