@@ -2934,6 +2934,21 @@ body {
     opacity: 0.8;
 }
 
+/* Slide 4: Fit headline + logos + tagline without cropping */
+[data-slide="4"] .large-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    margin-bottom: 1rem;
+}
+
+[data-slide="4"] .partner-logos-image {
+    max-height: 45vh;
+}
+
+[data-slide="4"] .tagline {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    margin-top: 1rem;
+}
+
 /* Slide 2: Agenda headlines in red */
 [data-slide="2"] .agenda-content h3 {
     color: var(--startup-red);
