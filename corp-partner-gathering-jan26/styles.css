@@ -374,6 +374,18 @@ body {
     margin-top: 2rem;
 }
 
+.video-frame {
+    margin-top: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.video-frame iframe {
+    display: block;
+    border-radius: 12px;
+}
+
 .bottom-partner-logo-large {
     height: 50px;
     width: auto;
@@ -493,12 +505,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 1.5rem;
+    padding-top: 2rem;
 }
 
 .nordic-expansion-slide .massive-title {
     font-size: clamp(2rem, 4vw, 3rem);
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
 .summit-logo-header {
@@ -613,6 +626,53 @@ body {
     color: var(--startup-red);
     font-weight: 700;
     font-size: 1.2rem;
+}
+
+/* Nordic Header Row - logo + title side by side */
+.nordic-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.nordic-header-row .summit-logo-header {
+    margin-bottom: 0;
+}
+
+.nordic-header-row .summit-logo-part-large {
+    height: 80px;
+    width: auto;
+}
+
+.nordic-header-row .massive-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    text-align: left;
+    margin: 0;
+}
+
+/* Nordic Description Box */
+.nordic-description-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.25rem 2rem;
+    max-width: 800px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.nordic-description-box p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--startup-light-gray);
+    margin: 0;
+}
+
+.nordic-description-box strong.red-text {
+    color: var(--startup-red);
+    font-weight: 700;
 }
 
 .section-header {
