@@ -2967,6 +2967,79 @@ body {
     width: 100%;
 }
 
+/* =============================================
+   OVERFLOW FIXES - Ensure all slides fit in frame
+   ============================================= */
+
+/* Slide 3: Constrain board photo height */
+.board-photo {
+    max-height: 45vh;
+    object-fit: cover;
+}
+
+/* Slide 10: Tighten text spacing */
+[data-slide="10"] .text-side-right .program-label {
+    margin-bottom: 1rem;
+}
+
+[data-slide="10"] .event-highlights {
+    padding: 1rem;
+}
+
+/* Slide 13: Compact the 4 verbose bullet points */
+[data-slide="13"] .event-highlights {
+    padding: 0.75rem;
+}
+
+[data-slide="13"] .text-side-right .highlight-list li {
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+[data-slide="13"] .text-side-right .highlight-list {
+    gap: 0.75rem;
+}
+
+[data-slide="13"] .text-side-right .program-label {
+    margin-bottom: 1rem;
+}
+
+/* Slide 17: Shrink sponsor logos and reduce gaps */
+[data-slide="17"] .sponsor-logo {
+    height: 60px;
+}
+
+[data-slide="17"] .photo-feature-slide {
+    gap: 1.5rem;
+}
+
+[data-slide="17"] .sponsor-logos-row {
+    margin-top: 1rem;
+}
+
+/* Slide 20: Scale city images with viewport */
+[data-slide="20"] .city-image {
+    height: clamp(120px, 18vh, 180px);
+}
+
+[data-slide="20"] .nordic-description-box {
+    padding: 0.75rem 1.5rem;
+}
+
+[data-slide="20"] .nordic-expansion-slide {
+    padding-top: 1rem;
+    gap: 1rem;
+}
+
+/* Slide 21: Scale summit logo with viewport */
+[data-slide="21"] .summit-logo-img-large {
+    height: clamp(120px, 22vh, 250px);
+}
+
+[data-slide="21"] .summit-logo-row {
+    margin: 0.5rem 0;
+}
+
 /* Print / Export styles */
 @media print {
     .presentation-nav, .progress-bar {
