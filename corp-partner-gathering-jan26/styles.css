@@ -1169,14 +1169,15 @@ body {
 /* Corporate Partnership Team - 2x2 grid */
 .team-photos-grid.corp-team {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    max-width: 500px;
+    gap: 1rem;
+    max-width: 340px;
     margin: 0 auto;
 }
 
 .team-photos-grid.corp-team .team-photo {
     aspect-ratio: 1/1;
     object-position: center 25%;
+    max-height: 150px;
 }
 
 .team-photos-grid.corp-team .team-card .name {
@@ -1354,7 +1355,10 @@ body {
 .recap-grid-modern {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    gap: 0.75rem;
+    align-content: center;
+    max-height: calc(100vh - 72px - 6rem);
+    overflow: hidden;
 }
 
 .recap-card {
@@ -1362,10 +1366,10 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem 1.5rem;
+    padding: 1rem 1rem;
     background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,51,51,0.05) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
+    border-radius: 12px;
     transition: all 0.3s var(--transition-smooth);
     text-align: center;
 }
@@ -1377,9 +1381,9 @@ body {
 }
 
 .recap-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 1rem;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.5rem;
     color: var(--startup-red);
 }
 
@@ -1389,7 +1393,7 @@ body {
 }
 
 .recap-label {
-    font-size: 1.6rem;
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.02em;
 }
