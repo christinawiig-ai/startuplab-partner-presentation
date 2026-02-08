@@ -636,6 +636,11 @@ body {
     opacity: 0.9;
 }
 
+.nordic-logo img.no-filter {
+    filter: none;
+    opacity: 1;
+}
+
 .nordic-logo.tba {
     color: var(--startup-red);
     font-weight: 700;
@@ -649,7 +654,7 @@ body {
     justify-content: flex-start;
     gap: 2rem;
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
 .nordic-header-row .summit-logo-header {
