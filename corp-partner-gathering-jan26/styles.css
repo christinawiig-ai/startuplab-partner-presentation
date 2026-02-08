@@ -2861,6 +2861,32 @@ body {
     text-align: left;
 }
 
+[data-slide="24"] .event-highlights {
+    padding: 0;
+}
+
+[data-slide="24"] .slide-quote {
+    margin-top: 1.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-slide="24"] .slide-quote blockquote {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    margin: 0;
+}
+
+[data-slide="24"] .slide-quote .quote-attribution {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--startup-red);
+}
+
 /* =============================================
    SLIDE 18: MEET CORPORATE - ENHANCED READABILITY
    ============================================= */
