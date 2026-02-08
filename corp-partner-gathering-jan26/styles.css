@@ -2977,7 +2977,12 @@ body {
     object-fit: cover;
 }
 
-/* Slide 10: Tighten text spacing */
+/* Slide 10: Show full photo without cropping */
+[data-slide="10"] .slide-photo {
+    object-fit: contain;
+}
+
+/* Slide 11: Tighten text spacing */
 [data-slide="11"] .text-side-right .program-label {
     margin-bottom: 1rem;
 }
