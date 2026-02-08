@@ -2890,38 +2890,14 @@ body {
 }
 
 /* =============================================
-   AI MAD LAB SLIDE - MEDIA PLACEHOLDER
+   AI MAD LAB SLIDE - VIDEO
    ============================================= */
 
-.media-placeholder {
+.video-side .slide-video {
     width: 100%;
-    height: 60vh;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 51, 51, 0.06) 100%);
-    border: 2px dashed rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    transition: all 0.3s var(--transition-smooth);
-}
-
-.media-placeholder:hover {
-    border-color: rgba(255, 51, 51, 0.4);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 51, 51, 0.1) 100%);
-}
-
-.placeholder-icon {
-    font-size: 3rem;
-    color: rgba(255, 255, 255, 0.2);
-}
-
-.placeholder-text {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.3);
-    font-weight: 500;
-    letter-spacing: 0.05em;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
 }
 
 /* Exclusive note styling */

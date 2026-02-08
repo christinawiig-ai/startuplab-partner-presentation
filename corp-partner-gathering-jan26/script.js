@@ -156,13 +156,22 @@ class StartupLabPresentation {
 
         targetSlideElement.classList.add('active');
 
-        // Handle video on slide 2
-        const video = document.querySelector('.fullscreen-video');
-        if (video) {
+        // Handle videos - play only on active slide, pause others
+        const fullscreenVideo = document.querySelector('.fullscreen-video');
+        if (fullscreenVideo) {
             if (slideNumber === 2) {
-                video.play().catch(() => {});
+                fullscreenVideo.play().catch(() => {});
             } else {
-                video.pause();
+                fullscreenVideo.pause();
+            }
+        }
+
+        const slideVideo = document.querySelector('[data-slide="25"] .slide-video');
+        if (slideVideo) {
+            if (slideNumber === 25) {
+                slideVideo.play().catch(() => {});
+            } else {
+                slideVideo.pause();
             }
         }
 
