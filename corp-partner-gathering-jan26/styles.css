@@ -402,6 +402,15 @@ body {
     gap: 1.5rem;
 }
 
+.logo-row-cta {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--startup-white);
+    font-style: italic;
+    white-space: nowrap;
+    margin-left: 0.5rem;
+}
+
 /* Event Details */
 .event-details {
     margin-top: 1.5rem;
