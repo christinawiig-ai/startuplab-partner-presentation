@@ -266,14 +266,11 @@ body {
 
 /* Summit Slide Layout */
 .summit-slide {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 2rem;
-}
-
-.summit-header {
-    width: 100%;
+    gap: 1.5rem;
 }
 
 .summit-header .program-label {
