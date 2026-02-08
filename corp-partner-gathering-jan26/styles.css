@@ -641,7 +641,7 @@ body {
 .nordic-header-row {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 2rem;
     width: 100%;
     margin-bottom: 1rem;
@@ -652,7 +652,7 @@ body {
 }
 
 .nordic-header-row .summit-logo-part-large {
-    height: 80px;
+    height: 140px;
     width: auto;
 }
 
