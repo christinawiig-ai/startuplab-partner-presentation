@@ -2978,8 +2978,9 @@ body {
 .madlab-video-container .slide-video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
+    background: #000;
 }
 
 /* Exclusive note styling */
