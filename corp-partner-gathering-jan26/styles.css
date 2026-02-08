@@ -3017,7 +3017,7 @@ body {
 }
 
 /* Slide 2: Agenda headlines in red */
-[data-slide="3"] .agenda-content h3 {
+[data-slide="2"] .agenda-content h3 {
     color: var(--startup-red);
 }
 

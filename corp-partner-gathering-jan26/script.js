@@ -159,7 +159,7 @@ class StartupLabPresentation {
         // Handle videos - play only on active slide, pause others
         const fullscreenVideo = document.querySelector('.fullscreen-video');
         if (fullscreenVideo) {
-            if (slideNumber === 2) {
+            if (slideNumber === 3) {
                 fullscreenVideo.play().catch(() => {});
             } else {
                 fullscreenVideo.pause();
