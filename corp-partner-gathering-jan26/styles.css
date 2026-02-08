@@ -2833,22 +2833,22 @@ body {
     margin-left: 0;
 }
 
-/* Slide 23: Vibecoding - pull text left */
-[data-slide="23"] .slide-content {
+/* Slide 24: Vibecoding - pull text left */
+[data-slide="24"] .slide-content {
     max-width: none;
     padding-left: 4rem;
     padding-right: 4rem;
 }
 
-[data-slide="23"] .text-side-left {
+[data-slide="24"] .text-side-left {
     text-align: left;
     padding-left: 0;
 }
 
-[data-slide="23"] .text-side-left .section-header,
-[data-slide="23"] .text-side-left .program-label,
-[data-slide="23"] .text-side-left .lead-text-large,
-[data-slide="23"] .text-side-left .lead-text {
+[data-slide="24"] .text-side-left .section-header,
+[data-slide="24"] .text-side-left .program-label,
+[data-slide="24"] .text-side-left .lead-text-large,
+[data-slide="24"] .text-side-left .lead-text {
     text-align: left;
 }
 
@@ -2856,27 +2856,27 @@ body {
    SLIDE 18: MEET CORPORATE - ENHANCED READABILITY
    ============================================= */
 
-[data-slide="18"] .lead-text {
+[data-slide="19"] .lead-text {
     font-size: clamp(1.2rem, 2.2vw, 1.55rem);
     color: var(--startup-white);
     line-height: 1.5;
 }
 
-[data-slide="18"] .how-it-works h4 {
+[data-slide="19"] .how-it-works h4 {
     font-size: 1.05rem;
 }
 
-[data-slide="18"] .process-list li {
+[data-slide="19"] .process-list li {
     color: var(--startup-white);
     font-size: 1.1rem;
     line-height: 1.5;
 }
 
-[data-slide="18"] .new-badge {
+[data-slide="19"] .new-badge {
     font-size: 0.95rem;
 }
 
-[data-slide="18"] .large-title {
+[data-slide="19"] .large-title {
     font-size: clamp(2.8rem, 5.5vw, 4.8rem);
 }
 
@@ -2939,27 +2939,27 @@ body {
 }
 
 /* Slide 4: Fit headline + logos + tagline without cropping */
-[data-slide="4"] .large-title {
+[data-slide="5"] .large-title {
     font-size: clamp(2rem, 4vw, 3.2rem);
     margin-bottom: 1rem;
 }
 
-[data-slide="4"] .partner-logos-image {
+[data-slide="5"] .partner-logos-image {
     max-height: 45vh;
 }
 
-[data-slide="4"] .tagline {
+[data-slide="5"] .tagline {
     font-size: clamp(1rem, 2vw, 1.4rem);
     margin-top: 1rem;
 }
 
 /* Slide 2: Agenda headlines in red */
-[data-slide="2"] .agenda-content h3 {
+[data-slide="3"] .agenda-content h3 {
     color: var(--startup-red);
 }
 
 /* Slide 3: Align team label with photo grid */
-[data-slide="3"] .team-section .section-label {
+[data-slide="4"] .team-section .section-label {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
@@ -2978,66 +2978,131 @@ body {
 }
 
 /* Slide 10: Tighten text spacing */
-[data-slide="10"] .text-side-right .program-label {
+[data-slide="11"] .text-side-right .program-label {
     margin-bottom: 1rem;
 }
 
-[data-slide="10"] .event-highlights {
+[data-slide="11"] .event-highlights {
     padding: 1rem;
 }
 
 /* Slide 13: Compact the 4 verbose bullet points */
-[data-slide="13"] .event-highlights {
+[data-slide="14"] .event-highlights {
     padding: 0.75rem;
 }
 
-[data-slide="13"] .text-side-right .highlight-list li {
+[data-slide="14"] .text-side-right .highlight-list li {
     font-size: 1rem;
     line-height: 1.45;
 }
 
-[data-slide="13"] .text-side-right .highlight-list {
+[data-slide="14"] .text-side-right .highlight-list {
     gap: 0.75rem;
 }
 
-[data-slide="13"] .text-side-right .program-label {
+[data-slide="14"] .text-side-right .program-label {
     margin-bottom: 1rem;
 }
 
 /* Slide 17: Shrink sponsor logos and reduce gaps */
-[data-slide="17"] .sponsor-logo {
+[data-slide="18"] .sponsor-logo {
     height: 60px;
 }
 
-[data-slide="17"] .photo-feature-slide {
+[data-slide="18"] .photo-feature-slide {
     gap: 1.5rem;
 }
 
-[data-slide="17"] .sponsor-logos-row {
+[data-slide="18"] .sponsor-logos-row {
     margin-top: 1rem;
 }
 
 /* Slide 20: Scale city images with viewport */
-[data-slide="20"] .city-image {
+[data-slide="21"] .city-image {
     height: clamp(120px, 18vh, 180px);
 }
 
-[data-slide="20"] .nordic-description-box {
+[data-slide="21"] .nordic-description-box {
     padding: 0.75rem 1.5rem;
 }
 
-[data-slide="20"] .nordic-expansion-slide {
+[data-slide="21"] .nordic-expansion-slide {
     padding-top: 1rem;
     gap: 1rem;
 }
 
 /* Slide 21: Scale summit logo with viewport */
-[data-slide="21"] .summit-logo-img-large {
+[data-slide="22"] .summit-logo-img-large {
     height: clamp(120px, 22vh, 250px);
 }
 
-[data-slide="21"] .summit-logo-row {
+[data-slide="22"] .summit-logo-row {
     margin: 0.5rem 0;
+}
+
+/* =============================================
+   SLIDE 2: FULLSCREEN VIDEO SLIDE
+   ============================================= */
+
+.video-slide {
+    position: relative;
+    padding: 0 !important;
+    max-width: none;
+    overflow: hidden;
+}
+
+.fullscreen-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--startup-darker);
+}
+
+.video-overlay-controls {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.video-slide:hover .video-overlay-controls {
+    opacity: 1;
+}
+
+.video-play-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--startup-white);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.video-play-btn:hover {
+    background: rgba(255, 51, 51, 0.8);
+    border-color: var(--startup-red);
+    transform: scale(1.1);
+}
+
+.video-play-btn svg {
+    width: 24px;
+    height: 24px;
+    margin-left: 3px;
+}
+
+.video-play-btn.playing svg {
+    margin-left: 0;
 }
 
 /* Print / Export styles */

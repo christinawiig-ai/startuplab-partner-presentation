@@ -13,6 +13,7 @@ class StartupLabPresentation {
 
     init() {
         this.setupEventListeners();
+        this.setupVideoControls();
         this.updateSlideCounter();
         this.updateProgressBar();
 
@@ -155,6 +156,16 @@ class StartupLabPresentation {
 
         targetSlideElement.classList.add('active');
 
+        // Handle video on slide 2
+        const video = document.querySelector('.fullscreen-video');
+        if (video) {
+            if (slideNumber === 2) {
+                video.play().catch(() => {});
+            } else {
+                video.pause();
+            }
+        }
+
         // Update UI
         this.updateSlideCounter();
         this.updateProgressBar();
@@ -249,6 +260,31 @@ class StartupLabPresentation {
                 el.style.opacity = '1';
                 el.style.transform = 'scale(1)';
             }, cardDelay + (index * 60));
+        });
+    }
+
+    setupVideoControls() {
+        const playBtn = document.querySelector('.video-play-btn');
+        const video = document.querySelector('.fullscreen-video');
+        if (!playBtn || !video) return;
+
+        const pauseIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+        const playIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><polygon points="5,3 19,12 5,21"/></svg>';
+
+        playBtn.innerHTML = pauseIcon;
+        playBtn.classList.add('playing');
+
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (video.paused) {
+                video.play();
+                playBtn.innerHTML = pauseIcon;
+                playBtn.classList.add('playing');
+            } else {
+                video.pause();
+                playBtn.innerHTML = playIcon;
+                playBtn.classList.remove('playing');
+            }
         });
     }
 
