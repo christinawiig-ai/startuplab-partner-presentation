@@ -2892,6 +2892,58 @@ body {
 }
 
 /* =============================================
+   SLIDE 28: THANK YOU - VIDEO LAYOUT
+   ============================================= */
+
+.thankyou-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2.5rem 4rem !important;
+    text-align: center;
+}
+
+.thankyou-slide .massive-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.thankyou-video-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #000;
+}
+
+.thankyou-video-container .thankyou-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.video-placeholder-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+}
+
+.video-placeholder-overlay p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* =============================================
    SLIDE 18: MEET CORPORATE - ENHANCED READABILITY
    ============================================= */
 
