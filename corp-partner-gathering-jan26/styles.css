@@ -268,7 +268,8 @@ body {
 .summit-slide {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.5rem;
+    justify-content: center;
+    gap: 2rem;
 }
 
 .summit-header {
