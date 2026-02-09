@@ -3349,21 +3349,45 @@ body {
     margin-top: 0.3rem;
 }
 
-/* Slide 33: Final slide - horizontal layout */
-[data-slide="33"] .closing-horizontal {
-    flex-direction: row;
-    align-items: center;
+/* Slide 32: Final slide - vertical layout, left aligned */
+[data-slide="32"] .closing-vertical {
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 0;
+    padding-left: 8%;
 }
 
-[data-slide="33"] .closing-horizontal .closing-logo {
-    margin: 0;
+[data-slide="32"] .closing-vertical .closing-logo {
+    margin: 0 0 1.5rem 0;
+    max-height: 50px;
 }
 
-[data-slide="33"] .closing-horizontal .tagline {
+[data-slide="32"] .closing-vertical .tagline {
     margin: 0;
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    text-align: left;
+}
+
+[data-slide="32"] .closing-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+[data-slide="32"] .closing-icon-link {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+[data-slide="32"] .closing-icon-link:hover {
+    color: #fff;
+}
+
+[data-slide="32"] .closing-icon {
+    width: 24px;
+    height: 24px;
 }
 
 /* EiR merged slide */
