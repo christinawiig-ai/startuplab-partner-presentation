@@ -1634,8 +1634,8 @@ body {
 /* Events Grid */
 .events-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    grid-template-columns: auto auto;
+    gap: 0.8rem;
 }
 
 .event-item {
@@ -1643,6 +1643,8 @@ body {
     background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     font-weight: 500;
+    white-space: nowrap;
+    font-size: 0.95rem;
     transition: all 0.2s var(--transition-smooth);
 }
 
