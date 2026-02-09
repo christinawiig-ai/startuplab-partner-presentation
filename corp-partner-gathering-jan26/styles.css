@@ -3419,8 +3419,9 @@ body {
 
 /* Slide 32: Final slide - vertical layout, left aligned */
 [data-slide="32"] .contact-slide {
+    display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     text-align: left;
     padding-left: 8%;
 }
@@ -3433,7 +3434,7 @@ body {
 }
 
 [data-slide="32"] .closing-vertical .closing-logo {
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.5rem -6px;
     width: clamp(250px, 35vw, 400px);
     max-height: none;
 }
