@@ -3143,16 +3143,16 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Slide 17: Shrink sponsor logos and reduce gaps */
-[data-slide="19"] .sponsor-logo {
+/* Slide 16: Nordic AI Gold Rush - sponsor logos and gaps */
+[data-slide="16"] .sponsor-logo {
     height: 60px;
 }
 
-[data-slide="19"] .photo-feature-slide {
+[data-slide="16"] .photo-feature-slide {
     gap: 1.5rem;
 }
 
-[data-slide="19"] .sponsor-logos-row {
+[data-slide="16"] .sponsor-logos-row {
     margin-top: 1rem;
 }
 
