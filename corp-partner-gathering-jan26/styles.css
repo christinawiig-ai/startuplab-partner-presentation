@@ -3174,6 +3174,24 @@ body {
     margin-top: 1rem;
 }
 
+.info-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.2rem;
+    background: var(--startup-red);
+    color: var(--startup-white);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+}
+
+.info-btn:hover {
+    background: #e02020;
+}
+
 /* Slide 20: Scale city images with viewport */
 [data-slide="22"] .city-image {
     height: clamp(120px, 18vh, 180px);
