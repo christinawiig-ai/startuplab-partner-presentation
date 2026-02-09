@@ -3349,6 +3349,23 @@ body {
     margin-top: 0.3rem;
 }
 
+/* Slide 33: Final slide - horizontal layout */
+[data-slide="33"] .closing-horizontal {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+[data-slide="33"] .closing-horizontal .closing-logo {
+    margin: 0;
+}
+
+[data-slide="33"] .closing-horizontal .tagline {
+    margin: 0;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+
 /* EiR merged slide */
 .eir-areas-grid {
     display: flex;
