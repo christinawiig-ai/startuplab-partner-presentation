@@ -295,6 +295,26 @@ class StartupLabPresentation {
                 playBtn.classList.remove('playing');
             }
         });
+
+        // Mute/unmute buttons for all videos
+        document.querySelectorAll('.video-mute-btn').forEach(muteBtn => {
+            muteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const targetVideo = muteBtn.closest('.video-slide, .madlab-video-side')?.querySelector('video');
+                if (!targetVideo) return;
+
+                targetVideo.muted = !targetVideo.muted;
+                const iconMuted = muteBtn.querySelector('.icon-muted');
+                const iconUnmuted = muteBtn.querySelector('.icon-unmuted');
+                if (targetVideo.muted) {
+                    iconMuted.style.display = '';
+                    iconUnmuted.style.display = 'none';
+                } else {
+                    iconMuted.style.display = 'none';
+                    iconUnmuted.style.display = '';
+                }
+            });
+        });
     }
 
     toggleFullscreen() {
