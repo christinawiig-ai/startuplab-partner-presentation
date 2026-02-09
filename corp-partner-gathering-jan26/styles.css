@@ -639,7 +639,7 @@ body {
     opacity: 1;
 }
 
-[data-slide="21"] .nordic-logo img.maria01-logo {
+[data-slide="22"] .nordic-logo img.maria01-logo {
     max-height: 60px;
 }
 
@@ -2857,35 +2857,35 @@ body {
 }
 
 /* Slide 24: Vibecoding - pull text left */
-[data-slide="25"] .slide-content {
+[data-slide="26"] .slide-content {
     max-width: 1600px;
     padding-left: 4rem;
     padding-right: 4rem;
 }
 
-[data-slide="25"] .text-side-left {
+[data-slide="26"] .text-side-left {
     text-align: left;
     padding-left: 0;
 }
 
-[data-slide="25"] .text-side-left .section-header,
-[data-slide="25"] .text-side-left .program-label,
-[data-slide="25"] .text-side-left .lead-text-large,
-[data-slide="25"] .text-side-left .lead-text {
+[data-slide="26"] .text-side-left .section-header,
+[data-slide="26"] .text-side-left .program-label,
+[data-slide="26"] .text-side-left .lead-text-large,
+[data-slide="26"] .text-side-left .lead-text {
     text-align: left;
 }
 
-[data-slide="25"] .event-highlights {
+[data-slide="26"] .event-highlights {
     padding: 0;
 }
 
-[data-slide="25"] .slide-quote {
+[data-slide="26"] .slide-quote {
     margin-top: 1.5rem;
     padding: 1rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-[data-slide="25"] .slide-quote blockquote {
+[data-slide="26"] .slide-quote blockquote {
     font-size: 0.95rem;
     font-style: italic;
     color: rgba(255, 255, 255, 0.75);
@@ -2893,7 +2893,7 @@ body {
     margin: 0;
 }
 
-[data-slide="25"] .slide-quote .quote-attribution {
+[data-slide="26"] .slide-quote .quote-attribution {
     margin-top: 0.5rem;
     font-size: 0.85rem;
     font-style: normal;
@@ -2999,27 +2999,27 @@ body {
    SLIDE 18: MEET CORPORATE - ENHANCED READABILITY
    ============================================= */
 
-[data-slide="19"] .lead-text {
+[data-slide="20"] .lead-text {
     font-size: clamp(1.2rem, 2.2vw, 1.55rem);
     color: var(--startup-white);
     line-height: 1.5;
 }
 
-[data-slide="19"] .how-it-works h4 {
+[data-slide="20"] .how-it-works h4 {
     font-size: 1.05rem;
 }
 
-[data-slide="19"] .process-list li {
+[data-slide="20"] .process-list li {
     color: var(--startup-white);
     font-size: 1.1rem;
     line-height: 1.5;
 }
 
-[data-slide="19"] .new-badge {
+[data-slide="20"] .new-badge {
     font-size: 0.95rem;
 }
 
-[data-slide="19"] .large-title {
+[data-slide="20"] .large-title {
     font-size: clamp(2.8rem, 5.5vw, 4.8rem);
 }
 
@@ -3065,16 +3065,16 @@ body {
 }
 
 /* Slide 4: Fit headline + logos + tagline without cropping */
-[data-slide="5"] .large-title {
+[data-slide="6"] .large-title {
     font-size: clamp(2rem, 4vw, 3.2rem);
     margin-bottom: 1rem;
 }
 
-[data-slide="5"] .partner-logos-image {
+[data-slide="6"] .partner-logos-image {
     max-height: 45vh;
 }
 
-[data-slide="5"] .tagline {
+[data-slide="6"] .tagline {
     font-size: clamp(1rem, 2vw, 1.4rem);
     margin-top: 1rem;
 }
@@ -3085,7 +3085,7 @@ body {
 }
 
 /* Slide 3: Align team label with photo grid */
-[data-slide="4"] .team-section .section-label {
+[data-slide="5"] .team-section .section-label {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
@@ -3104,74 +3104,74 @@ body {
 }
 
 /* Slide 10: Show full photo without cropping */
-[data-slide="10"] .slide-photo {
+[data-slide="11"] .slide-photo {
     object-fit: contain;
 }
 
 /* Slide 11: Tighten text spacing */
-[data-slide="11"] .text-side-right .program-label {
+[data-slide="12"] .text-side-right .program-label {
     margin-bottom: 1rem;
 }
 
-[data-slide="11"] .event-highlights {
+[data-slide="12"] .event-highlights {
     padding: 1rem;
 }
 
 /* Slide 13: Compact the 4 verbose bullet points */
-[data-slide="14"] .event-highlights {
+[data-slide="15"] .event-highlights {
     padding: 0.75rem;
 }
 
-[data-slide="14"] .text-side-right .highlight-list li {
+[data-slide="15"] .text-side-right .highlight-list li {
     font-size: 1rem;
     line-height: 1.45;
 }
 
-[data-slide="14"] .text-side-right .highlight-list {
+[data-slide="15"] .text-side-right .highlight-list {
     gap: 0.75rem;
 }
 
-[data-slide="14"] .text-side-right .program-label {
+[data-slide="15"] .text-side-right .program-label {
     margin-bottom: 1rem;
 }
 
 /* Slide 17: Shrink sponsor logos and reduce gaps */
-[data-slide="18"] .sponsor-logo {
+[data-slide="19"] .sponsor-logo {
     height: 60px;
 }
 
-[data-slide="18"] .photo-feature-slide {
+[data-slide="19"] .photo-feature-slide {
     gap: 1.5rem;
 }
 
-[data-slide="18"] .sponsor-logos-row {
+[data-slide="19"] .sponsor-logos-row {
     margin-top: 1rem;
 }
 
 /* Slide 20: Scale city images with viewport */
-[data-slide="21"] .city-image {
+[data-slide="22"] .city-image {
     height: clamp(120px, 18vh, 180px);
 }
 
-[data-slide="21"] .nordic-description-box {
+[data-slide="22"] .nordic-description-box {
     padding: 0.75rem 1.5rem;
 }
 
-[data-slide="21"] .nordic-expansion-slide {
+[data-slide="22"] .nordic-expansion-slide {
     padding-top: 1rem;
     gap: 1rem;
 }
 
 /* Slide 21: Scale summit logo with viewport */
-[data-slide="22"] .summit-logo-img-large {
+[data-slide="23"] .summit-logo-img-large {
     height: clamp(120px, 22vh, 250px);
 }
 
-[data-slide="22"] .summit-logo-row {
+[data-slide="23"] .summit-logo-row {
     margin: 0.5rem 0;
 }
 
-[data-slide="22"].slide .summit-slide {
+[data-slide="23"].slide .summit-slide {
     justify-content: center;
     padding-top: 2rem !important;
     gap: 1.5rem;
@@ -3243,7 +3243,7 @@ body {
 }
 
 /* Totalforsvar slide */
-[data-slide="24"] .slide-content {
+[data-slide="25"] .slide-content {
     max-width: 1600px;
     margin: 0 auto;
     padding: 3rem 5rem;
@@ -3327,16 +3327,16 @@ body {
 }
 
 /* Slide 23: Student Accelerator - fit content */
-[data-slide="23"] .new-badge {
+[data-slide="24"] .new-badge {
     margin-bottom: 0.8rem;
 }
 
-[data-slide="23"] .large-title {
+[data-slide="24"] .large-title {
     font-size: clamp(2rem, 4vw, 3.2rem);
     line-height: 1.05;
 }
 
-[data-slide="23"] .text-side-right {
+[data-slide="24"] .text-side-right {
     padding: 1.5rem 2rem;
     display: flex;
     flex-direction: column;
@@ -3344,14 +3344,14 @@ body {
     gap: 0.3rem;
 }
 
-[data-slide="23"] .upcoming-callout {
+[data-slide="24"] .upcoming-callout {
     margin-top: 1rem;
     padding: 0.7rem 1rem;
     font-size: 1rem;
     max-width: 100%;
 }
 
-[data-slide="23"] .partner-logos-inline {
+[data-slide="24"] .partner-logos-inline {
     margin-top: 0.3rem;
 }
 
@@ -3366,7 +3366,8 @@ body {
 
 [data-slide="32"] .closing-vertical .closing-logo {
     margin: 0 0 1.5rem 0;
-    max-height: 50px;
+    width: clamp(250px, 35vw, 400px);
+    max-height: none;
 }
 
 [data-slide="32"] .closing-vertical .tagline {
@@ -3421,31 +3422,31 @@ body {
 }
 
 /* Slide 28: Hive Autonomy case study */
-[data-slide="28"] .slide-content {
+[data-slide="29"] .slide-content {
     padding-top: 2rem;
     padding-bottom: 2rem;
     gap: 0;
 }
 
-[data-slide="28"] .section-label {
+[data-slide="29"] .section-label {
     margin-bottom: 1rem;
 }
 
-[data-slide="28"] .logo-partnership {
+[data-slide="29"] .logo-partnership {
     margin-top: 0;
     margin-bottom: 1.2rem;
     gap: 2rem;
 }
 
-[data-slide="28"] .partner-logo-large {
+[data-slide="29"] .partner-logo-large {
     height: 80px;
 }
 
-[data-slide="28"] .plus-sign {
+[data-slide="29"] .plus-sign {
     font-size: 2.5rem;
 }
 
-[data-slide="28"] .hive-photo-grid {
+[data-slide="29"] .hive-photo-grid {
     display: grid;
     grid-template-columns: 1.8fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -3457,18 +3458,18 @@ body {
     overflow: hidden;
 }
 
-[data-slide="28"] .hive-photo-main {
+[data-slide="29"] .hive-photo-main {
     grid-row: 1 / 3;
     border-radius: 10px;
     overflow: hidden;
 }
 
-[data-slide="28"] .hive-photo-small {
+[data-slide="29"] .hive-photo-small {
     border-radius: 10px;
     overflow: hidden;
 }
 
-[data-slide="28"] .hive-photo-grid img {
+[data-slide="29"] .hive-photo-grid img {
     width: 100%;
     height: 100%;
     object-fit: cover;
