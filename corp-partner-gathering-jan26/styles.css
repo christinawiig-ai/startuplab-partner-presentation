@@ -3162,16 +3162,62 @@ body {
 }
 
 /* Slide 16: Nordic AI Gold Rush - sponsor logos and gaps */
-[data-slide="16"] .sponsor-logo {
-    height: 60px;
-}
-
 [data-slide="16"] .photo-feature-slide {
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
-[data-slide="16"] .sponsor-logos-row {
-    margin-top: 1rem;
+[data-slide="16"] .speaker-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 1100px;
+}
+
+[data-slide="16"] .speaker-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+[data-slide="16"] .speaker-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    align-self: flex-start;
+    margin-bottom: 0.25rem;
+}
+
+[data-slide="16"] .speaker-logo.light-bg-logo {
+    background: transparent;
+}
+
+[data-slide="16"] .speaker-topic {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+[data-slide="16"] .speaker-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--startup-white);
+    margin: 0;
+}
+
+[data-slide="16"] .speaker-role {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+[data-slide="16"] .info-btn {
+    margin-top: 0.25rem;
 }
 
 .info-btn {
