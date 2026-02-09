@@ -3211,11 +3211,6 @@ body {
     bottom: 2rem;
     right: 2rem;
     z-index: 10;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.video-slide:hover .video-overlay-controls {
     opacity: 1;
 }
 
@@ -3492,11 +3487,11 @@ body {
 
 /* Mute/Unmute button */
 .video-mute-btn {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 51, 51, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     color: var(--startup-white);
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -3504,6 +3499,7 @@ body {
     justify-content: center;
     transition: all 0.2s ease;
     backdrop-filter: blur(10px);
+    animation: pulse-mute 2s ease-in-out 3;
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -3524,8 +3520,13 @@ body {
 }
 
 .video-mute-btn svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
+}
+
+@keyframes pulse-mute {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.6); }
+    50% { box-shadow: 0 0 0 12px rgba(255, 51, 51, 0); }
 }
 
 .video-overlay-controls {
