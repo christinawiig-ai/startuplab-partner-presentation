@@ -2831,7 +2831,7 @@ body {
 
 /* Slide 1: Hero - pull content left, align logo with text */
 [data-slide="1"] .slide-content {
-    max-width: none;
+    max-width: 1600px;
     padding-left: 4rem;
     padding-right: 4rem;
 }
@@ -2852,7 +2852,7 @@ body {
 
 /* Slide 24: Vibecoding - pull text left */
 [data-slide="25"] .slide-content {
-    max-width: none;
+    max-width: 1600px;
     padding-left: 4rem;
     padding-right: 4rem;
 }
