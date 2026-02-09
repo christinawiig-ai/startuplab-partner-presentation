@@ -3418,7 +3418,31 @@ body {
     margin-top: 0.5rem;
 }
 
-/* Slide 28: Hive Autonomy photo grid */
+/* Slide 28: Hive Autonomy case study */
+[data-slide="28"] .slide-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    gap: 0;
+}
+
+[data-slide="28"] .section-label {
+    margin-bottom: 1rem;
+}
+
+[data-slide="28"] .logo-partnership {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    gap: 2rem;
+}
+
+[data-slide="28"] .partner-logo-large {
+    height: 80px;
+}
+
+[data-slide="28"] .plus-sign {
+    font-size: 2.5rem;
+}
+
 [data-slide="28"] .hive-photo-grid {
     display: grid;
     grid-template-columns: 1.8fr 1fr;
@@ -3426,7 +3450,7 @@ body {
     gap: 0.6rem;
     width: 100%;
     max-width: 900px;
-    height: 340px;
+    height: 380px;
     border-radius: 10px;
     overflow: hidden;
 }
