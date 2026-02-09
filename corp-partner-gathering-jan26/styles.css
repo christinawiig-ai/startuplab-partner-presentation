@@ -3320,6 +3320,35 @@ body {
     width: auto;
 }
 
+/* Slide 23: Student Accelerator - fit content */
+[data-slide="23"] .new-badge {
+    margin-bottom: 0.8rem;
+}
+
+[data-slide="23"] .large-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.05;
+}
+
+[data-slide="23"] .text-side-right {
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3rem;
+}
+
+[data-slide="23"] .upcoming-callout {
+    margin-top: 1rem;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    max-width: 100%;
+}
+
+[data-slide="23"] .partner-logos-inline {
+    margin-top: 0.3rem;
+}
+
 /* EiR merged slide */
 .eir-areas-grid {
     display: flex;
