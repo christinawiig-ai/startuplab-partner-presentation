@@ -1180,6 +1180,24 @@ body {
     white-space: nowrap;
 }
 
+.board-names-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.4rem 0.5rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--startup-white);
+    font-weight: 500;
+}
+
+.board-names-grid span {
+    white-space: nowrap;
+}
+
+.board-names-grid .front-row {
+    padding-left: 1rem;
+}
+
 /* Team Photos Grid */
 .team-photos-grid {
     display: grid;
