@@ -3230,6 +3230,70 @@ body {
     margin-left: 0;
 }
 
+/* Totalforsvar slide */
+.totalforsvar-photo-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 1rem;
+}
+
+.totalforsvar-photo-side .slide-photo {
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.totalforsvar-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.totalforsvar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.tf-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+}
+
+.tf-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.totalforsvar-partner {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.totalforsvar-partner .partner-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+.kjeller-logo {
+    height: 32px;
+    width: auto;
+}
+
 /* Mute/Unmute button */
 .video-mute-btn {
     background: rgba(0, 0, 0, 0.6);
