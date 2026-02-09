@@ -639,6 +639,10 @@ body {
     opacity: 1;
 }
 
+[data-slide="21"] .nordic-logo img.maria01-logo {
+    max-height: 60px;
+}
+
 .nordic-logo.tba {
     color: var(--startup-red);
     font-weight: 700;
