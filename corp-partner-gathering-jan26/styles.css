@@ -3364,12 +3364,18 @@ body {
 }
 
 /* Slide 32: Final slide - vertical layout, left aligned */
+[data-slide="32"] .contact-slide {
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 8%;
+}
+
 [data-slide="32"] .closing-vertical {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap: 0;
-    padding-left: 8%;
 }
 
 [data-slide="32"] .closing-vertical .closing-logo {
