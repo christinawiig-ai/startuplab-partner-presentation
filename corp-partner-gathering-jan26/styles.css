@@ -1657,12 +1657,12 @@ body {
 }
 
 .event-item {
-    padding: 1rem 1.25rem;
+    padding: 0.85rem 1rem;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     font-weight: 500;
     white-space: nowrap;
-    font-size: 0.95rem;
+    font-size: clamp(0.75rem, 1.2vw, 0.95rem);
     transition: all 0.2s var(--transition-smooth);
 }
 
