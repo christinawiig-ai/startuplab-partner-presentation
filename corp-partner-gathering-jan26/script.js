@@ -175,9 +175,9 @@ class StartupLabPresentation {
             }
         }
 
-        const partyVideo = document.querySelector('[data-slide="30"] .thankyou-video');
+        const partyVideo = document.querySelector('[data-slide="31"] .thankyou-video');
         if (partyVideo) {
-            if (slideNumber === 30) {
+            if (slideNumber === 31) {
                 partyVideo.play().catch(() => {});
             } else {
                 partyVideo.pause();

@@ -3436,31 +3436,31 @@ body {
 }
 
 /* Slide 28: Hive Autonomy case study */
-[data-slide="29"] .slide-content {
+[data-slide="30"] .slide-content {
     padding-top: 2rem;
     padding-bottom: 2rem;
     gap: 0;
 }
 
-[data-slide="29"] .section-label {
+[data-slide="30"] .section-label {
     margin-bottom: 1rem;
 }
 
-[data-slide="29"] .logo-partnership {
+[data-slide="30"] .logo-partnership {
     margin-top: 0;
     margin-bottom: 1.2rem;
     gap: 2rem;
 }
 
-[data-slide="29"] .partner-logo-large {
+[data-slide="30"] .partner-logo-large {
     height: 80px;
 }
 
-[data-slide="29"] .plus-sign {
+[data-slide="30"] .plus-sign {
     font-size: 2.5rem;
 }
 
-[data-slide="29"] .hive-photo-grid {
+[data-slide="30"] .hive-photo-grid {
     display: grid;
     grid-template-columns: 1.8fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -3472,18 +3472,18 @@ body {
     overflow: hidden;
 }
 
-[data-slide="29"] .hive-photo-main {
+[data-slide="30"] .hive-photo-main {
     grid-row: 1 / 3;
     border-radius: 10px;
     overflow: hidden;
 }
 
-[data-slide="29"] .hive-photo-small {
+[data-slide="30"] .hive-photo-small {
     border-radius: 10px;
     overflow: hidden;
 }
 
-[data-slide="29"] .hive-photo-grid img {
+[data-slide="30"] .hive-photo-grid img {
     width: 100%;
     height: 100%;
     object-fit: cover;
