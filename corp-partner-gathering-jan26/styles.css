@@ -3161,8 +3161,13 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Slide 16: Nordic AI Gold Rush - sponsor logos and gaps */
+/* Slide 16: Nordic AI Gold Rush */
 [data-slide="16"] .photo-feature-slide {
+    gap: 0.75rem;
+}
+
+[data-slide="16"] .photo-grid-3 {
+    max-width: 1050px;
     gap: 1rem;
 }
 
@@ -3171,7 +3176,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1050px;
 }
 
 [data-slide="16"] .speaker-card {
@@ -3190,6 +3195,13 @@ body {
     object-fit: contain;
     align-self: flex-start;
     margin-bottom: 0.25rem;
+}
+
+[data-slide="16"] .speaker-logo.nscale-logo {
+    height: 50px;
+    filter: brightness(0) invert(1);
+    background: transparent;
+    mix-blend-mode: screen;
 }
 
 [data-slide="16"] .speaker-logo.light-bg-logo {
