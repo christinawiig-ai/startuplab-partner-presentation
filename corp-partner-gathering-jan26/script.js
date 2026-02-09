@@ -175,6 +175,15 @@ class StartupLabPresentation {
             }
         }
 
+        const partyVideo = document.querySelector('[data-slide="29"] .thankyou-video');
+        if (partyVideo) {
+            if (slideNumber === 29) {
+                partyVideo.play().catch(() => {});
+            } else {
+                partyVideo.pause();
+            }
+        }
+
         // Update UI
         this.updateSlideCounter();
         this.updateProgressBar();
@@ -300,7 +309,7 @@ class StartupLabPresentation {
         document.querySelectorAll('.video-mute-btn').forEach(muteBtn => {
             muteBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const targetVideo = muteBtn.closest('.video-slide, .madlab-video-side')?.querySelector('video');
+                const targetVideo = muteBtn.closest('.video-slide, .madlab-video-side, .thankyou-video-container')?.querySelector('video');
                 if (!targetVideo) return;
 
                 targetVideo.muted = !targetVideo.muted;
