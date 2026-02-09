@@ -3320,6 +3320,30 @@ body {
     width: auto;
 }
 
+/* EiR merged slide */
+.eir-areas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
+}
+
+.eir-areas-grid .tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.eir-backgrounds {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
 /* Mute/Unmute button */
 .video-mute-btn {
     background: rgba(0, 0, 0, 0.6);
