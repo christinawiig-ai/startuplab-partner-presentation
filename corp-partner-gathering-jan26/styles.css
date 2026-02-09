@@ -2851,35 +2851,35 @@ body {
 }
 
 /* Slide 24: Vibecoding - pull text left */
-[data-slide="24"] .slide-content {
+[data-slide="25"] .slide-content {
     max-width: none;
     padding-left: 4rem;
     padding-right: 4rem;
 }
 
-[data-slide="24"] .text-side-left {
+[data-slide="25"] .text-side-left {
     text-align: left;
     padding-left: 0;
 }
 
-[data-slide="24"] .text-side-left .section-header,
-[data-slide="24"] .text-side-left .program-label,
-[data-slide="24"] .text-side-left .lead-text-large,
-[data-slide="24"] .text-side-left .lead-text {
+[data-slide="25"] .text-side-left .section-header,
+[data-slide="25"] .text-side-left .program-label,
+[data-slide="25"] .text-side-left .lead-text-large,
+[data-slide="25"] .text-side-left .lead-text {
     text-align: left;
 }
 
-[data-slide="24"] .event-highlights {
+[data-slide="25"] .event-highlights {
     padding: 0;
 }
 
-[data-slide="24"] .slide-quote {
+[data-slide="25"] .slide-quote {
     margin-top: 1.5rem;
     padding: 1rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-[data-slide="24"] .slide-quote blockquote {
+[data-slide="25"] .slide-quote blockquote {
     font-size: 0.95rem;
     font-style: italic;
     color: rgba(255, 255, 255, 0.75);
@@ -2887,7 +2887,7 @@ body {
     margin: 0;
 }
 
-[data-slide="24"] .slide-quote .quote-attribution {
+[data-slide="25"] .slide-quote .quote-attribution {
     margin-top: 0.5rem;
     font-size: 0.85rem;
     font-style: normal;
