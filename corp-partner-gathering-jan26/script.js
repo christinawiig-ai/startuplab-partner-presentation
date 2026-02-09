@@ -168,7 +168,7 @@ class StartupLabPresentation {
 
         const slideVideo = document.querySelector('[data-slide="27"] .slide-video');
         if (slideVideo) {
-            if (slideNumber === 26) {
+            if (slideNumber === 27) {
                 slideVideo.play().catch(() => {});
             } else {
                 slideVideo.pause();
@@ -177,7 +177,7 @@ class StartupLabPresentation {
 
         const partyVideo = document.querySelector('[data-slide="30"] .thankyou-video');
         if (partyVideo) {
-            if (slideNumber === 29) {
+            if (slideNumber === 30) {
                 partyVideo.play().catch(() => {});
             } else {
                 partyVideo.pause();
