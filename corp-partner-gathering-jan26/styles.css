@@ -3231,11 +3231,18 @@ body {
 }
 
 /* Totalforsvar slide */
+[data-slide="24"] .slide-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 3rem 5rem;
+}
+
 .totalforsvar-photo-side {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #000;
+    background: var(--startup-darker);
+    border-radius: 12px;
     padding: 1.5rem;
 }
 
