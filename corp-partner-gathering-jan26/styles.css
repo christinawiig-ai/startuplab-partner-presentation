@@ -1634,7 +1634,7 @@ body {
 /* Events Grid */
 .events-grid {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     gap: 0.8rem;
 }
 
