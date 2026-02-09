@@ -3165,6 +3165,21 @@ body {
     margin: 0.5rem 0;
 }
 
+[data-slide="22"].slide .summit-slide {
+    justify-content: flex-start;
+    padding-top: 3rem !important;
+    gap: 0;
+}
+
+[data-slide="22"] .summit-header {
+    margin-bottom: 0;
+}
+
+[data-slide="22"] .summit-cards {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 /* =============================================
    SLIDE 2: FULLSCREEN VIDEO SLIDE
    ============================================= */
