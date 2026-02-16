@@ -1,10 +1,276 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="refresh" content="0;url=/corp-partner-gathering-jan26/">
-    <title>Redirecting...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartupLab Presentation Template</title>
+    <link rel="stylesheet" href="template-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <p>Redirecting to <a href="/corp-partner-gathering-jan26/">presentation</a>...</p>
+    <!-- Navigation -->
+    <nav class="nav-controls">
+        <button class="nav-btn" onclick="previousSlide()">←</button>
+        <span class="slide-counter">1 / 10</span>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </nav>
+
+    <!-- Slide Container -->
+    <div class="slides-container">
+        
+        <!-- 1. Title Slide -->
+        <section class="slide slide--title active">
+            <div class="container">
+                <div class="title-content">
+                    <h1 class="hero-title">Empowering Tech Founders<br>To Go Further</h1>
+                    <p class="subtitle">StartupLab Partner Presentation</p>
+                    <div class="brand-mark">SL</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Section Divider -->
+        <section class="slide slide--divider">
+            <div class="container">
+                <div class="divider-content">
+                    <div class="divider-number">01</div>
+                    <h2 class="section-title">Partnership Overview</h2>
+                    <div class="divider-line"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Two-Column Content -->
+        <section class="slide slide--two-col">
+            <div class="container">
+                <div class="two-col-grid">
+                    <div class="col-left">
+                        <h2 class="heading">Building Norway's Next Unicorns</h2>
+                        <p class="body-text">StartupLab has been at the forefront of Norwegian tech entrepreneurship since 2012, supporting over 100 startups that have collectively raised more than €500M in funding.</p>
+                        <p class="body-text">Our unique combination of capital, community, and expertise creates an ecosystem where ambitious founders can scale globally from day one.</p>
+                        <ul class="feature-list">
+                            <li>€50M+ under management</li>
+                            <li>100+ portfolio companies</li>
+                            <li>7 industry-focused programs</li>
+                        </ul>
+                    </div>
+                    <div class="col-right">
+                        <div class="image-placeholder">
+                            <span>Visual Content</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. KPI Tiles -->
+        <section class="slide slide--kpi">
+            <div class="container">
+                <h2 class="section-heading">Impact & Results</h2>
+                <div class="kpi-grid">
+                    <div class="kpi-tile">
+                        <div class="kpi-number">€500M+</div>
+                        <div class="kpi-label">Total Funding Raised</div>
+                    </div>
+                    <div class="kpi-tile">
+                        <div class="kpi-number">100+</div>
+                        <div class="kpi-label">Portfolio Companies</div>
+                    </div>
+                    <div class="kpi-tile">
+                        <div class="kpi-number">85%</div>
+                        <div class="kpi-label">Survival Rate</div>
+                    </div>
+                    <div class="kpi-tile">
+                        <div class="kpi-number">2,500+</div>
+                        <div class="kpi-label">Jobs Created</div>
+                    </div>
+                    <div class="kpi-tile">
+                        <div class="kpi-number">7</div>
+                        <div class="kpi-label">Industry Programs</div>
+                    </div>
+                    <div class="kpi-tile">
+                        <div class="kpi-number">12</div>
+                        <div class="kpi-label">Years of Impact</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Startup Cards Grid -->
+        <section class="slide slide--startups">
+            <div class="container">
+                <h2 class="section-heading">Portfolio Highlights</h2>
+                <div class="startup-grid">
+                    <div class="startup-card">
+                        <div class="startup-logo">Company A</div>
+                        <h3 class="startup-name">TechCo</h3>
+                        <p class="startup-desc">AI-powered logistics platform</p>
+                        <div class="startup-meta">Series B • €25M</div>
+                    </div>
+                    <div class="startup-card">
+                        <div class="startup-logo">Company B</div>
+                        <h3 class="startup-name">HealthTech</h3>
+                        <p class="startup-desc">Digital health diagnostics</p>
+                        <div class="startup-meta">Series A • €12M</div>
+                    </div>
+                    <div class="startup-card">
+                        <div class="startup-logo">Company C</div>
+                        <h3 class="startup-name">FinSolutions</h3>
+                        <p class="startup-desc">Next-gen payment infrastructure</p>
+                        <div class="startup-meta">Series C • €45M</div>
+                    </div>
+                    <div class="startup-card">
+                        <div class="startup-logo">Company D</div>
+                        <h3 class="startup-name">GreenEnergy</h3>
+                        <p class="startup-desc">Renewable energy optimization</p>
+                        <div class="startup-meta">Series A • €18M</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Quote -->
+        <section class="slide slide--quote">
+            <div class="container">
+                <div class="quote-content">
+                    <div class="quote-mark">"</div>
+                    <blockquote class="quote-text">
+                        StartupLab didn't just provide funding – they gave us access to a network that transformed our trajectory. Their hands-on approach and industry expertise were instrumental in our international expansion.
+                    </blockquote>
+                    <div class="quote-author">
+                        <div class="author-name">Sarah Chen</div>
+                        <div class="author-title">CEO & Founder, TechCo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Timeline/Roadmap -->
+        <section class="slide slide--timeline">
+            <div class="container">
+                <h2 class="section-heading">Partnership Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Q1 2026</h3>
+                            <p class="timeline-desc">Initial partnership agreement and onboarding</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Q2 2026</h3>
+                            <p class="timeline-desc">First joint initiatives and startup introductions</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Q3 2026</h3>
+                            <p class="timeline-desc">Pilot programs and co-innovation projects</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Q4 2026</h3>
+                            <p class="timeline-desc">Scale successful initiatives and measure impact</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Team -->
+        <section class="slide slide--team">
+            <div class="container">
+                <h2 class="section-heading">Leadership Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo"></div>
+                        <h3 class="member-name">Kjetil Holmefjord</h3>
+                        <p class="member-role">CEO & Managing Partner</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo"></div>
+                        <h3 class="member-name">Christina Wiig</h3>
+                        <p class="member-role">Head of Corporate Partnerships</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo"></div>
+                        <h3 class="member-name">Name Here</h3>
+                        <p class="member-role">Partner, Energy & Mobility</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo"></div>
+                        <h3 class="member-name">Name Here</h3>
+                        <p class="member-role">Partner, FinTech & Data</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Section Divider (Example 2) -->
+        <section class="slide slide--divider">
+            <div class="container">
+                <div class="divider-content">
+                    <div class="divider-number">02</div>
+                    <h2 class="section-title">Next Steps</h2>
+                    <div class="divider-line"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Closing CTA -->
+        <section class="slide slide--cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Let's Build the Future Together</h2>
+                    <p class="cta-subtitle">Join Norway's leading tech ecosystem</p>
+                    <div class="cta-actions">
+                        <button class="btn btn--primary">Schedule Meeting</button>
+                        <button class="btn btn--secondary">Download Deck</button>
+                    </div>
+                    <div class="contact-info">
+                        <p>partnerships@startuplab.no</p>
+                        <p>+47 123 45 678</p>
+                        <p>startuplab.no</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Simple Navigation Script -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const slideCounter = document.querySelector('.slide-counter');
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+    </script>
 </body>
 </html>

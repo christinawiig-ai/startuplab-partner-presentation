@@ -3201,7 +3201,6 @@ body {
     height: 50px;
     filter: brightness(0) invert(1);
     background: transparent;
-    mix-blend-mode: screen;
 }
 
 [data-slide="16"] .speaker-logo.light-bg-logo {
@@ -3580,7 +3579,7 @@ body {
     gap: 0.6rem;
     width: 100%;
     max-width: 900px;
-    height: 380px;
+    height: clamp(280px, 45vh, 420px);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -3653,10 +3652,159 @@ body {
     gap: 0;
 }
 
+/* =============================================
+   RESPONSIVE FIXES — QA PASS
+   ============================================= */
+
+/* Two-column-photo: stack on tablet */
+@media (max-width: 1024px) {
+    .two-column-photo {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+
+    .photo-side {
+        height: auto;
+        max-height: 40vh;
+    }
+
+    .photo-side.stacked {
+        height: 30vh;
+    }
+
+    .text-side-right,
+    .text-side-left {
+        padding: 1rem;
+    }
+
+    .text-side-left {
+        order: 0;
+    }
+
+    /* Nordic cards: 3+2 layout on tablet */
+    .nordic-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Speaker grid: stack to 1 col on tablet */
+    [data-slide="16"] .speaker-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+
+    /* Summit cards: stack vertically */
+    .summit-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .summit-card {
+        max-width: 100%;
+    }
+
+    /* Totalforsvar grid: single column */
+    .totalforsvar-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Hive photo grid: smaller */
+    [data-slide="30"] .hive-photo-grid {
+        height: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .two-column-photo {
+        gap: 1rem;
+    }
+
+    .photo-side {
+        max-height: 30vh;
+    }
+
+    .photo-side.stacked {
+        height: 25vh;
+        flex-direction: column;
+    }
+
+    .nordic-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .nordic-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .nordic-header-row .summit-logo-part-large {
+        height: 120px;
+    }
+
+    .summit-card {
+        flex-direction: column;
+    }
+
+    .summit-card-img {
+        width: 100%;
+        min-width: auto;
+        height: 180px;
+    }
+
+    [data-slide="16"] .photo-grid-3 {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    [data-slide="16"] .grid-photo {
+        aspect-ratio: 16/9;
+    }
+
+    [data-slide="30"] .hive-photo-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    [data-slide="30"] .hive-photo-main {
+        grid-row: auto;
+    }
+
+    [data-slide="30"] .hive-photo-grid img {
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nordic-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-feature-slide {
+        gap: 1rem;
+    }
+
+    .feature-label-large {
+        font-size: 1rem;
+    }
+}
+
 /* Print / Export styles */
 @media print {
-    .presentation-nav, .progress-bar {
-        display: none;
+    .presentation-nav, .progress-bar,
+    .video-overlay-controls, .video-mute-btn,
+    .video-play-btn, .info-btn {
+        display: none !important;
+    }
+
+    body {
+        background: #fff;
+        color: #1a1a1a;
+        overflow: visible;
+    }
+
+    .presentation-container {
+        height: auto;
+        padding-top: 0;
     }
 
     .slide {
@@ -3665,7 +3813,146 @@ body {
         visibility: visible;
         transform: none;
         page-break-after: always;
+        page-break-inside: avoid;
         height: auto;
         min-height: 100vh;
+        top: 0;
+    }
+
+    .slide-content {
+        max-width: none;
+        padding: 3rem;
+    }
+
+    /* Invert dark backgrounds for print */
+    .dark-bg {
+        background: #fff !important;
+        color: #1a1a1a !important;
+    }
+
+    .dark-bg .large-title,
+    .dark-bg .massive-title,
+    .dark-bg .section-header,
+    .dark-bg .tagline,
+    .dark-bg h1, .dark-bg h2, .dark-bg h3,
+    .dark-bg .team-card .name,
+    .dark-bg .speaker-name,
+    .dark-bg .case-stat .value,
+    .dark-bg .impact-value,
+    .dark-bg .recap-label,
+    .dark-bg .case-insight strong,
+    .dark-bg .highlight-list li strong,
+    .dark-bg .upcoming-callout .date {
+        color: #1a1a1a !important;
+    }
+
+    .dark-bg .lead-text,
+    .dark-bg .subtitle,
+    .dark-bg .highlight-list li,
+    .dark-bg .process-list li,
+    .dark-bg .case-stat .label,
+    .dark-bg .speaker-topic,
+    .dark-bg .speaker-role,
+    .dark-bg .case-insight p,
+    .dark-bg .offering-details .description,
+    .dark-bg .event-date,
+    .dark-bg .eir-backgrounds,
+    .dark-bg .tf-item {
+        color: #555 !important;
+    }
+
+    .red-text {
+        color: #CC2929 !important;
+    }
+
+    /* Red section dividers keep color */
+    .red-bg {
+        background: var(--startup-red) !important;
+    }
+
+    .red-bg .section-title,
+    .red-bg .white-text,
+    .contact-slide .tagline {
+        color: #fff !important;
+    }
+
+    /* Logo inversion for print */
+    .dark-bg .inline-partner-logo,
+    .dark-bg .bottom-partner-logo-large,
+    .dark-bg .partner-logo,
+    .dark-bg .nordic-logo img,
+    .dark-bg .speaker-logo.nscale-logo {
+        filter: none !important;
+    }
+
+    .dark-bg .hero-logo,
+    .dark-bg .nav-logo,
+    .dark-bg .closing-logo {
+        filter: brightness(0) !important;
+    }
+
+    /* Video slides - show placeholder text */
+    .video-slide::after,
+    .madlab-video-side::after,
+    .thankyou-video-container::after {
+        content: '[Video]';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f0f0f0;
+        color: #999;
+        font-size: 1.5rem;
+        font-weight: 600;
+        border-radius: 12px;
+        min-height: 300px;
+    }
+
+    .fullscreen-video,
+    .slide-video,
+    .thankyou-video {
+        display: none !important;
+    }
+
+    /* Cards and elements - print-friendly borders */
+    .dark-bg .recap-card,
+    .dark-bg .speaker-card,
+    .dark-bg .tf-item,
+    .dark-bg .event-item.highlight,
+    .dark-bg .offering-details,
+    .dark-bg .case-stat.highlight,
+    .dark-bg .case-insight,
+    .dark-bg .upcoming-callout,
+    .dark-bg .nordic-card,
+    .dark-bg .summit-card,
+    .dark-bg .nordic-description-box {
+        background: #f7f7f7 !important;
+        border-color: #ddd !important;
+    }
+
+    .dark-bg .eir-areas-grid .tag,
+    .dark-bg .competence-areas .tag {
+        background: #f0f0f0 !important;
+        border-color: #ccc !important;
+        color: #333 !important;
+    }
+
+    /* Images - proper sizing */
+    .slide-photo, .grid-photo, .board-photo {
+        max-height: 40vh;
+    }
+
+    .partner-logos-image {
+        max-height: 35vh;
+    }
+
+    /* Team photos - show in color for print */
+    .team-photo {
+        filter: none;
+    }
+
+    /* Disable hover animations */
+    * {
+        transition: none !important;
+        animation: none !important;
     }
 }

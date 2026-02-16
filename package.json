@@ -1,0 +1,35 @@
+{
+  "name": "startuplab-presentation-template",
+  "version": "1.0.0",
+  "description": "StartupLab presentation template system with HTML and PowerPoint generators",
+  "main": "generate-ppt.js",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-ppt.js",
+    "build": "npm run generate",
+    "serve": "npx http-server . -p 8080 -o",
+    "dev": "npm run serve"
+  },
+  "keywords": [
+    "startuplab",
+    "presentation",
+    "template",
+    "powerpoint",
+    "pptx",
+    "scandinavian",
+    "design"
+  ],
+  "author": "StartupLab",
+  "license": "MIT",
+  "dependencies": {
+    "pptxgenjs": "^3.12.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
