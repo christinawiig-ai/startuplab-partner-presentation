@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Startuplab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           STARTUPLAB CORPORATE DECK
+           Master presentation, arrow key navigation
+           ============================================ */
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Regular.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Bold.woff2') format('woff2');
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Heavy.woff2') format('woff2');
+            font-weight: 900;
+        }
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Light.woff2') format('woff2');
+            font-weight: 300;
+        }
+
+        :root {
+            --sl-red: #FF3333;
+            --sl-red-soft: rgba(255, 51, 51, 0.1);
+            --sl-black: #131415;
+            --sl-deep-black: #050505;
+            --sl-dark-gray: #161819;
+            --sl-charcoal: #1a1a1a;
+            --sl-gray-800: #222222;
+            --sl-gray-200: #e5e5e5;
+            --sl-gray-100: #f5f5f5;
+            --sl-off-white: #f7f7f7;
+            --sl-white: #ffffff;
+            --sl-muted: #9ba1a5;
+            --sl-pink: #ffe5ea;
+            --sl-blue: #1c64ff;
+
+            --font-display: 'Replica LL', 'Inter', -apple-system, sans-serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--sl-deep-black);
+            color: var(--sl-white);
+            overflow: hidden;
+            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* ============================================
+           SLIDE SYSTEM
+           ============================================ */
+        .slide {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0; left: 0;
+            display: none;
+            overflow: hidden;
+        }
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-inner {
+            width: 100%;
+            height: 100vh;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        /* Backgrounds */
+        .bg-dark { background: linear-gradient(135deg, var(--sl-deep-black) 0%, var(--sl-black) 100%); color: var(--sl-white); }
+        .bg-black { background: var(--sl-black); color: var(--sl-white); }
+        .bg-white { background: var(--sl-white); color: var(--sl-black); }
+        .bg-light { background: var(--sl-off-white); color: var(--sl-black); }
+        .bg-red { background: linear-gradient(135deg, #FF3333 0%, #e62e2e 100%); color: var(--sl-white); }
+        .bg-red-dark { background: linear-gradient(135deg, #cc2929 0%, #991f1f 100%); color: var(--sl-white); }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        .t-hero {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+        }
+        .t-large {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .t-medium {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+        .t-section {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 3.5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .t-body {
+            font-size: clamp(1rem, 1.2vw, 1.25rem);
+            line-height: 1.6;
+        }
+        .t-small {
+            font-size: clamp(0.85rem, 1vw, 1rem);
+            line-height: 1.5;
+        }
+        .t-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--sl-red);
+        }
+        .t-red { color: var(--sl-red); }
+        .t-muted { color: var(--sl-muted); }
+        .t-white { color: var(--sl-white); }
+
+        /* ============================================
+           LAYOUT HELPERS
+           ============================================ */
+        .flex-col { display: flex; flex-direction: column; }
+        .flex-row { display: flex; flex-direction: row; }
+        .gap-sm { gap: 0.75rem; }
+        .gap-md { gap: 1.5rem; }
+        .gap-lg { gap: 2.5rem; }
+        .gap-xl { gap: 4rem; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .flex-1 { flex: 1; }
+        .mb-sm { margin-bottom: 0.75rem; }
+        .mb-md { margin-bottom: 1.5rem; }
+        .mb-lg { margin-bottom: 2.5rem; }
+        .mb-xl { margin-bottom: 4rem; }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            height: 100%;
+        }
+        .two-col-wide {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 4rem;
+            align-items: center;
+            height: 100%;
+        }
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        /* ============================================
+           COMPONENTS
+           ============================================ */
+        .stat-block {
+            text-align: left;
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--sl-red);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .bg-red .stat-number,
+        .bg-red-dark .stat-number { color: var(--sl-white); }
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            position: relative;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 14px; height: 14px;
+            border-top: 2px solid var(--sl-red);
+            border-left: 2px solid var(--sl-red);
+        }
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 14px; height: 14px;
+            border-bottom: 2px solid var(--sl-red);
+            border-right: 2px solid var(--sl-red);
+        }
+
+        .card-light {
+            background: var(--sl-white);
+            border: 1px solid var(--sl-gray-200);
+            padding: 1.5rem;
+            border-radius: 2px;
+        }
+
+        .red-line {
+            width: 60px;
+            height: 3px;
+            background: var(--sl-red);
+            margin-bottom: 1.5rem;
+        }
+        .bg-red .red-line { background: var(--sl-white); }
+
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+        }
+        .bullet-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            line-height: 1.5;
+        }
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 6px;
+            height: 6px;
+            background: var(--sl-red);
+        }
+        .bg-red .bullet-list li::before { background: var(--sl-white); }
+
+        .case-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--sl-red-soft);
+            color: var(--sl-red);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bg-dark .case-tag {
+            background: rgba(255, 51, 51, 0.2);
+            color: #ff6666;
+        }
+        .bg-red .case-tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--sl-white);
+        }
+
+        .img-container {
+            width: 100%;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .logo-wall {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem 2rem;
+            align-items: center;
+        }
+        .logo-wall .corp-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.3vw, 1.2rem);
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .logo-wall .corp-name:hover { opacity: 1; }
+
+        .quote-block {
+            border-left: 3px solid var(--sl-red);
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .quote-text {
+            font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .quote-attr {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--sl-red);
+        }
+
+        /* Process steps */
+        .process-steps {
+            display: flex;
+            gap: 0;
+            margin: 1.5rem 0;
+        }
+        .process-step {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 51, 51, 0.08);
+            border-right: 2px solid var(--sl-red);
+            position: relative;
+        }
+        .process-step:last-child { border-right: none; }
+        .process-step .step-num {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--sl-red);
+            margin-bottom: 0.25rem;
+        }
+        .process-step .step-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .bg-dark .process-step { background: rgba(255, 51, 51, 0.12); }
+
+        /* Section divider */
+        .section-divider {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100%;
+            padding: 0;
+        }
+        .section-divider .t-label { margin-bottom: 1rem; }
+
+        /* Formats grid */
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+        .format-card {
+            padding: 1.25rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: background 0.3s;
+        }
+        .format-card:hover { background: rgba(255, 255, 255, 0.1); }
+        .format-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .format-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Red accent circle for title slide */
+        .accent-circle {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 51, 51, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            margin: 2rem 0;
+        }
+        .timeline-item {
+            flex: 1;
+            padding: 1.25rem;
+            border-left: 2px solid rgba(255, 51, 51, 0.3);
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 1.25rem;
+            width: 8px;
+            height: 8px;
+            background: var(--sl-red);
+            border-radius: 50%;
+        }
+        .timeline-year {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: var(--sl-red);
+            margin-bottom: 0.5rem;
+        }
+        .timeline-text {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0.85;
+        }
+
+        /* Fade in children */
+        .slide.active .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        .slide.active .fade-up:nth-child(1) { animation-delay: 0.05s; }
+        .slide.active .fade-up:nth-child(2) { animation-delay: 0.15s; }
+        .slide.active .fade-up:nth-child(3) { animation-delay: 0.25s; }
+        .slide.active .fade-up:nth-child(4) { animation-delay: 0.35s; }
+        .slide.active .fade-up:nth-child(5) { animation-delay: 0.45s; }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           FIXED LOGO
+           ============================================ */
+        .logo-fixed {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 90;
+            opacity: 0.9;
+            width: 110px;
+        }
+        .logo-fixed svg { width: 100%; height: auto; }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav-bar {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 4px;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 4px;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+        .nav-btn:hover { color: var(--sl-white); }
+        .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+        .nav-counter {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            min-width: 50px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+        .progress-dots {
+            display: flex;
+            gap: 3px;
+        }
+        .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transition: all 0.3s;
+        }
+        .dot.active {
+            background: var(--sl-red);
+            transform: scale(1.5);
+        }
+        .dot.section-start {
+            margin-left: 4px;
+        }
+
+        /* ============================================
+           SECTION NAV BAR (top, hover-triggered)
+           ============================================ */
+        .section-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.92);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .section-nav-trigger {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 20px;
+            z-index: 998;
+        }
+        .section-nav-trigger:hover + .section-nav,
+        .section-nav:hover {
+            transform: translateY(0);
+        }
+        .section-nav-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.4rem 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .section-nav-btn:hover {
+            background: var(--sl-red);
+            border-color: var(--sl-red);
+            color: white;
+        }
+        .section-nav-btn.active {
+            background: rgba(255,51,51,0.2);
+            border-color: var(--sl-red);
+            color: var(--sl-red);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1200px) {
+            .slide-inner { padding: 40px 50px; }
+            .two-col, .two-col-wide { grid-template-columns: 1fr; gap: 2rem; }
+            .format-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide-inner { padding: 24px 30px; }
+            .three-col { grid-template-columns: 1fr; }
+            .format-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-steps { flex-direction: column; }
+            .timeline { flex-direction: column; }
+        }
+
+        /* Print styles */
+        @media print {
+            .nav-bar, .logo-fixed, .section-nav, .section-nav-trigger { display: none; }
+            .slide { display: flex !important; position: relative !important; page-break-after: always; height: 100vh; }
+            .slide.active { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- FIXED LOGO (white for dark, switches) -->
+    <div class="logo-fixed" id="logo-container">
+        <svg viewBox="0 0 371.47 195.18" xmlns="http://www.w3.org/2000/svg" id="sl-logo">
+            <g id="logo-paths">
+                <path d="M65.01,92.69c-12.87,0-18.67-6.44-18.67-14.81l0.64-0.64h7.72l0.64,0.64c0,4.51,2.57,7.08,10.3,7.08c5.79,0,9.01-1.93,9.01-5.79c0-4.51-2.57-5.79-11.59-7.08c-9.01-1.29-16.09-4.51-16.09-13.52c0-6.44,5.15-12.23,17.38-12.23c12.23,0,17.38,5.79,17.38,13.52l-0.64,0.64h-7.72l-0.64-0.64c0-3.86-1.93-5.79-9.01-5.79C57.93,54.07,56,56,56,58.58c0,3.86,2.57,5.15,11.59,6.44c9.01,1.29,16.09,5.15,16.09,14.16C83.68,86.26,78.53,92.69,65.01,92.69z"/>
+                <path d="M121.62,54.71h-12.87l-0.64,0.64V91.4l-0.64,0.64h-7.72l-0.64-0.64V55.36l-0.64-0.64H85.57l-0.64-0.64v-6.44l0.64-0.64h36.05l0.64,0.64v6.44L121.62,54.71z"/>
+                <path d="M158.01,92.05h-5.79l-0.64-0.64l-3.22-8.37l-1.29-0.64h-16.09l-1.29,0.64l-3.22,8.37l-0.64,0.64h-5.79l-0.64-0.64v-6.44l14.8-37.33l0.64-0.64h8.37l0.64,0.64l14.81,37.33v6.44L158.01,92.05z M139.35,58.58h-0.64l-5.79,15.45l0.64,0.64h10.94l0.64-0.64L139.35,58.58z"/>
+                <path d="M79.17,148.84H51.2l-0.64-0.64v-43.77l0.64-0.64h7.72l0.64,0.64v36.05l0.64,0.64h18.95l0.64,0.64v6.44L79.17,148.84z"/>
+                <path d="M122.61,148.84h-5.79l-0.64-0.64l-3.22-8.37l-1.29-0.64H95.58l-1.29,0.64l-3.22,8.37l-0.64,0.64h-5.79l-0.64-0.64v-6.44l14.81-37.33l0.64-0.64h8.37l0.64,0.64l14.81,37.33v6.44L122.61,148.84z M103.94,115.36h-0.64l-5.79,15.45l0.64,0.64h10.94l0.64-0.64L103.94,115.36z"/>
+                <path d="M150.26,148.84h-21.89l-0.64-0.64v-43.77l0.64-0.64h20.6c6.44,0,12.87,3.22,12.87,11.59c0,4.51-1.93,8.37-6.44,9.66v0.64c5.15,1.29,7.72,5.15,7.72,10.94C163.13,145.62,156.7,148.84,150.26,148.84z M147.68,111.5h-10.3l-0.64,0.64v9.01l0.64,0.64h10.3c3.86,0,5.15-2.57,5.15-5.15C152.83,113.43,151.55,111.5,147.68,111.5z M147.68,129.52h-10.3l-0.64,0.64v10.3l0.64,0.64h10.3c4.51,0,6.44-1.93,6.44-5.79C154.12,131.46,152.19,129.52,147.68,129.52z"/>
+                <path d="M190.81,73.38v0.64l8.37,10.94v6.44l-0.64,0.64h-3.86l-1.29-0.64l-12.87-16.74l-1.29-0.64h-6.44l-0.64,0.64V91.4l-0.64,0.64h-7.72l-0.64-0.64V47.63l0.64-0.64h21.24c9.01,0,15.45,4.51,15.45,13.52C200.47,67.59,195.96,72.09,190.81,73.38z M185.02,54.71h-12.23l-0.64,0.64v10.3l0.64,0.64h12.23c3.86,0,6.44-1.29,6.44-5.79C191.46,56,188.88,54.71,185.02,54.71z"/>
+                <path d="M240.35,54.71h-12.87l-0.64,0.64V91.4l-0.64,0.64h-7.72l-0.64-0.64V55.36l-0.64-0.64H204.3l-0.64-0.64v-6.44l0.64-0.64h36.05l0.64,0.64v6.44L240.35,54.71z"/>
+                <path d="M281.72,74.67c0,11.59-6.44,18.02-18.02,18.02c-11.59,0-18.02-6.44-18.02-18.02V47.63l0.64-0.64h7.72l0.64,0.64v27.04c0,6.44,2.57,10.3,9.01,10.3c6.44,0,9.01-3.86,9.01-10.3V47.63l0.64-0.64h7.72l0.64,0.64V74.67z"/>
+                <path d="M309.68,74.03h-12.23l-0.64,0.64V91.4l-0.64,0.64h-7.73l-0.64-0.64V47.63l0.64-0.64h21.24c9.01,0,15.45,4.51,15.45,13.52C325.13,69.52,318.69,74.03,309.68,74.03z M309.68,54.71h-12.23l-0.64,0.64v10.3l0.64,0.64h12.23c3.86,0,6.44-1.29,6.44-5.79C316.12,56,313.54,54.71,309.68,54.71z"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- SECTION NAVIGATION (hover top edge to reveal) -->
+    <div class="section-nav-trigger"></div>
+    <div class="section-nav" id="section-nav">
+        <button class="section-nav-btn" data-slide="0">Intro</button>
+        <button class="section-nav-btn" data-slide="5">Formats</button>
+        <button class="section-nav-btn" data-slide="8">MEET:Corp</button>
+        <button class="section-nav-btn" data-slide="10">Industry</button>
+        <button class="section-nav-btn" data-slide="14">Summit</button>
+        <button class="section-nav-btn" data-slide="16">CIN</button>
+        <button class="section-nav-btn" data-slide="17">Startups</button>
+        <button class="section-nav-btn" data-slide="20">Corporates</button>
+        <button class="section-nav-btn" data-slide="22">Foundation</button>
+        <button class="section-nav-btn" data-slide="24">Bank</button>
+        <button class="section-nav-btn" data-slide="38">Close</button>
+    </div>
+
+    <div class="presentation">
+
+        <!-- =============================================
+             SLIDE 1: TITLE
+             ============================================= -->
+        <div class="slide active bg-dark" data-logo="white">
+            <div class="accent-circle" style="top: -100px; right: -100px;"></div>
+            <div class="accent-circle" style="bottom: -150px; left: -50px; width: 300px; height: 300px;"></div>
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <div class="red-line" style="width: 80px; height: 4px; margin-bottom: 2rem;"></div>
+                </div>
+                <h1 class="t-hero fade-up" style="margin-bottom: 1.5rem;">Helping corporates<br>stay ahead in a world<br>that <span class="t-red">won't wait</span></h1>
+                <p class="t-body fade-up" style="opacity: 0.6; max-width: 500px;">Norway's leading tech incubator and innovation hub. 13+ years of building the startup ecosystem.</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 2: SHARED VISION
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Shared Vision</p>
+                </div>
+                <h2 class="t-hero fade-up" style="margin-bottom: 2rem;">Nordic startups<br>need to <span class="t-red">succeed</span></h2>
+                <p class="t-body fade-up" style="max-width: 600px; opacity: 0.8; margin-bottom: 1.5rem;">This has been our mission for 13+ years. We share Ignite's conviction that startups and corporates need better bridges.</p>
+                <p class="t-body fade-up" style="max-width: 600px; opacity: 0.6;">The question is not whether to act, but how to build on what already works.</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 2B: WHY OPEN INNOVATION
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">The Case for Open Innovation</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 3rem;">Open innovation is no longer optional.<br>It's <span class="t-red">mission critical.</span></h2>
+
+                <!-- Stats grid -->
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin-bottom: 2.5rem;">
+                    <!-- Stat 1 -->
+                    <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-family: var(--font-display); font-weight: 900; font-size: 3.5rem; color: var(--sl-red); line-height: 1;">80%</div>
+                        <p class="t-small" style="opacity: 0.7; margin-top: 0.75rem;">of European corporates consider open innovation important or mission critical</p>
+                        <p style="font-size: 0.7rem; opacity: 0.35; margin-top: 0.5rem;">Up from 67% in 2023</p>
+                    </div>
+                    <!-- Stat 2 -->
+                    <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-family: var(--font-display); font-weight: 900; font-size: 3.5rem; color: var(--sl-red); line-height: 1;">7/10</div>
+                        <p class="t-small" style="opacity: 0.7; margin-top: 0.75rem;">view startup partnerships as vital to their AI strategy</p>
+                    </div>
+                    <!-- Stat 3 -->
+                    <div style="padding: 2rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-family: var(--font-display); font-weight: 900; font-size: 3.5rem; color: var(--sl-red); line-height: 1;">22%</div>
+                        <p class="t-small" style="opacity: 0.7; margin-top: 0.75rem;">have deployed generative AI at scale. Startups are critical for closing the gap.</p>
+                    </div>
+                </div>
+
+                <!-- Bottom bar: success trend + source -->
+                <div class="fade-up" style="display: flex; align-items: center; gap: 3rem; max-width: 1100px;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="padding: 0.75rem 1.5rem; background: rgba(255,51,51,0.1); border: 1px solid rgba(255,51,51,0.2);">
+                            <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;">58%</span>
+                            <span style="opacity: 0.5; margin: 0 0.5rem;">&rarr;</span>
+                            <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--sl-red);">65%</span>
+                        </div>
+                        <span style="font-size: 0.85rem; opacity: 0.6;">Open innovation success rates, 2023 to 2025</span>
+                    </div>
+                </div>
+                <p class="fade-up" style="font-size: 0.7rem; opacity: 0.3; margin-top: 1.5rem; max-width: 1100px;">Source: Sopra Steria Open Innovation Report 2025. 1,643 organisations across 12 European countries. In collaboration with INSEAD.</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 3: AT A GLANCE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Startuplab at a Glance</p>
+                </div>
+                <h2 class="t-large fade-up mb-lg">13 years of ecosystem building</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 900px;">
+                    <div class="stat-block">
+                        <div class="stat-number">13+</div>
+                        <div class="stat-label">Years</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number">4,000+</div>
+                        <div class="stat-label">Startups in network</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Matchmakings</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Pilots facilitated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 4: THE SWEDISH MODEL + WHY IT MATTERS
+             ============================================= -->
+        <div class="slide bg-red" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md" style="color: rgba(255,255,255,0.7);">Building on Existing Actors</p>
+                </div>
+                <h2 class="t-large fade-up mb-lg">The Swedish Model<br>and why it matters</h2>
+                <div class="fade-up two-col" style="height: auto; max-width: 1050px; gap: 3rem;">
+                    <div>
+                        <p class="t-body mb-md" style="opacity: 0.9;"><strong>Ignite Sweden was founded by Sting and established incubators</strong>, not imposed from outside. A consortium of 40+ actors under SISP.</p>
+                        <ul class="bullet-list" style="margin-top: 1rem;">
+                            <li>Existing actors have trust with startups and corporates</li>
+                            <li>13+ years of data, methodology and relationships</li>
+                            <li>Publicly funded duplicates distort the market</li>
+                        </ul>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <div style="background: rgba(0,0,0,0.25); padding: 2.5rem; border-left: 4px solid var(--sl-white);">
+                            <p style="font-family: var(--font-display); font-size: clamp(1.3rem, 2vw, 1.75rem); font-weight: 700; line-height: 1.4;">
+                                "For Ignite Norway to succeed, it must be built on and with the leading national actors."
+                            </p>
+                            <p style="font-size: 0.85rem; margin-top: 0.75rem; opacity: 0.7;">Maria Olofsson, VP Ecosystem, Ignite Sweden</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 6: MATCHMAKING FORMATS
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">What We Deliver</p>
+                </div>
+                <h2 class="t-medium fade-up" style="margin-bottom: 2.5rem;">Six formats for startup-corporate collaboration</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; width: 100%; max-width: 1100px;">
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">MEET:Corporate</div>
+                        <p class="t-small" style="opacity: 0.6;">Curated 1:1 sessions between startups and corporate decision-makers with mandate to act.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Summit</div>
+                        <p class="t-small" style="opacity: 0.6;">Annual 500+ attendee event with scouting, pitching and structured matchmaking. Nordic expansion 2026.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Industry Programs</div>
+                        <p class="t-small" style="opacity: 0.6;">Sector-specific programs (Construction, Energy) with dedicated scouting, events and international reach.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Corporate Innovation Network</div>
+                        <p class="t-small" style="opacity: 0.6;">Monthly "Hjemme hos" workshops on how to succeed working with startups. 50+ corporates.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Hackathons & Sprints</div>
+                        <p class="t-small" style="opacity: 0.6;">Intensive problem-solving around specific corporate challenges. Krafthack, Mobility, Circular Economy.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Corporate Readiness</div>
+                        <p class="t-small" style="opacity: 0.6;">Training, tools and procurement support for corporates new to startup collaboration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 7B: PARTNERSHIP JOURNEY MAP
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">How It Works</p>
+                </div>
+                <h2 class="t-medium fade-up" style="margin-bottom: 3rem;">From first contact to <span class="t-red">scaled partnership</span></h2>
+
+                <!-- Journey phases -->
+                <div class="fade-up" style="display: flex; align-items: flex-start; gap: 0; width: 100%; max-width: 1200px; position: relative;">
+
+                    <!-- Connecting line -->
+                    <div style="position: absolute; top: 28px; left: 60px; right: 60px; height: 2px; background: linear-gradient(90deg, var(--sl-red), rgba(255,51,51,0.3));"></div>
+
+                    <!-- Phase 1: ENTER -->
+                    <div style="flex: 1; text-align: center; position: relative; padding: 0 0.75rem;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1;">
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.25rem;">1</span>
+                        </div>
+                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Enter</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Summit</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">MEET:Corporate</span>
+                        </div>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">First exposure to startups and structured matchmaking</p>
+                    </div>
+
+                    <!-- Phase 2: EXPLORE -->
+                    <div style="flex: 1; text-align: center; position: relative; padding: 0 0.75rem;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1;">
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.25rem;">2</span>
+                        </div>
+                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Explore</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Industry Programs</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Workshops</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Hackathons</span>
+                        </div>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Sector-specific deep dives and hands-on problem solving</p>
+                    </div>
+
+                    <!-- Phase 3: DEEPEN -->
+                    <div style="flex: 1; text-align: center; position: relative; padding: 0 0.75rem;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1;">
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.25rem;">3</span>
+                        </div>
+                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Deepen</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">CIN Network</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Corporate Readiness</span>
+                        </div>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Learn from peers, build internal capability and processes</p>
+                    </div>
+
+                    <!-- Phase 4: SCALE -->
+                    <div style="flex: 1; text-align: center; position: relative; padding: 0 0.75rem;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1;">
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.25rem;">4</span>
+                        </div>
+                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Scale</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Pilot Design</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Multi-year Partnership</span>
+                        </div>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">From pilot to contract, with support for procurement and integration</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 8: SUCCESS CASE EVENTS & WORKSHOPS
+             ============================================= -->
+        <div class="slide bg-light" data-logo="red">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <!-- Left: Content -->
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Workshops & Events</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md">Success Case Events & Workshops</h2>
+                    <p class="t-body fade-up mb-lg" style="max-width: 500px; opacity: 0.8;">"How to Work with Startups" regular sessions for corporates, combined with live case presentations from successful collaborations.</p>
+                    <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span class="case-tag">Gjensidige x Mitigrate</span>
+                        <span class="case-tag">Fremtind x 7analytics</span>
+                        <span class="case-tag">Equinor x F3NICE</span>
+                        <span class="case-tag">OBOS x Parqio</span>
+                    </div>
+                </div>
+                <!-- Right: Two photos stacked -->
+                <div style="flex: 0 0 42%; display: flex; flex-direction: column; gap: 1rem; max-height: calc(100vh - 140px);">
+                    <div style="flex: 1; overflow: hidden;">
+                        <img src="img/img-cin-session.jpg" alt="CIN workshop session" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                    <div style="flex: 1; overflow: hidden;">
+                        <img src="img/img-workshop-statkraft.jpg" alt="Statkraft workshop presentation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 9: MEET:CORPORATE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <!-- Left: Content -->
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Curated Format</p>
+                    </div>
+                    <h2 class="t-large fade-up mb-md">MEET:<span class="t-red">CORPORATE</span></h2>
+                    <p class="t-body fade-up" style="max-width: 500px; opacity: 0.8; margin-bottom: 1.5rem;">A curated format that goes beyond inspiration into concrete business dialogue.</p>
+                    <div class="process-steps fade-up" style="margin-bottom: 1.5rem;">
+                        <div class="process-step">
+                            <div class="step-num">01</div>
+                            <div class="step-label">Targeted scouting</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-num">02</div>
+                            <div class="step-label">4-8 startups selected</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-num">03</div>
+                            <div class="step-label">Senior team with mandate</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-num">04</div>
+                            <div class="step-label">Structured 1:1 sessions</div>
+                        </div>
+                    </div>
+                    <div class="glass-card fade-up">
+                        <p class="t-small" style="margin-bottom: 0.5rem;"><strong class="t-red">Case: Wilhelmsen</strong></p>
+                        <p class="t-small" style="opacity: 0.8;">16 challenges, 4,000+ startups screened, 40 sent, 10 met stakeholders, 5 continued dialogue.</p>
+                    </div>
+                </div>
+                <!-- Right: Two stacked photos -->
+                <div style="flex: 0 0 38%; display: flex; flex-direction: column; gap: 1rem; max-height: calc(100vh - 140px);">
+                    <div style="flex: 1; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="img/img-meet-corporate-1.jpg" alt="MEET:Corporate session" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                    <div style="flex: 1; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="img/img-meet-corporate-2.jpg" alt="MEET:Corporate matchmaking" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 10: LARGE-SCALE EVENTS
+             ============================================= -->
+        <div class="slide bg-white" data-logo="red">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Large-Scale Events</p>
+                </div>
+                <h2 class="t-medium fade-up mb-md">MeetCorporates Oslo & Beyond</h2>
+                <div class="fade-up" style="max-width: 1100px; margin-bottom: 1.5rem;">
+                    <img src="img/img-meetcorporates-logos.png" alt="Corporate partners participating in MeetCorporates events" style="width: 100%; height: auto; display: block;">
+                </div>
+                <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span class="case-tag">Statnett R&D and Innovation Day</span>
+                    <span class="case-tag">Krafthack (6 actors)</span>
+                    <span class="case-tag">Mobility Hackathon</span>
+                    <span class="case-tag">Circular Economy Hackathon</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 11: SL CONSTRUCTION
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Industry Programs</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">SL <span class="t-red">Construction</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.25rem; max-width: 1100px; margin-bottom: 1.5rem;">
+                    <!-- Card 1: ZEC -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">Zero Emission Construction</p>
+                            <p class="t-small" style="opacity: 0.8; margin-bottom: 0.5rem;">Global participants from Japan, UAE, EU, USA. Field visit to Nyhellervatn electrified dam restoration.</p>
+                            <p style="font-size: 0.75rem; opacity: 0.45;">ZEC 2026: June 9-10</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-zec-field.png" alt="ZEC field visit at Nyhellervatn" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                    <!-- Card 2: International Excursion -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">International Excursion</p>
+                            <p class="t-small" style="opacity: 0.8;">Norwegian startups meeting large builders in Southern Europe with Buildworlds.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-excursion.jpg" alt="International excursion networking" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                    <!-- Card 3: Advisory Board -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">Advisory Board</p>
+                            <p class="t-small" style="opacity: 0.8;">Industry leaders guiding program direction and connecting startups to market opportunities.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-advisory-board.png" alt="Advisory board meeting" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                    <!-- Card 4: Startups to Watch -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">Industry Updates & Startups to Watch</p>
+                            <p class="t-small" style="opacity: 0.8;">Curated programme updates and startup scouting reports for construction partners.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-startups-to-watch.png" alt="Norconsult x Infraspace team" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                    <span class="case-tag">Hive Autonomy + Veidekke</span>
+                    <span class="t-small" style="opacity: 0.5;">Autonomous construction machinery</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 12: SL ENERGY
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Industry Programs</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">SL <span class="t-red">Energy</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 1100px; margin-bottom: 1.5rem;">
+                    <!-- Card 1: Houston Climate Week -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">Houston Climate Week</p>
+                            <p class="t-small" style="opacity: 0.8;">Cross-Atlantic partnership bringing Norwegian + US energy startups together. With Equinor, Greentown Labs.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-houston-event.jpg" alt="Houston Climate Week" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                    <!-- Card 2: ONS Scale Up Stage -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">ONS Scale Up Stage</p>
+                            <p class="t-small" style="opacity: 0.8;">Startuplab curates and hosts the Scale Up Stage at ONS, Stavanger. Connecting energy startups with industry leaders.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-ons-panel.jpg" alt="ONS Scale Up Stage panel" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                    <!-- Card 3: Case Studies -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">Case Studies</p>
+                            <p class="t-small" style="opacity: 0.8;">Documented startup-corporate collaborations proving real impact in the energy sector.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-energy-workshop.jpg" alt="Energy workshop session" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                    <!-- Card 4: Datacenter Opportunity -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">The Datacenter Opportunity</p>
+                            <p class="t-small" style="opacity: 0.8;">AI and datacenters are reshaping Nordic energy demand. Mapping startup solutions for this emerging opportunity.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-datacenter-talk.jpg" alt="Datacenter and energy presentation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-up" style="display: flex; align-items: center; gap: 2.5rem;">
+                    <img src="logos/logo-installer.png" alt="Installer" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                    <img src="logos/logo-hive.png" alt="HIVE Autonomy" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                    <img src="logos/logo-glintsolar.png" alt="Glint Solar" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                    <img src="logos/logo-renasys.png" alt="Renasys" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 11B: HOUSTON CLIMATE WEEK
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <!-- Left: Content -->
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Cross-Atlantic Partnership</p>
+                    </div>
+                    <h2 class="t-large fade-up mb-md">Houston<br><span class="t-red">Climate Week</span></h2>
+                    <p class="t-body fade-up" style="max-width: 500px; opacity: 0.8; margin-bottom: 1.5rem;">Equinor partners with Startuplab, Innovation Dock and Greentown Labs (Houston) to bridge Norwegian and American energy innovation.</p>
+                    <p class="t-body fade-up" style="max-width: 500px; opacity: 0.8; margin-bottom: 1.5rem;">4 Norwegian startups selected for an all-expenses-paid week of investor pitching, customer meetings and exposure in Texas.</p>
+                    <div class="glass-card fade-up" style="margin-bottom: 1.5rem;">
+                        <p class="t-small" style="margin-bottom: 0.5rem;"><strong class="t-red">3 of 4 selected startups are Startuplab companies</strong></p>
+                        <p class="t-small" style="opacity: 0.7;">Following a successful ONS collaboration where Greentown brought 5 US companies to Norway for pitching alongside 4 Norwegian startups.</p>
+                    </div>
+                    <div class="fade-up" style="display: flex; align-items: center; gap: 2rem; margin-top: auto;">
+                        <img src="logos/logo-installer.png" alt="Installer" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                        <img src="logos/logo-hive.png" alt="HIVE Autonomy" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                        <img src="logos/logo-glintsolar.png" alt="Glint Solar" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                        <img src="logos/logo-renasys.png" alt="Renasys" style="height: 38px; filter: brightness(0) invert(1); opacity: 0.8;">
+                    </div>
+                </div>
+                <!-- Right: Photo grid -->
+                <div style="flex: 0 0 45%; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; max-height: calc(100vh - 140px);">
+                    <div style="overflow: hidden; grid-column: 1 / -1; height: 280px;">
+                        <img src="img/img-houston-3.png" alt="Houston Climate Week event" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                    <div style="overflow: hidden; height: 220px;">
+                        <img src="img/img-houston-1.jpg" alt="Houston networking" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                    <div style="overflow: hidden; height: 220px;">
+                        <img src="img/img-houston-2.jpg" alt="Houston delegation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 12B: CASE - EQUINOR + FIELDMADE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Case Study</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Equinor + <span class="t-red">Fieldmade</span></h2>
+                <p class="t-body fade-up mb-lg" style="max-width: 650px; opacity: 0.8;">3D printing spare parts for offshore operations, eliminating months of downtime and logistics.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; margin-bottom: 2rem;">
+                    <div class="glass-card">
+                        <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 1rem;">Strainer at Snorre</p>
+                        <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.25rem;">
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--sl-red);">3 months</span>
+                            <span style="font-size: 1.25rem; opacity: 0.4;">&rarr;</span>
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--sl-white);">8 days</span>
+                        </div>
+                        <p class="t-small" style="opacity: 0.5;">Lead time reduction</p>
+                    </div>
+                    <div class="glass-card">
+                        <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 1rem;">Thruster for Norne Ship</p>
+                        <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.25rem;">
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--sl-red);">40 weeks</span>
+                            <span style="font-size: 1.25rem; opacity: 0.4;">&rarr;</span>
+                            <span style="font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--sl-white);">10 weeks</span>
+                        </div>
+                        <p class="t-small" style="opacity: 0.5;">Lead time reduction</p>
+                    </div>
+                </div>
+                <div class="fade-up" style="display: flex; align-items: center; gap: 2rem;">
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 3rem;">1B NOK</div>
+                        <div class="stat-label">Estimated savings</div>
+                    </div>
+                    <span class="case-tag" style="align-self: center;">Corporate Innovation Network</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 14: STARTUPLAB SUMMIT
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" style="overflow: hidden;">
+            <div class="slide-inner" style="justify-content: flex-start; padding-top: 80px; padding-bottom: 30px; position: relative; z-index: 2;">
+                <h2 class="t-large fade-up" style="margin-bottom: 0.75rem;">Startuplab <span class="t-red">Summit</span></h2>
+                <div class="fade-up" style="display: flex; gap: 2.5rem; align-items: flex-start; margin-bottom: 0.75rem;">
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 2rem;">500+</div>
+                        <div class="stat-label">Attendees</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 2rem;">100</div>
+                        <div class="stat-label">Nordic startups</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 2rem;">250+</div>
+                        <div class="stat-label">VC firms</div>
+                    </div>
+                    <div class="process-steps" style="margin-left: auto; min-width: 380px; max-width: 500px;">
+                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
+                            <div class="step-num" style="font-size: 1rem;">01</div>
+                            <div class="step-label" style="font-size: 0.7rem;">Define headaches</div>
+                        </div>
+                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
+                            <div class="step-num" style="font-size: 1rem;">02</div>
+                            <div class="step-label" style="font-size: 0.7rem;">Scout</div>
+                        </div>
+                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
+                            <div class="step-num" style="font-size: 1rem;">03</div>
+                            <div class="step-label" style="font-size: 0.7rem;">Summit</div>
+                        </div>
+                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
+                            <div class="step-num" style="font-size: 1rem;">04</div>
+                            <div class="step-label" style="font-size: 0.7rem;">Sprint</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logo wall fills remaining space -->
+                <div class="fade-up" style="flex: 1; margin-top: 0.75rem; overflow: hidden; min-height: 0;">
+                    <img src="img/img-summit-logos.png" alt="Summit startup logo wall" style="width: 100%; height: 100%; object-fit: contain; object-position: top center; display: block;">
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 15: NORDIC REACH + EXPANSION
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner" style="flex-direction: column; justify-content: center; padding: 70px 60px 50px;">
+                <!-- Lead-in -->
+                <div class="fade-up">
+                    <p class="t-label mb-sm" style="color: var(--sl-red);">Startuplab Summit</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 0.5rem;">Nordic reach,<br><span class="t-red">local impact</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.6; max-width: 700px; margin-bottom: 2rem;">One event connecting the best climate and energy startups across the Nordics with corporates ready to collaborate. In 2025, we expanded through partnerships with leading hubs. In 2026, we include the Baltics.</p>
+
+                <!-- Nordic hub map -->
+                <div class="fade-up" style="display: flex; gap: 1.25rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                    <!-- Norway / Oslo -->
+                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127475;&#127476;</div>
+                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Oslo</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Host city</p>
+                        <img src="SL_signature_white.svg" alt="Startuplab" style="height: 14px; opacity: 0.6;">
+                    </div>
+                    <!-- Netherlands / Amsterdam -->
+                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.2);"></div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127475;&#127473;</div>
+                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Amsterdam</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
+                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.6;">Rockstart</p>
+                    </div>
+                    <!-- Sweden / Stockholm -->
+                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.2);"></div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127480;&#127466;</div>
+                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Stockholm</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
+                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.6;">Norrsken</p>
+                    </div>
+                    <!-- Finland / Helsinki -->
+                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.2);"></div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127467;&#127470;</div>
+                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Helsinki</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
+                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.6;">Maria 01</p>
+                    </div>
+                    <!-- Baltics / 2026 -->
+                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.15); border-style: dashed; padding: 1.25rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red); opacity: 0.5;"></div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127466;&#127466;</div>
+                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Baltics</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Expanding 2026</p>
+                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.4; font-style: italic;">TBA</p>
+                    </div>
+                </div>
+
+                <!-- Proof point -->
+                <div class="fade-up" style="display: flex; align-items: center; gap: 2.5rem; padding: 1.25rem 1.5rem; border-left: 3px solid var(--sl-red); background: rgba(255,255,255,0.03);">
+                    <div>
+                        <p style="font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: var(--sl-red); margin-bottom: 0.15rem;">Renasens (Sweden)</p>
+                        <p style="font-size: 0.8rem; opacity: 0.6;">Won Climate Tech Startup of the Year 2025 at Oslo Summit. A Swedish startup winning in Oslo proves the model works across borders.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 18: CIN - CORPORATE INNOVATION NETWORK
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner" style="justify-content: center; padding: 60px 60px 50px;">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Community</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 0.5rem;">Where innovation leaders<br><span class="t-red">learn from each other</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 800px; margin-bottom: 1.25rem;">Corporate Innovation Network: a rotating "Hjemme hos" format where corporates host, share real experiences, and tackle the hard questions together. 4-6 events per year.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; width: 100%; max-width: 1300px; flex: 1; min-height: 0;">
+                    <!-- Card 1: Posten Bring -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="height: 45%; background: var(--sl-gray-800); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.75rem;">
+                            <span>Photo TBD</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; flex: 1; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red);">Hjemme hos Posten Bring</p>
+                                <span style="font-size: 0.65rem; opacity: 0.4;">Feb 2024</span>
+                            </div>
+                            <p style="font-size: 0.85rem; line-height: 1.4; opacity: 0.8; flex: 1;">Innovation through design-driven development. Cases: Aviant drones, Glow logistics.</p>
+                            <img src="logos/logo-postenbring.svg" alt="Posten Bring" style="height: 18px; opacity: 0.5; filter: brightness(0) invert(1); margin-top: 0.5rem; align-self: flex-start;">
+                        </div>
+                    </div>
+                    <!-- Card 2: Skanska -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="height: 45%; overflow: hidden;">
+                            <img src="img/img-cin-skanska.jpg" alt="Digital innovation in Skanska presentation at CIN" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="padding: 1rem 1.25rem; flex: 1; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red);">Hjemme hos Skanska</p>
+                                <span style="font-size: 0.65rem; opacity: 0.4;">Dec 2024</span>
+                            </div>
+                            <p style="font-size: 0.85rem; line-height: 1.4; opacity: 0.8; flex: 1;">Buy, Build or Invest? CDO on innovation strategy and the L'easi startup case.</p>
+                            <img src="logos/logo-skanska.svg" alt="Skanska" style="height: 18px; opacity: 0.5; filter: brightness(0) invert(1); margin-top: 0.5rem; align-self: flex-start;">
+                        </div>
+                    </div>
+                    <!-- Card 3: DNB -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="height: 45%; overflow: hidden;">
+                            <img src="img/img-cin-dnb.jpg" alt="CIN networking at DNB" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="padding: 1rem 1.25rem; flex: 1; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red);">Hjemme hos DNB</p>
+                                <span style="font-size: 0.65rem; opacity: 0.4;">Aug 2023</span>
+                            </div>
+                            <p style="font-size: 0.85rem; line-height: 1.4; opacity: 0.8; flex: 1;">Tailoring procurement for startups. Learnings from DNB NXT accelerator and investments.</p>
+                            <img src="logos/logo-dnb.svg" alt="DNB" style="height: 18px; opacity: 0.5; filter: brightness(0) invert(1); margin-top: 0.5rem; align-self: flex-start;">
+                        </div>
+                    </div>
+                    <!-- Card 4: Nye Veier -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="height: 45%; background: var(--sl-gray-800); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.75rem;">
+                            <span>Photo TBD</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; flex: 1; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red);">Hjemme hos Nye Veier</p>
+                                <span style="font-size: 0.65rem; opacity: 0.4;">Feb 2025</span>
+                            </div>
+                            <p style="font-size: 0.85rem; line-height: 1.4; opacity: 0.8; flex: 1;">Sustainable value chains and excursion to HIVE Autonomy's autonomous heavy machinery.</p>
+                            <img src="logos/logo-nyeveier.svg" alt="Nye Veier" style="height: 16px; opacity: 0.5; filter: brightness(0) invert(1); margin-top: 0.5rem; align-self: flex-start;">
+                        </div>
+                    </div>
+                    <!-- Card 5: Schibsted -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="height: 45%; overflow: hidden;">
+                            <img src="img/img-cin-schibsted.jpg" alt="Hjemme hos Schibsted audience" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="padding: 1rem 1.25rem; flex: 1; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red);">Hjemme hos Schibsted</p>
+                                <span style="font-size: 0.65rem; opacity: 0.4;">2025</span>
+                            </div>
+                            <p style="font-size: 0.85rem; line-height: 1.4; opacity: 0.8; flex: 1;">Coming soon.</p>
+                            <img src="logos/logo-schibsted.svg" alt="Schibsted" style="height: 16px; opacity: 0.5; filter: brightness(0) invert(1); margin-top: 0.5rem; align-self: flex-start;">
+                        </div>
+                    </div>
+                    <!-- Card 6: Gjensidige -->
+                    <div style="display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="height: 45%; background: var(--sl-gray-800); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.75rem;">
+                            <span>Photo TBD</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; flex: 1; display: flex; flex-direction: column;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red);">Hjemme hos Gjensidige</p>
+                                <span style="font-size: 0.65rem; opacity: 0.4;">Aug 2022</span>
+                            </div>
+                            <p style="font-size: 0.85rem; line-height: 1.4; opacity: 0.8; flex: 1;">From innovation lab to holistic process. Circular business models and climate adaptation with AR.</p>
+                            <img src="logos/logo-gjensidige.svg" alt="Gjensidige" style="height: 16px; opacity: 0.5; filter: brightness(0) invert(1); margin-top: 0.5rem; align-self: flex-start;">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-up" style="margin-top: auto;">
+                    <p class="t-small mb-md" style="opacity: 0.5;">Host companies include:</p>
+                    <div style="display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap;">
+                        <img src="logos/logo-dnb.svg" alt="DNB" style="height: 28px; opacity: 0.8; filter: brightness(0) invert(1);">
+                        <img src="logos/logo-gjensidige.svg" alt="Gjensidige" style="height: 24px; opacity: 0.8; filter: brightness(0) invert(1);">
+                        <img src="logos/logo-fremtind.svg" alt="Fremtind" style="height: 24px; opacity: 0.8; filter: brightness(0) invert(1);">
+                        <img src="logos/logo-obos.svg" alt="OBOS" style="height: 28px; opacity: 0.8; filter: brightness(0) invert(1);">
+                        <img src="logos/logo-nyeveier.svg" alt="Nye Veier" style="height: 24px; opacity: 0.8; filter: brightness(0) invert(1);">
+                        <img src="logos/logo-telenor.svg" alt="Telenor" style="height: 26px; opacity: 0.8; filter: brightness(0) invert(1);">
+                        <img src="logos/logo-wilhelmsen.svg" alt="Wilhelmsen" style="height: 24px; opacity: 0.8; filter: brightness(0) invert(1);">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 19: SECTION DIVIDER - FOR STARTUPS
+             ============================================= -->
+        <div class="slide bg-red" data-logo="white">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">For Startups</p>
+                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">We turn corporate<br>complexity into<br>opportunity</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 20: STARTUP SUPPORT
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Startup Readiness</p>
+                </div>
+                <h2 class="t-medium fade-up mb-lg">More than matchmaking</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Open Doors</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Warm introductions to decision makers, not just cold matching. We leverage 13 years of relationships.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Sales & Pitch Training</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Corporate Sales Bootcamp and "Rules of Engagement" guide for startup-corporate dynamics.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px; overflow: hidden;">
+                            <img src="img/img-sales-training.jpg" alt="Sales training session" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Procurement Navigation</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Helping startups through complex procurement processes.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Legal & Negotiation</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Legal support, negotiation guidance, NDA templates, and contract review for startup-corporate deals.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 20: STRATEGIC SALES TRAINING
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: 100%; max-height: 100%;">
+                    <!-- Left: Content -->
+                    <div style="padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center;">
+                        <p class="t-label fade-up" style="color: var(--sl-red); margin-bottom: 0.75rem;">Corporate Sales Bootcamp</p>
+                        <h2 class="t-large fade-up" style="margin-bottom: 1.5rem; line-height: 1.15;">From knowledge<br>to know-how</h2>
+                        <p class="t-small fade-up" style="opacity: 0.7; margin-bottom: 1.75rem; max-width: 420px;">Practical, hands-on training. Whiteboard sessions, group exercises, and frameworks you can use the next day.</p>
+
+                        <div style="display: flex; flex-direction: column; gap: 1rem;" class="fade-up">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">01</span>
+                                <div>
+                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Why selling and buying is hard</h4>
+                                    <p style="opacity: 0.5; font-size: 0.75rem;">Understanding and labeling common obstacles facing sellers and buyers.</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">02</span>
+                                <div>
+                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Creating strategic alignment</h4>
+                                    <p style="opacity: 0.5; font-size: 0.75rem;">Build a value pyramid. Link technical capability to high-level goals. Rise above the noise.</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">03</span>
+                                <div>
+                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Creating the case for change</h4>
+                                    <p style="opacity: 0.5; font-size: 0.75rem;">Control stakeholders, accelerate decisions. The "3 Whys" framework for getting initiatives rolling.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Photo stack -->
+                    <div style="display: flex; flex-direction: column; overflow: hidden;">
+                        <div style="flex: 1; overflow: hidden;">
+                            <img src="img/img-strategic-sales-workshop.jpg" alt="Whiteboard workshop session" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="flex: 1; overflow: hidden;">
+                            <img src="img/img-strategic-sales-conversation.jpg" alt="Participants in discussion" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 22: SECTION DIVIDER - FOR CORPORATES
+             ============================================= -->
+        <div class="slide bg-red-dark" data-logo="white">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">For Corporates</p>
+                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">Access the innovators<br>already solving<br>your problems</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 22: CORPORATE INNOVATION SUPPORT
+             ============================================= -->
+        <div class="slide bg-light" data-logo="red">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Corporate Readiness</p>
+                </div>
+                <h2 class="t-medium fade-up mb-lg" style="color: var(--sl-black);">Innovation support & implementation</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; max-width: 1100px;">
+                    <div class="card-light">
+                        <h3 style="color: var(--sl-red); font-size: 0.95rem; margin-bottom: 0.75rem;">"How to Work with Startups"</h3>
+                        <p class="t-small" style="opacity: 0.7;">Quarterly workshop, 20+ corporates per session</p>
+                    </div>
+                    <div class="card-light">
+                        <h3 style="color: var(--sl-red); font-size: 0.95rem; margin-bottom: 0.75rem;">"Learn from Startups"</h3>
+                        <p class="t-small" style="opacity: 0.7;">Program bringing startup mindset into corporate teams</p>
+                    </div>
+                    <div class="card-light">
+                        <h3 style="color: var(--sl-red); font-size: 0.95rem; margin-bottom: 0.75rem;">Structure and Tools</h3>
+                        <p class="t-small" style="opacity: 0.7;">Templates (pilot agreement, NDA etc.) and checklists</p>
+                    </div>
+                    <div class="card-light">
+                        <h3 style="color: var(--sl-red); font-size: 0.95rem; margin-bottom: 0.75rem;">Procurement Transformation</h3>
+                        <p class="t-small" style="opacity: 0.7;">Cases: Oslo Kommune Smart Oslo, DNB simplified procurement</p>
+                    </div>
+                    <div class="card-light">
+                        <h3 style="color: var(--sl-red); font-size: 0.95rem; margin-bottom: 0.75rem;">Pilot Design & Implementation</h3>
+                        <p class="t-small" style="opacity: 0.7;">Structured methodology from scoping to evaluation</p>
+                    </div>
+                    <div class="card-light">
+                        <h3 style="color: var(--sl-red); font-size: 0.95rem; margin-bottom: 0.75rem;">Stakeholder Alignment</h3>
+                        <p class="t-small" style="opacity: 0.7;">Change management and internal buy-in facilitation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 23: INFRASTRUCTURE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Infrastructure</p>
+                </div>
+                <h2 class="t-large fade-up mb-lg">The foundation<br><span class="t-red">already exists</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.5rem; max-width: 1000px;">
+                    <div>
+                        <h3 class="t-red" style="font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 700;">NorthBase Database</h3>
+                        <p class="t-small" style="opacity: 0.8;">4,000+ startups with AI-powered matching and deep sector tagging</p>
+                    </div>
+                    <div>
+                        <h3 class="t-red" style="font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 700;">Partnership Framework</h3>
+                        <p class="t-small" style="opacity: 0.8;">Define &rarr; Scout &rarr; Align &rarr; Pilot &rarr; Scale. Proven methodology.</p>
+                    </div>
+                    <div>
+                        <h3 class="t-red" style="font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 700;">Track Record</h3>
+                        <p class="t-small" style="opacity: 0.8;">50+ scaled collaborations from pilot to contract. Measurable outcomes across energy, construction, finance and more.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 24: SUMMARY / IMPACT
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">13 Years of Impact</p>
+                </div>
+                <h2 class="t-large fade-up mb-lg">A track record of<br><span class="t-red">ecosystem building</span></h2>
+                <div class="timeline fade-up" style="max-width: 1100px;">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2012</div>
+                        <div class="timeline-text">Startuplab founded. First incubator companies.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-text">First corporate partnerships. MEET:Corporate format launched.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2018</div>
+                        <div class="timeline-text">MeetCorporates at scale. Industry programs begin.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-text">2030 Climate Tech Programme.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-text">Corp Collab Courses and Tools.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-text">Summit 500+ attendees. Nordic expansion.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: WHY IT WORKS (testimonials)
+             ============================================= -->
+        <div class="slide bg-light" data-logo="red">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Why It Works</p>
+                </div>
+                <h2 class="t-medium fade-up mb-lg" style="color: var(--sl-black);">What our partners say</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; max-width: 1100px;">
+                    <div class="quote-block">
+                        <p class="quote-text">"As a proud partner of the 2030 Startuplab Programme we're tackling our 'Climate Headache' and seeking ground-breaking technological approaches."</p>
+                        <p class="quote-attr">Statkraft, LinkedIn</p>
+                    </div>
+                    <div class="quote-block">
+                        <p class="quote-text">"I've experienced many innovation events, but Startuplab's format stands out. 8 startups in structured sessions, with a team that truly understands the dynamics."</p>
+                        <p class="quote-attr">Simen Engelstchiøn, Gjensidige</p>
+                    </div>
+                    <div class="quote-block">
+                        <p class="quote-text">"Innovation via startups works. Through Startuplab we had 11 match-ups that led to real dialogue and pilot opportunities for our road projects."</p>
+                        <p class="quote-attr">Nye Veier, LinkedIn</p>
+                    </div>
+                </div>
+                <div class="fade-up" style="margin-top: 2.5rem; display: flex; gap: 3rem; max-width: 1100px;">
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 2.5rem; color: var(--sl-red);">27</div>
+                        <div class="stat-label" style="color: var(--sl-black);">Corporate partners</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 2.5rem; color: var(--sl-red);">50+</div>
+                        <div class="stat-label" style="color: var(--sl-black);">Scaled collaborations</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 2.5rem; color: var(--sl-red);">85%</div>
+                        <div class="stat-label" style="color: var(--sl-black);">Follow-up rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: IN THE NEWS
+             ============================================= -->
+        <div class="slide bg-white" data-logo="red">
+            <div class="slide-inner" style="justify-content: center; padding: 60px 50px;">
+                <div class="fade-up">
+                    <p class="t-label mb-md">In the News</p>
+                </div>
+                <h2 class="t-medium fade-up" style="color: var(--sl-black); margin-bottom: 1.5rem;">Startuplab companies making headlines</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr 1fr; gap: 0.75rem; flex: 1; min-height: 0; max-height: calc(100vh - 240px);">
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-rekordinteresse.jpg" alt="Rekordinteresse for norske startups - Finansavisen" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-zivid-oda.png" alt="Zivid 3D-kameraer - Dagens Næringsliv" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-skiwo.png" alt="Skiwo 669% vekst - Finansavisen" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-tise.png" alt="Tise halv milliard - Dagens Næringsliv" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-sensorita.png" alt="Sensorita Ulrikke Lien - Finansavisen" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-moller-sirken.png" alt="Møller satser på Sirken - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-sloyd.png" alt="Sloyd 3D-verktøy - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-obos-parqio.png" alt="OBOS og AF Gruppen satser på Parqio - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-dnb-lucidtech.png" alt="DNB valgte Lucidtech - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
+                        <img src="img/img-news-fremtind-klima.png" alt="Klimastartup og Fremtind - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: MEET:CORPORATE - WILHELMSEN CASE
+             ============================================= -->
+        <div class="slide bg-light" data-logo="red">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">MEET:Corporate Case</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md" style="color: var(--sl-black);">Wilhelmsen + <span class="t-red">[Startup TBD]</span></h2>
+                    <p class="t-body fade-up" style="color: var(--sl-black); opacity: 0.7; max-width: 500px; margin-bottom: 1.5rem;">Placeholder: Detail a specific MEET:Corporate match that led to pilot or contract. Show the journey from curated session to outcome.</p>
+                    <div class="fade-up" style="display: flex; gap: 2rem;">
+                        <div class="stat-block">
+                            <div class="stat-number" style="color: var(--sl-red);">1:1</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Curated match</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" style="color: var(--sl-red);">3 mo</div>
+                            <div class="stat-label" style="color: var(--sl-black);">To pilot</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 0; height: 400px; background: var(--sl-gray-100); display: flex; align-items: center; justify-content: center; color: var(--sl-muted); font-size: 0.85rem;">
+                    Photo TBD
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: MEET:CORPORATE - RESULTS OVERVIEW
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">MEET:Corporate</p>
+                </div>
+                <h2 class="t-large fade-up mb-lg">Results from curated<br><span class="t-red">matchmaking</span></h2>
+                <div class="fade-up" style="display: flex; gap: 4rem; margin-bottom: 2.5rem;">
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 3.5rem;">500+</div>
+                        <div class="stat-label">Matchmakings conducted</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 3.5rem;">200+</div>
+                        <div class="stat-label">Pilots facilitated</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number" style="font-size: 3.5rem;">85%</div>
+                        <div class="stat-label">Follow-up rate</div>
+                    </div>
+                </div>
+                <p class="t-body fade-up" style="opacity: 0.6; max-width: 700px;">Placeholder: Add specific outcome data, conversion rates, and notable deals closed through MEET:Corporate sessions.</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: SUMMIT - DETAILED FORMAT
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Summit</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Inside the<br><span class="t-red">Summit format</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Placeholder: Break down the Summit day, from scouting and pre-matching to on-stage pitches and 1:1 meetings.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; max-width: 1100px;">
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem;">1</div>
+                        <div style="font-weight: 700; margin-bottom: 0.4rem;">Pre-Scouting</div>
+                        <p class="t-small" style="opacity: 0.5;">AI-supported startup matching weeks before the event</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem;">2</div>
+                        <div style="font-weight: 700; margin-bottom: 0.4rem;">Pitches</div>
+                        <p class="t-small" style="opacity: 0.5;">Selected startups pitch to corporate audience</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem;">3</div>
+                        <div style="font-weight: 700; margin-bottom: 0.4rem;">1:1 Meetings</div>
+                        <p class="t-small" style="opacity: 0.5;">Structured matchmaking sessions</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem;">4</div>
+                        <div style="font-weight: 700; margin-bottom: 0.4rem;">Follow-up</div>
+                        <p class="t-small" style="opacity: 0.5;">Post-event facilitation and pilot setup</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: SUMMIT - 2025 HIGHLIGHTS
+             ============================================= -->
+        <div class="slide bg-white" data-logo="red">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Summit 2025</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md" style="color: var(--sl-black);">Startuplab <span class="t-red">Summit</span> Highlights</h2>
+                    <div class="fade-up" style="display: flex; gap: 2rem; margin-bottom: 1.5rem;">
+                        <div class="stat-block">
+                            <div class="stat-number" style="font-size: 2.5rem; color: var(--sl-red);">500+</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Attendees</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" style="font-size: 2.5rem; color: var(--sl-red);">80+</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Startups</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" style="font-size: 2.5rem; color: var(--sl-red);">30+</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Corporates</div>
+                        </div>
+                    </div>
+                    <p class="t-body fade-up" style="color: var(--sl-black); opacity: 0.6;">Placeholder: Add Summit-specific outcomes, notable matches, and attendee feedback.</p>
+                </div>
+                <div style="flex: 1; min-width: 0; height: 400px; background: var(--sl-gray-100); display: flex; align-items: center; justify-content: center; color: var(--sl-muted); font-size: 0.85rem;">
+                    Summit photo TBD
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INDUSTRY PROGRAMS - OVERVIEW
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Industry Programs</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Sector-specific<br><span class="t-red">deep dives</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Dedicated programs with sector-specific scouting, curated events, and international reach.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1000px;">
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">SL Construction</div>
+                        <p class="t-small" style="opacity: 0.5;">OBOS, Nye Veier, Multiconsult, Statsbygg. Active since 2022.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">SL Energy</div>
+                        <p class="t-small" style="opacity: 0.5;">Equinor, Statkraft, HitecVision. International events in Houston, ONS.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">SL Mobility</div>
+                        <p class="t-small" style="opacity: 0.5;">Placeholder: Transport, logistics, autonomous systems. Partners TBD.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INDUSTRY - OBOS + FINDABLE CASE
+             ============================================= -->
+        <div class="slide bg-light" data-logo="red">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">SL Construction Case</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md" style="color: var(--sl-black);">OBOS + <span class="t-red">Findable</span></h2>
+                    <p class="t-body fade-up" style="color: var(--sl-black); opacity: 0.7; max-width: 500px; margin-bottom: 1.5rem;">Placeholder: Detail the OBOS + Findable collaboration. How the match was made through SL Construction, pilot scope, and outcomes.</p>
+                    <div class="fade-up" style="display: flex; gap: 2rem;">
+                        <div class="stat-block">
+                            <div class="stat-number" style="color: var(--sl-red);">2023</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Match made</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" style="color: var(--sl-red);">Pilot</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Status</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 0; height: 400px; background: var(--sl-gray-100); display: flex; align-items: center; justify-content: center; color: var(--sl-muted); font-size: 0.85rem;">
+                    Photo TBD
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: CASE - NYE VEIER + HIVE AUTONOMY
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: 100%; padding: 0;">
+                <!-- Left: Story -->
+                <div style="padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="fade-up">
+                        <p class="t-label mb-sm" style="color: var(--sl-red);">Case Study</p>
+                        <p style="font-size: 0.7rem; opacity: 0.4; margin-bottom: 1.5rem;">SL Construction Program</p>
+                    </div>
+                    <h2 class="t-medium fade-up" style="margin-bottom: 0.5rem; line-height: 1.15;">Nye Veier + <span class="t-red">Hive Autonomy</span></h2>
+                    <p class="fade-up" style="font-size: 0.8rem; opacity: 0.5; margin-bottom: 1.5rem; font-style: italic;">Europe's first industrial test of autonomous machines in tunnel and quarry operations</p>
+
+                    <!-- How they met -->
+                    <div class="fade-up" style="margin-bottom: 1.25rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                            <span style="color: var(--sl-red); font-weight: 900; font-size: 0.75rem;">HOW THEY MET</span>
+                        </div>
+                        <p class="t-small" style="opacity: 0.7; font-size: 0.8rem;">Through a Startuplab Construction excursion to Nye Veier in Kristiansand, where Hive Autonomy presented their autonomous machine technology.</p>
+                    </div>
+
+                    <!-- The pilot -->
+                    <div class="fade-up" style="margin-bottom: 1.25rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                            <span style="color: var(--sl-red); font-weight: 900; font-size: 0.75rem;">THE PILOT</span>
+                        </div>
+                        <p class="t-small" style="opacity: 0.7; font-size: 0.8rem;">Nye Veier and Hive Autonomy ran the first test of autonomous machines in Nordic construction. A robot dog and an autonomous wheel loader operated side by side, controlled and monitored in real time from Oslo, 100 km from site.</p>
+                    </div>
+
+                    <!-- Why it matters -->
+                    <div class="fade-up" style="margin-bottom: 1.25rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                            <span style="color: var(--sl-red); font-weight: 900; font-size: 0.75rem;">WHY IT MATTERS</span>
+                        </div>
+                        <p class="t-small" style="opacity: 0.7; font-size: 0.8rem;">Proved that autonomous technology works in demanding construction environments with high demands for precision and safe production. Not replacing people, but making the work safer and better.</p>
+                    </div>
+
+                    <div class="fade-up" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <span class="case-tag">SL Construction</span>
+                        <span class="case-tag">Autonomous machines</span>
+                        <span class="case-tag">Remote operations</span>
+                    </div>
+                </div>
+
+                <!-- Right: Video -->
+                <div style="display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); overflow: hidden;">
+                    <video
+                        src="veidekke-hive-autonomy.mp4"
+                        style="width: 100%; height: 100%; object-fit: cover;"
+                        muted
+                        loop
+                        playsinline
+                        onmouseenter="this.play()"
+                        onmouseleave="this.pause()"
+                        poster=""
+                    >
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: CIN - DEEP DIVE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Corporate Innovation Network</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Learning from<br><span class="t-red">each other</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Placeholder: Elaborate on CIN format, topics covered, participation growth, and specific insights shared by host companies.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 900px;">
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">How it works</h3>
+                        <p class="t-small" style="opacity: 0.8;">Monthly "Hjemme hos" format: one corporate hosts, shares their startup collaboration journey, open Q&A with peers.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Why it matters</h3>
+                        <p class="t-small" style="opacity: 0.8;">Corporates learn from peers, not consultants. Reduces fear, increases speed. "How did you actually do it?"</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Topics covered</h3>
+                        <p class="t-small" style="opacity: 0.8;">Procurement hacks, internal buy-in, scaling pilots, legal frameworks, measuring innovation ROI.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Growth</h3>
+                        <p class="t-small" style="opacity: 0.8;">Placeholder: Add member growth from 2022 to today, attendance rates, and expansion plans.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: HACKATHONS & SPRINTS - KRAFTHACK
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Hackathons & Sprints</p>
+                    </div>
+                    <h2 class="t-large fade-up mb-md"><span class="t-red">Krafthack</span></h2>
+                    <p class="t-body fade-up" style="opacity: 0.7; max-width: 500px; margin-bottom: 1.5rem;">Placeholder: Energy sector hackathon bringing together startups and corporates around specific challenges. 48-hour intensive format.</p>
+                    <div class="fade-up" style="display: flex; gap: 2rem;">
+                        <div class="stat-block">
+                            <div class="stat-number">48h</div>
+                            <div class="stat-label">Intensive format</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number">[X]</div>
+                            <div class="stat-label">Teams</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number">[X]</div>
+                            <div class="stat-label">Corporate challenges</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 0; height: 400px; background: var(--sl-charcoal); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.85rem;">
+                    Krafthack photo TBD
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: HACKATHONS & SPRINTS - OVERVIEW
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Hackathons & Sprints</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Problem-solving at<br><span class="t-red">speed</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Intensive formats where startups and corporates tackle specific challenges together in 24-72 hours.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1000px;">
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Krafthack</div>
+                        <p class="t-small" style="opacity: 0.5;">Energy sector challenges with Statkraft, Equinor, and energy startups.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Mobility Sprint</div>
+                        <p class="t-small" style="opacity: 0.5;">Placeholder: Transport and mobility innovation challenges. Partners TBD.</p>
+                    </div>
+                    <div style="padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Circular Economy</div>
+                        <p class="t-small" style="opacity: 0.5;">Placeholder: Sustainability-focused hackathon. Waste, reuse, material innovation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: CORPORATE READINESS - TRAINING
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Corporate Readiness</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Getting corporates<br><span class="t-red">startup-ready</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Training, tools, and procurement support for corporates new to startup collaboration.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 900px;">
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">"How to Work with Startups"</h3>
+                        <p class="t-small" style="opacity: 0.8;">Full-day course covering procurement, legal, pilot design, and internal championing. Delivered to 50+ corporates.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Pilot Agreement Templates</h3>
+                        <p class="t-small" style="opacity: 0.8;">Standardized templates for NDA, pilot agreements, and evaluation frameworks. Reduces legal friction by weeks.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Procurement Navigation</h3>
+                        <p class="t-small" style="opacity: 0.8;">Helping corporates simplify procurement for startup solutions. Threshold exemptions, innovation partnerships.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Innovation Maturity Assessment</h3>
+                        <p class="t-small" style="opacity: 0.8;">Placeholder: Diagnostic tool to assess corporate readiness for startup collaboration. Benchmarks against peers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: CORPORATE READINESS - DNB CASE
+             ============================================= -->
+        <div class="slide bg-light" data-logo="red">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Corporate Readiness Case</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md" style="color: var(--sl-black);">DNB: From first match<br>to <span class="t-red">3-year partnership</span></h2>
+                    <p class="t-body fade-up" style="color: var(--sl-black); opacity: 0.7; max-width: 500px; margin-bottom: 1.5rem;">DNB's journey from initial MEET:Corporate sessions to procurement reform, CIN hosting, and a multi-year partnership.</p>
+                    <div class="fade-up" style="display: flex; gap: 2rem;">
+                        <div class="stat-block">
+                            <div class="stat-number" style="color: var(--sl-red);">Multi-year</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Partnership</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" style="color: var(--sl-red);">CIN host</div>
+                            <div class="stat-label" style="color: var(--sl-black);">Active member</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 0; height: 400px; background: var(--sl-gray-100); display: flex; align-items: center; justify-content: center; color: var(--sl-muted); font-size: 0.85rem;">
+                    Photo TBD
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: CORPORATE READINESS - TOOLS
+             ============================================= -->
+        <div class="slide bg-white" data-logo="red">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Corporate Readiness</p>
+                </div>
+                <h2 class="t-medium fade-up mb-md" style="color: var(--sl-black);">Structure and <span class="t-red">tools</span></h2>
+                <p class="t-body fade-up" style="color: var(--sl-black); opacity: 0.6; max-width: 700px; margin-bottom: 2rem;">Placeholder: Showcase the toolbox available to corporate partners, from templates to structured programs.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1000px;">
+                    <div style="padding: 1.75rem; background: var(--sl-gray-100); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--sl-black);">NDA Templates</div>
+                        <p class="t-small" style="opacity: 0.5; color: var(--sl-black);">Standardized, startup-friendly. Reviewed by DLA Piper.</p>
+                    </div>
+                    <div style="padding: 1.75rem; background: var(--sl-gray-100); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--sl-black);">Pilot Agreements</div>
+                        <p class="t-small" style="opacity: 0.5; color: var(--sl-black);">Plug-and-play pilot contract templates. 2-week setup vs 3-month.</p>
+                    </div>
+                    <div style="padding: 1.75rem; background: var(--sl-gray-100); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--sl-black);">Evaluation Framework</div>
+                        <p class="t-small" style="opacity: 0.5; color: var(--sl-black);">Structured scoring for startup solutions. Align procurement, innovation, and business units.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 25: CLOSING
+             ============================================= -->
+        <div class="slide bg-red" data-logo="white">
+            <div class="slide-inner justify-center" style="align-items: flex-start;">
+                <div class="fade-up">
+                    <div class="red-line" style="background: var(--sl-white); width: 80px; height: 4px; margin-bottom: 2.5rem;"></div>
+                </div>
+                <h2 class="t-hero fade-up" style="margin-bottom: 2rem;">Let's build on<br>what works</h2>
+                <p class="t-body fade-up" style="opacity: 0.85; max-width: 550px; margin-bottom: 3rem;">The Norwegian startup ecosystem doesn't need to start from scratch. It needs to scale what already delivers results.</p>
+                <div class="fade-up" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <p style="font-size: 1.1rem; font-weight: 600;">Christina Wiig</p>
+                    <p style="font-size: 0.95rem; opacity: 0.8;">Head of Corporate, Startuplab</p>
+                    <p style="font-size: 0.95rem; opacity: 0.7; margin-top: 0.5rem;">christina@startuplab.no</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="prev()">&#8249;</button>
+        <div class="progress-dots" id="dots"></div>
+        <span class="nav-counter" id="counter">1 / 24</span>
+        <button class="nav-btn" id="next-btn" onclick="next()">&#8250;</button>
+    </div>
+
+    <script>
+        // Section start indices for visual grouping in dots
+        const sectionStarts = [0, 3, 4, 22];
+
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+
+        // Logo color management
+        const logoPaths = document.querySelectorAll('#logo-paths path');
+        function setLogoColor(color) {
+            const fill = color === 'white' ? '#FFFFFF' : '#FF3333';
+            logoPaths.forEach(p => p.setAttribute('fill', fill));
+        }
+
+        // Initialize dots
+        const dotsContainer = document.getElementById('dots');
+        for (let i = 0; i < total; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '') + (sectionStarts.includes(i) && i > 0 ? ' section-start' : '');
+            dot.onclick = () => goTo(i);
+            dot.style.cursor = 'pointer';
+            dotsContainer.appendChild(dot);
+        }
+
+        function goTo(index) {
+            if (index < 0 || index >= total) return;
+            slides[current].classList.remove('active');
+            current = index;
+            slides[current].classList.add('active');
+
+            // Update dots
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === current);
+            });
+
+            // Update counter
+            document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+
+            // Update nav buttons
+            document.getElementById('prev-btn').disabled = current === 0;
+            document.getElementById('next-btn').disabled = current === total - 1;
+
+            // Update logo color based on slide background
+            const logoType = slides[current].getAttribute('data-logo') || 'white';
+            setLogoColor(logoType);
+        }
+
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+            if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+            if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+        });
+
+        // Section navigation
+        const sectionBtns = document.querySelectorAll('.section-nav-btn');
+        const sectionSlideIndices = Array.from(sectionBtns).map(b => parseInt(b.dataset.slide));
+
+        sectionBtns.forEach(btn => {
+            btn.addEventListener('click', () => goTo(parseInt(btn.dataset.slide)));
+        });
+
+        function updateSectionNav() {
+            let activeIdx = 0;
+            for (let i = sectionSlideIndices.length - 1; i >= 0; i--) {
+                if (current >= sectionSlideIndices[i]) { activeIdx = i; break; }
+            }
+            sectionBtns.forEach((btn, i) => btn.classList.toggle('active', i === activeIdx));
+        }
+
+        // Patch goTo to also update section nav
+        const origGoTo = goTo;
+        goTo = function(index) {
+            origGoTo(index);
+            updateSectionNav();
+        };
+
+        // Initialize
+        goTo(0);
+    </script>
+</body>
+</html>
