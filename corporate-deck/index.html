@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduction to Startuplab</title>
+    <title>Startuplab Corporate Deck Builder</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ============================================
@@ -611,13 +611,359 @@
 
         /* Print styles */
         @media print {
-            .nav-bar, .logo-fixed, .section-nav, .section-nav-trigger { display: none; }
+            .nav-bar, .logo-fixed, .section-nav, .section-nav-trigger, .manager-panel { display: none; }
             .slide { display: flex !important; position: relative !important; page-break-after: always; height: 100vh; }
             .slide.active { animation: none; }
         }
+
+        /* ============================================
+           DECK BUILDER / MANAGER PANEL
+           ============================================ */
+        .manager-panel {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 320px;
+            background: #0a0a0b;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(0);
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            font-family: var(--font-body);
+            overflow: hidden;
+        }
+        .manager-panel.hidden {
+            transform: translateX(-320px);
+        }
+        body.manager-open .presentation,
+        body.manager-open .nav-bar,
+        body.manager-open .logo-fixed {
+            margin-left: 320px;
+            transition: margin-left 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        body:not(.manager-open) .presentation,
+        body:not(.manager-open) .nav-bar,
+        body:not(.manager-open) .logo-fixed {
+            margin-left: 0;
+            transition: margin-left 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        body.presenting .manager-panel,
+        body.presenting .nav-bar,
+        body.presenting .section-nav-trigger,
+        body.presenting .section-nav,
+        body.presenting .manager-toggle {
+            display: none !important;
+        }
+
+        .manager-header {
+            padding: 20px 16px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+        }
+        .manager-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--sl-white);
+            margin-bottom: 10px;
+        }
+        .manager-stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .manager-count {
+            font-size: 0.75rem;
+            color: var(--sl-muted);
+        }
+        .manager-count strong {
+            color: var(--sl-red);
+            font-weight: 700;
+        }
+        .manager-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .btn-manager {
+            background: var(--sl-red);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: background 0.2s;
+        }
+        .btn-manager:hover { background: #e62e2e; }
+        .btn-manager.secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+        }
+        .btn-manager.secondary:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .manager-presets {
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .preset-select {
+            flex: 1;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--sl-white);
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+            padding: 5px 8px;
+            cursor: pointer;
+        }
+        .preset-select option { background: #111; }
+        .btn-icon {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .btn-icon:hover { border-color: var(--sl-red); color: var(--sl-red); }
+
+        .manager-slides {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        .manager-slides::-webkit-scrollbar { width: 4px; }
+        .manager-slides::-webkit-scrollbar-track { background: transparent; }
+        .manager-slides::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+        .section-group {
+            margin-bottom: 4px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s;
+        }
+        .section-header:hover { background: rgba(255,255,255,0.03); }
+        .section-arrow {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.3);
+            transition: transform 0.2s;
+            width: 12px;
+            text-align: center;
+        }
+        .section-group.collapsed .section-arrow { transform: rotate(-90deg); }
+        .section-group.collapsed .section-slides { display: none; }
+        .section-name {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.5);
+            flex: 1;
+        }
+        .section-toggle {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.25);
+            cursor: pointer;
+            padding: 2px 4px;
+        }
+        .section-toggle:hover { color: var(--sl-red); }
+
+        .slide-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 16px 5px 28px;
+            cursor: pointer;
+            transition: background 0.15s;
+            position: relative;
+        }
+        .slide-item:hover { background: rgba(255,255,255,0.04); }
+        .slide-item.active-preview {
+            background: rgba(255,51,51,0.1);
+        }
+        .slide-item.active-preview::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--sl-red);
+        }
+        .slide-check {
+            width: 14px; height: 14px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.15s;
+            font-size: 0.55rem;
+            color: transparent;
+        }
+        .slide-item.selected .slide-check {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: var(--sl-white);
+        }
+        .slide-bg-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .slide-bg-dot.bg-dark-dot { background: #333; }
+        .slide-bg-dot.bg-red-dot { background: var(--sl-red); }
+        .slide-bg-dot.bg-light-dot { background: #ddd; }
+        .slide-bg-dot.bg-white-dot { background: #fff; border: 1px solid #ccc; }
+        .slide-label {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.3;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .slide-item.selected .slide-label { color: var(--sl-white); }
+        .slide-num {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.2);
+            font-variant-numeric: tabular-nums;
+            width: 16px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Drag and drop */
+        .slide-drag-handle {
+            cursor: grab;
+            color: rgba(255,255,255,0.15);
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            padding: 2px 2px 2px 0;
+            flex-shrink: 0;
+            user-select: none;
+            line-height: 1;
+        }
+        .slide-drag-handle:hover { color: rgba(255,255,255,0.4); }
+        .slide-item.dragging {
+            opacity: 0.3;
+            background: rgba(255,51,51,0.05);
+        }
+        .slide-item.drag-over-top {
+            box-shadow: 0 -2px 0 0 var(--sl-red) inset;
+        }
+        .slide-item.drag-over-bottom {
+            box-shadow: 0 2px 0 0 var(--sl-red) inset;
+        }
+        .section-slides.drag-active .slide-item {
+            transition: none;
+        }
+        /* Section-level drag */
+        .section-header[draggable="true"] {
+            cursor: grab;
+        }
+        .section-header .section-drag-handle {
+            color: rgba(255,255,255,0.15);
+            font-size: 0.6rem;
+            margin-right: 2px;
+            cursor: grab;
+        }
+        .section-header:hover .section-drag-handle { color: rgba(255,255,255,0.35); }
+        .section-group.dragging-section { opacity: 0.3; }
+        .section-group.drag-over-section-top {
+            border-top: 2px solid var(--sl-red);
+        }
+        .section-group.drag-over-section-bottom {
+            border-bottom: 2px solid var(--sl-red);
+        }
+
+        .manager-footer {
+            padding: 10px 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+        }
+        .manager-hint {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.25);
+            text-align: center;
+        }
+        .manager-hint kbd {
+            background: rgba(255,255,255,0.08);
+            padding: 1px 5px;
+            border-radius: 2px;
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+        }
+
+        .manager-toggle {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            z-index: 999;
+            background: rgba(10,10,10,0.85);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-left: none;
+            color: rgba(255,255,255,0.5);
+            width: 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        body.manager-open .manager-toggle { left: 320px; }
+        .manager-toggle:hover { color: var(--sl-white); background: rgba(255,51,51,0.3); }
     </style>
 </head>
-<body>
+<body class="manager-open">
+    <!-- DECK BUILDER PANEL -->
+    <div class="manager-panel" id="manager-panel">
+        <div class="manager-header">
+            <div class="manager-title">Deck Builder</div>
+            <div class="manager-stats">
+                <div class="manager-count"><strong id="selected-count">0</strong> of <span id="total-count">0</span> selected</div>
+                <div class="manager-actions">
+                    <button class="btn-manager" id="btn-present" title="Present selected slides (P)">Present</button>
+                </div>
+            </div>
+        </div>
+        <div class="manager-presets">
+            <select class="preset-select" id="preset-select">
+                <option value="__all__">All slides</option>
+            </select>
+            <button class="btn-icon" id="btn-save-preset" title="Save current selection as preset">+</button>
+            <button class="btn-icon" id="btn-delete-preset" title="Delete selected preset">&times;</button>
+        </div>
+        <div class="manager-slides" id="manager-slides"></div>
+        <div class="manager-footer">
+            <div class="manager-hint"><kbd>Tab</kbd> toggle panel &middot; <kbd>P</kbd> present &middot; <kbd>Esc</kbd> exit</div>
+        </div>
+    </div>
+    <div class="manager-toggle" id="manager-toggle">&#9776;</div>
+
     <!-- FIXED LOGO (white for dark, switches) -->
     <div class="logo-fixed" id="logo-container">
         <svg viewBox="0 0 371.47 195.18" xmlns="http://www.w3.org/2000/svg" id="sl-logo">
@@ -655,9 +1001,64 @@
     <div class="presentation">
 
         <!-- =============================================
+             SLIDE 0: INTERNAL META SLIDE
+             ============================================= -->
+        <div class="slide active bg-dark" data-logo="white" data-title="Internal: How to use this deck" data-section="Overview" style="border-left: 4px solid var(--sl-red);">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 2rem; padding: 80px 60px 60px;">
+                <!-- Left: Title -->
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p style="display: inline-block; background: var(--sl-red); color: var(--sl-white); font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.5rem 1.25rem; margin-bottom: 1rem;">Internal / Work in progress</p>
+                    </div>
+                    <h1 class="t-hero fade-up" style="margin-bottom: 0.5rem; line-height: 1.05;">Corporate Partner<br>Master Deck</h1>
+                    <p class="fade-up" style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; opacity: 0.4; margin-bottom: 2rem;">Early draft</p>
+                    <p class="t-body fade-up" style="opacity: 0.6; max-width: 480px; margin-bottom: 2.5rem;">This is a living document. It contains all slides across every topic we present to corporate partners. Not all slides are meant to be shown at once.</p>
+                    <p class="fade-up" style="font-size: 0.75rem; opacity: 0.3;">Last updated: Feb 2026 / Christina Wiig</p>
+                </div>
+                <!-- Right: How to use -->
+                <div class="fade-up" style="flex: 0 0 440px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 2.5rem;">
+                    <p style="font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 2rem; color: var(--sl-red);">How to use this deck</p>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <span style="background: var(--sl-red); padding: 0.35rem 0.7rem; font-size: 0.8rem; font-weight: 700; border-radius: 4px; white-space: nowrap; min-width: 52px; text-align: center;">Tab</span>
+                            <div>
+                                <p style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem;">Open the slide selector</p>
+                                <p style="font-size: 0.8rem; opacity: 0.55; line-height: 1.4;">Browse all slides grouped by section</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <span style="background: var(--sl-red); padding: 0.35rem 0.7rem; font-size: 0.8rem; font-weight: 700; border-radius: 4px; white-space: nowrap; min-width: 52px; text-align: center;">Click</span>
+                            <div>
+                                <p style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem;">Select slides for your audience</p>
+                                <p style="font-size: 0.8rem; opacity: 0.55; line-height: 1.4;">Check or uncheck slides to build your set</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <span style="background: var(--sl-red); padding: 0.35rem 0.7rem; font-size: 0.8rem; font-weight: 700; border-radius: 4px; white-space: nowrap; min-width: 52px; text-align: center;">P</span>
+                            <div>
+                                <p style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem;">Present your selection</p>
+                                <p style="font-size: 0.8rem; opacity: 0.55; line-height: 1.4;">Full-screen mode with only the slides you picked</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <span style="background: var(--sl-red); padding: 0.35rem 0.7rem; font-size: 0.8rem; font-weight: 700; border-radius: 4px; white-space: nowrap; min-width: 52px; text-align: center;">Save</span>
+                            <div>
+                                <p style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem;">Save named presets</p>
+                                <p style="font-size: 0.8rem; opacity: 0.55; line-height: 1.4;">Reuse slide sets for recurring meetings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                        <p style="font-size: 0.8rem; opacity: 0.55; line-height: 1.5;">New slides can be added to any section or to the Slide Bank at the end. The deck grows as we develop new formats, cases, and materials.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
              SLIDE 1: TITLE
              ============================================= -->
-        <div class="slide active bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Helping corporates stay ahead" data-section="Overview">
             <div class="accent-circle" style="top: -100px; right: -100px;"></div>
             <div class="accent-circle" style="bottom: -150px; left: -50px; width: 300px; height: 300px;"></div>
             <div class="slide-inner justify-center">
@@ -672,10 +1073,10 @@
         <!-- =============================================
              SLIDE 2: SHARED VISION
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Nordic startups need to succeed" data-section="Overview">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
-                    <p class="t-label mb-md">Shared Vision</p>
+                    <p class="t-label mb-md">Shared Vision with Ignite Sweden</p>
                 </div>
                 <h2 class="t-hero fade-up" style="margin-bottom: 2rem;">Nordic startups<br>need to <span class="t-red">succeed</span></h2>
                 <p class="t-body fade-up" style="max-width: 600px; opacity: 0.8; margin-bottom: 1.5rem;">This has been our mission for 13+ years. We share Ignite's conviction that startups and corporates need better bridges.</p>
@@ -686,7 +1087,7 @@
         <!-- =============================================
              SLIDE 2B: WHY OPEN INNOVATION
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Open innovation is mission critical" data-section="Overview">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">The Case for Open Innovation</p>
@@ -734,7 +1135,7 @@
         <!-- =============================================
              SLIDE 3: AT A GLANCE
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="13 years of ecosystem building" data-section="Overview">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Startuplab at a Glance</p>
@@ -764,7 +1165,7 @@
         <!-- =============================================
              SLIDE 4: THE SWEDISH MODEL + WHY IT MATTERS
              ============================================= -->
-        <div class="slide bg-red" data-logo="white">
+        <div class="slide bg-red" data-logo="white" data-title="The Swedish Model" data-section="Model & Approach">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md" style="color: rgba(255,255,255,0.7);">Building on Existing Actors</p>
@@ -794,7 +1195,7 @@
         <!-- =============================================
              SLIDE 6: MATCHMAKING FORMATS
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Six formats for collaboration" data-section="Formats & Delivery">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">What We Deliver</p>
@@ -838,7 +1239,7 @@
         <!-- =============================================
              SLIDE 7B: PARTNERSHIP JOURNEY MAP
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Partnership journey map" data-section="Formats & Delivery">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">How It Works</p>
@@ -858,37 +1259,39 @@
                         </div>
                         <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Enter</div>
                         <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Summit</span>
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">MEET:Corporate</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Kick-off</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Onboarding</span>
                         </div>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">First exposure to startups and structured matchmaking</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Dedicated contact, strategic alignment, and tailored partnership plan</p>
                     </div>
 
-                    <!-- Phase 2: EXPLORE -->
+                    <!-- Phase 2: ENGAGE -->
                     <div style="flex: 1; text-align: center; position: relative; padding: 0 0.75rem;">
                         <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1;">
                             <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.25rem;">2</span>
                         </div>
-                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Explore</div>
+                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Engage</div>
                         <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Industry Programs</span>
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Workshops</span>
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Hackathons</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Summit</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">MEET:Corporate</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">CIN Network</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">CVC Network</span>
                         </div>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Sector-specific deep dives and hands-on problem solving</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Meet startups, connect with peers, and build your innovation network</p>
                     </div>
 
-                    <!-- Phase 3: DEEPEN -->
+                    <!-- Phase 3: ACTIVATE -->
                     <div style="flex: 1; text-align: center; position: relative; padding: 0 0.75rem;">
                         <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1;">
                             <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.25rem;">3</span>
                         </div>
-                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Deepen</div>
+                        <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Activate</div>
                         <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">CIN Network</span>
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Corporate Readiness</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Hackathons</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Innovation Academy</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Startup Collaborations</span>
                         </div>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Learn from peers, build internal capability and processes</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Hands-on collaboration, co-creation, and real-world problem solving</p>
                     </div>
 
                     <!-- Phase 4: SCALE -->
@@ -898,10 +1301,10 @@
                         </div>
                         <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Scale</div>
                         <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Pilot Design</span>
-                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Multi-year Partnership</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">From pilot to production</span>
+                            <span style="background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block;">Benefits realisation</span>
                         </div>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">From pilot to contract, with support for procurement and integration</p>
+                        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4;">Structured implementation support and measurable business impact</p>
                     </div>
                 </div>
 
@@ -911,38 +1314,10 @@
         <!-- =============================================
              SLIDE 8: SUCCESS CASE EVENTS & WORKSHOPS
              ============================================= -->
-        <div class="slide bg-light" data-logo="red">
-            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
-                <!-- Left: Content -->
-                <div style="flex: 1; min-width: 0;">
-                    <div class="fade-up">
-                        <p class="t-label mb-md">Workshops & Events</p>
-                    </div>
-                    <h2 class="t-medium fade-up mb-md">Success Case Events & Workshops</h2>
-                    <p class="t-body fade-up mb-lg" style="max-width: 500px; opacity: 0.8;">"How to Work with Startups" regular sessions for corporates, combined with live case presentations from successful collaborations.</p>
-                    <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        <span class="case-tag">Gjensidige x Mitigrate</span>
-                        <span class="case-tag">Fremtind x 7analytics</span>
-                        <span class="case-tag">Equinor x F3NICE</span>
-                        <span class="case-tag">OBOS x Parqio</span>
-                    </div>
-                </div>
-                <!-- Right: Two photos stacked -->
-                <div style="flex: 0 0 42%; display: flex; flex-direction: column; gap: 1rem; max-height: calc(100vh - 140px);">
-                    <div style="flex: 1; overflow: hidden;">
-                        <img src="img/img-cin-session.jpg" alt="CIN workshop session" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                    </div>
-                    <div style="flex: 1; overflow: hidden;">
-                        <img src="img/img-workshop-statkraft.jpg" alt="Statkraft workshop presentation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- =============================================
              SLIDE 9: MEET:CORPORATE
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="MEET:Corporate" data-section="MEET:Corporate">
             <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
                 <!-- Left: Content -->
                 <div style="flex: 1; min-width: 0;">
@@ -989,7 +1364,7 @@
         <!-- =============================================
              SLIDE 10: LARGE-SCALE EVENTS
              ============================================= -->
-        <div class="slide bg-white" data-logo="red">
+        <div class="slide bg-white" data-logo="red" data-title="MeetCorporates Oslo & Beyond" data-section="MEET:Corporate">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Large-Scale Events</p>
@@ -1010,7 +1385,7 @@
         <!-- =============================================
              SLIDE 11: SL CONSTRUCTION
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="SL Construction" data-section="Industry Programs">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Industry Programs</p>
@@ -1067,9 +1442,71 @@
         </div>
 
         <!-- =============================================
+             SLIDE: SL HARDWARE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="SL Hardware" data-section="Industry Programs">
+            <div class="slide-inner justify-center">
+                <div class="fade-up" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;">
+                    <p class="t-label">Industry Programs</p>
+                    <img src="../brand-profile/industry-programs/SL_programs_hardware/svg/SL_pro_hardware_white.svg" alt="SL Hardware" style="height: 24px; opacity: 0.5;">
+                </div>
+                <h2 class="t-large fade-up mb-md">SL <span class="t-red">Hardware</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.25rem; max-width: 1100px; margin-bottom: 1.5rem;">
+                    <!-- Card 1: Ready for Production Workshop -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">Ready for Production Workshop</p>
+                            <p class="t-small" style="opacity: 0.8;">Hands-on sessions helping hardware startups bridge the gap from prototype to scalable manufacturing.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px; background: var(--sl-gray-800); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.75rem;">
+                            <span>Photo TBD</span>
+                        </div>
+                    </div>
+                    <!-- Card 2: HW Advisory Board -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">HW Advisory Board</p>
+                            <p class="t-small" style="opacity: 0.8;">Industry veterans from Kongsberg, Sony, and Nordic sensor ecosystem guiding program strategy and startup connections.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px; background: var(--sl-gray-800); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.75rem;">
+                            <span>Photo TBD</span>
+                        </div>
+                    </div>
+                    <!-- Card 3: HW Playbook -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">HW Playbook</p>
+                            <p class="t-small" style="opacity: 0.8;">Structured methodology and templates for hardware commercialization, from design for manufacturing to supply chain setup.</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px; background: var(--sl-gray-800); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.75rem;">
+                            <span>Photo TBD</span>
+                        </div>
+                    </div>
+                    <!-- Card 4: Excursions and Conferences -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); margin-bottom: 0.5rem;">Excursions & Conferences</p>
+                            <p class="t-small" style="opacity: 0.8; margin-bottom: 0.5rem;">Field visits, trade shows, and conferences connecting hardware startups to corporates and supply chains.</p>
+                            <p style="font-size: 0.75rem; opacity: 0.45;">The Sensor Decade, CES, Electronica</p>
+                        </div>
+                        <div style="overflow: hidden; height: 180px;">
+                            <img src="img/img-sensor-decade.jpg" alt="The Sensor Decade conference" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                    <span class="case-tag">Sensor startups</span>
+                    <span class="case-tag">Deep tech</span>
+                    <span class="case-tag">MEMS & Photonics</span>
+                    <span class="t-small" style="opacity: 0.5;">Prototype to production</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
              SLIDE 12: SL ENERGY
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="SL Energy" data-section="Industry Programs">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Industry Programs</p>
@@ -1129,7 +1566,7 @@
         <!-- =============================================
              SLIDE 11B: HOUSTON CLIMATE WEEK
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Houston Climate Week" data-section="Industry Programs">
             <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
                 <!-- Left: Content -->
                 <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
@@ -1168,7 +1605,7 @@
         <!-- =============================================
              SLIDE 12B: CASE - EQUINOR + FIELDMADE
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Case: Equinor + Fieldmade" data-section="Industry Programs">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Case Study</p>
@@ -1208,30 +1645,34 @@
         <!-- =============================================
              SLIDE 14: STARTUPLAB SUMMIT
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white" style="overflow: hidden;">
-            <div class="slide-inner" style="justify-content: flex-start; padding-top: 80px; padding-bottom: 30px; position: relative; z-index: 2;">
-                <h2 class="t-large fade-up" style="margin-bottom: 0.75rem;">Startuplab <span class="t-red">Summit</span></h2>
-                <div class="fade-up" style="display: flex; gap: 2.5rem; align-items: flex-start; margin-bottom: 0.75rem;">
-                    <div class="stat-block">
-                        <div class="stat-number" style="font-size: 2rem;">500+</div>
-                        <div class="stat-label">Attendees</div>
+        <div class="slide bg-dark" data-logo="white" data-title="Startuplab Summit" data-section="Summit" style="overflow: hidden;">
+            <img src="logos/summit-startuplab.png" alt="Startuplab Summit" style="position: absolute; top: 30px; right: 40px; height: 36px; opacity: 0.7; z-index: 10;">
+            <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: 100%; max-height: 100%; padding: 0;">
+                <!-- Left: Content -->
+                <div style="padding: 80px 2.5rem 50px 60px; display: flex; flex-direction: column; justify-content: center;">
+                    <h2 class="t-large fade-up" style="margin-bottom: 1.25rem;">Startuplab <span class="t-red">Summit</span></h2>
+                    <div class="fade-up" style="display: flex; gap: 2rem; margin-bottom: 1.5rem;">
+                        <div class="stat-block">
+                            <div class="stat-number" style="font-size: 2rem;">500+</div>
+                            <div class="stat-label">Attendees</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" style="font-size: 2rem;">100</div>
+                            <div class="stat-label">Nordic startups</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" style="font-size: 2rem;">250+</div>
+                            <div class="stat-label">VC firms</div>
+                        </div>
                     </div>
-                    <div class="stat-block">
-                        <div class="stat-number" style="font-size: 2rem;">100</div>
-                        <div class="stat-label">Nordic startups</div>
-                    </div>
-                    <div class="stat-block">
-                        <div class="stat-number" style="font-size: 2rem;">250+</div>
-                        <div class="stat-label">VC firms</div>
-                    </div>
-                    <div class="process-steps" style="margin-left: auto; min-width: 380px; max-width: 500px;">
+                    <div class="fade-up" style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
                         <div class="process-step" style="padding: 0.6rem 0.75rem;">
                             <div class="step-num" style="font-size: 1rem;">01</div>
-                            <div class="step-label" style="font-size: 0.7rem;">Define headaches</div>
+                            <div class="step-label" style="font-size: 0.7rem;">Onboarding & kick-off</div>
                         </div>
                         <div class="process-step" style="padding: 0.6rem 0.75rem;">
                             <div class="step-num" style="font-size: 1rem;">02</div>
-                            <div class="step-label" style="font-size: 0.7rem;">Scout</div>
+                            <div class="step-label" style="font-size: 0.7rem;">MEET:Corporate</div>
                         </div>
                         <div class="process-step" style="padding: 0.6rem 0.75rem;">
                             <div class="step-num" style="font-size: 1rem;">03</div>
@@ -1239,13 +1680,28 @@
                         </div>
                         <div class="process-step" style="padding: 0.6rem 0.75rem;">
                             <div class="step-num" style="font-size: 1rem;">04</div>
-                            <div class="step-label" style="font-size: 0.7rem;">Sprint</div>
+                            <div class="step-label" style="font-size: 0.7rem;">Hackathons</div>
                         </div>
                     </div>
+                    <!-- Logo wall -->
+                    <div class="fade-up" style="flex: 1; overflow: hidden; min-height: 0;">
+                        <img src="img/img-summit-logos.png" alt="Summit startup logo wall" style="width: 100%; height: 100%; object-fit: contain; object-position: top left; display: block;">
+                    </div>
                 </div>
-                <!-- Logo wall fills remaining space -->
-                <div class="fade-up" style="flex: 1; margin-top: 0.75rem; overflow: hidden; min-height: 0;">
-                    <img src="img/img-summit-logos.png" alt="Summit startup logo wall" style="width: 100%; height: 100%; object-fit: contain; object-position: top center; display: block;">
+                <!-- Right: Photo grid -->
+                <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 0; height: 100%; overflow: hidden;">
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="img/summit-roundtable.png" alt="Summit roundtable discussions" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">Thematic roundtables</p>
+                        </div>
+                    </div>
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="img/summit-speeddating.png" alt="Startup speed-dating sessions" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                            <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">Startup speed-dating</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1253,7 +1709,8 @@
         <!-- =============================================
              SLIDE 15: NORDIC REACH + EXPANSION
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Nordic reach, local impact" data-section="Summit">
+            <img src="logos/summit-startuplab.png" alt="Startuplab Summit" style="position: absolute; top: 30px; right: 40px; height: 36px; opacity: 0.7; z-index: 10;">
             <div class="slide-inner" style="flex-direction: column; justify-content: center; padding: 70px 60px 50px;">
                 <!-- Lead-in -->
                 <div class="fade-up">
@@ -1262,47 +1719,62 @@
                 <h2 class="t-large fade-up" style="margin-bottom: 0.5rem;">Nordic reach,<br><span class="t-red">local impact</span></h2>
                 <p class="t-body fade-up" style="opacity: 0.6; max-width: 700px; margin-bottom: 2rem;">One event connecting the best climate and energy startups across the Nordics with corporates ready to collaborate. In 2025, we expanded through partnerships with leading hubs. In 2026, we include the Baltics.</p>
 
-                <!-- Nordic hub map -->
-                <div class="fade-up" style="display: flex; gap: 1.25rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <!-- Nordic hub cards with city photos -->
+                <div class="fade-up" style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
                     <!-- Norway / Oslo -->
-                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127475;&#127476;</div>
-                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Oslo</p>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Host city</p>
-                        <img src="SL_signature_white.svg" alt="Startuplab" style="height: 14px; opacity: 0.6;">
+                    <div style="flex: 1; min-width: 150px; position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 3/4;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; z-index: 2; background: linear-gradient(90deg, #BA0C2F 33%, #fff 33%, #fff 67%, #003087 67%);"></div>
+                        <img src="img/oslo.jpg" alt="Oslo" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; z-index: 1;">
+                            <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem;">Oslo</p>
+                            <p style="font-size: 0.65rem; opacity: 0.5; margin-bottom: 0.75rem;">Host city</p>
+                            <img src="logos/SL_signature_white.svg" alt="Startuplab" style="height: 16px; opacity: 0.7;">
+                        </div>
                     </div>
-                    <!-- Netherlands / Amsterdam -->
-                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.2);"></div>
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127475;&#127473;</div>
-                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Amsterdam</p>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
-                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.6;">Rockstart</p>
+                    <!-- Denmark / Copenhagen -->
+                    <div style="flex: 1; min-width: 150px; position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 3/4;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; z-index: 2; background: #C8102E; background-image: linear-gradient(#fff, #fff); background-size: 12% 100%; background-position: 30% 0; background-repeat: no-repeat;"></div>
+                        <img src="img/copenhagen.jpg" alt="Copenhagen" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; z-index: 1;">
+                            <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem;">Copenhagen</p>
+                            <p style="font-size: 0.65rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
+                            <img src="logos/rockstart-logo.png" alt="Rockstart" style="height: 22px; opacity: 0.8; filter: brightness(10);">
+                        </div>
                     </div>
                     <!-- Sweden / Stockholm -->
-                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.2);"></div>
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127480;&#127466;</div>
-                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Stockholm</p>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
-                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.6;">Norrsken</p>
+                    <div style="flex: 1; min-width: 150px; position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 3/4;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; z-index: 2; background: linear-gradient(90deg, #006AA7 30%, #FECC02 30%, #FECC02 45%, #006AA7 45%);"></div>
+                        <img src="img/stockholm.jpg" alt="Stockholm" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; z-index: 1;">
+                            <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem;">Stockholm</p>
+                            <p style="font-size: 0.65rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
+                            <img src="logos/norrsken-logo-white.png" alt="Norrsken" style="height: 22px; opacity: 0.8;">
+                        </div>
                     </div>
                     <!-- Finland / Helsinki -->
-                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.2);"></div>
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127467;&#127470;</div>
-                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Helsinki</p>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
-                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.6;">Maria 01</p>
+                    <div style="flex: 1; min-width: 150px; position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 3/4;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; z-index: 2; background: #fff; background-image: linear-gradient(#003580, #003580); background-size: 30% 100%; background-position: 25% 0; background-repeat: no-repeat;"></div>
+                        <img src="img/helsinki.jpg" alt="Helsinki" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; z-index: 1;">
+                            <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem;">Helsinki</p>
+                            <p style="font-size: 0.65rem; opacity: 0.5; margin-bottom: 0.75rem;">Partner hub</p>
+                            <img src="logos/maria01-logo.png" alt="Maria 01" style="height: 28px; opacity: 0.8; filter: brightness(10);">
+                        </div>
                     </div>
-                    <!-- Baltics / 2026 -->
-                    <div style="flex: 1; min-width: 140px; border: 1px solid rgba(255,255,255,0.15); border-style: dashed; padding: 1.25rem; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red); opacity: 0.5;"></div>
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">&#127466;&#127466;</div>
-                        <p style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem;">Baltics</p>
-                        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 0.75rem;">Expanding 2026</p>
-                        <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.4; font-style: italic;">TBA</p>
+                    <!-- Baltics / Tallinn -->
+                    <div style="flex: 1; min-width: 150px; position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 3/4;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; z-index: 2; background: linear-gradient(90deg, #0072CE 33%, #000 33%, #000 67%, #fff 67%);"></div>
+                        <img src="img/tallinn.jpg" alt="Tallinn" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; z-index: 1;">
+                            <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem;">Baltics</p>
+                            <p style="font-size: 0.65rem; opacity: 0.5; margin-bottom: 0.75rem;">Expanding 2026</p>
+                            <p style="font-size: 0.8rem; font-weight: 600; opacity: 0.4; font-style: italic;">TBA</p>
+                        </div>
                     </div>
                 </div>
 
@@ -1317,12 +1789,117 @@
         </div>
 
         <!-- =============================================
-             SLIDE 18: CIN - CORPORATE INNOVATION NETWORK
+             SLIDE 19: SECTION DIVIDER - FOR STARTUPS
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-red" data-logo="white" data-title="For Startups" data-section="For Startups">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">For Startups</p>
+                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">We turn corporate<br>complexity into<br>opportunity</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 20: STARTUP SUPPORT
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="Startup readiness" data-section="For Startups">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Startup Readiness</p>
+                </div>
+                <h2 class="t-medium fade-up mb-lg">More than matchmaking</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Open Doors</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Warm introductions to decision makers, not just cold matching. We leverage 13 years of relationships.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Sales & Pitch Training</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Corporate Sales Bootcamp and "Rules of Engagement" guide for startup-corporate dynamics.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px; overflow: hidden;">
+                            <img src="img/img-sales-training.jpg" alt="Sales training session" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Procurement Navigation</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Helping startups through complex procurement processes.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
+                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Legal & Negotiation</h3>
+                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Legal support, negotiation guidance, NDA templates, and contract review for startup-corporate deals.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 22: SECTION DIVIDER - FOR CORPORATES
+             ============================================= -->
+        <div class="slide bg-red-dark" data-logo="white" data-title="For Corporates" data-section="For Corporates">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">For Corporates</p>
+                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">Access the innovators<br>already solving<br>your problems</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             CIN - DEEP DIVE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="CIN deep dive" data-section="For Corporates">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Corporate Innovation Network</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Learning from<br><span class="t-red">each other</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Placeholder: Elaborate on CIN format, topics covered, participation growth, and specific insights shared by host companies.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 900px;">
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">How it works</h3>
+                        <p class="t-small" style="opacity: 0.8;">Monthly "Hjemme hos" format: one corporate hosts, shares their startup collaboration journey, open Q&A with peers.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Why it matters</h3>
+                        <p class="t-small" style="opacity: 0.8;">Corporates learn from peers, not consultants. Reduces fear, increases speed. "How did you actually do it?"</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Topics covered</h3>
+                        <p class="t-small" style="opacity: 0.8;">Procurement hacks, internal buy-in, scaling pilots, legal frameworks, measuring innovation ROI.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Growth</h3>
+                        <p class="t-small" style="opacity: 0.8;">Placeholder: Add member growth from 2022 to today, attendance rates, and expansion plans.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             CIN - CORPORATE INNOVATION NETWORK
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="Corporate Innovation Network" data-section="For Corporates">
             <div class="slide-inner" style="justify-content: center; padding: 60px 60px 50px;">
                 <div class="fade-up">
-                    <p class="t-label mb-md">Community</p>
+                    <p class="t-label mb-md">Network</p>
                 </div>
                 <h2 class="t-large fade-up" style="margin-bottom: 0.5rem;">Where innovation leaders<br><span class="t-red">learn from each other</span></h2>
                 <p class="t-body fade-up" style="opacity: 0.7; max-width: 800px; margin-bottom: 1.25rem;">Corporate Innovation Network: a rotating "Hjemme hos" format where corporates host, share real experiences, and tackle the hard questions together. 4-6 events per year.</p>
@@ -1428,133 +2005,40 @@
         </div>
 
         <!-- =============================================
-             SLIDE 19: SECTION DIVIDER - FOR STARTUPS
+             EVENTS & WORKSHOPS
              ============================================= -->
-        <div class="slide bg-red" data-logo="white">
-            <div class="slide-inner">
-                <div class="section-divider">
-                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">For Startups</p>
-                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">We turn corporate<br>complexity into<br>opportunity</h2>
+        <div class="slide bg-light" data-logo="red" data-title="Events & Workshops" data-section="For Corporates">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
+                <!-- Left: Content -->
+                <div style="flex: 1; min-width: 0;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Workshops & Events</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md">Success Case Events & Workshops</h2>
+                    <p class="t-body fade-up mb-lg" style="max-width: 500px; opacity: 0.8;">"How to Work with Startups" regular sessions for corporates, combined with live case presentations from successful collaborations.</p>
+                    <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span class="case-tag">Gjensidige x Mitigrate</span>
+                        <span class="case-tag">Fremtind x 7analytics</span>
+                        <span class="case-tag">Equinor x F3NICE</span>
+                        <span class="case-tag">OBOS x Parqio</span>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- =============================================
-             SLIDE 20: STARTUP SUPPORT
-             ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
-            <div class="slide-inner justify-center">
-                <div class="fade-up">
-                    <p class="t-label mb-md">Startup Readiness</p>
-                </div>
-                <h2 class="t-medium fade-up mb-lg">More than matchmaking</h2>
-                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
-                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
-                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Open Doors</h3>
-                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Warm introductions to decision makers, not just cold matching. We leverage 13 years of relationships.</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
-                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
-                        </div>
+                <!-- Right: Two photos stacked -->
+                <div style="flex: 0 0 42%; display: flex; flex-direction: column; gap: 1rem; max-height: calc(100vh - 140px);">
+                    <div style="flex: 1; overflow: hidden;">
+                        <img src="img/img-cin-session.jpg" alt="CIN workshop session" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
-                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
-                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Sales & Pitch Training</h3>
-                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Corporate Sales Bootcamp and "Rules of Engagement" guide for startup-corporate dynamics.</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px; overflow: hidden;">
-                            <img src="img/img-sales-training.jpg" alt="Sales training session" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
-                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
-                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Procurement Navigation</h3>
-                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Helping startups through complex procurement processes.</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
-                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
-                        <div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: center;">
-                            <h3 style="color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700;">Legal & Negotiation</h3>
-                            <p class="t-small" style="opacity: 0.8; font-size: 0.8rem;">Legal support, negotiation guidance, NDA templates, and contract review for startup-corporate deals.</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; min-height: 140px;">
-                            <span style="font-size: 0.7rem; opacity: 0.3;">Photo TBD</span>
-                        </div>
+                    <div style="flex: 1; overflow: hidden;">
+                        <img src="img/img-workshop-statkraft.jpg" alt="Statkraft workshop presentation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- =============================================
-             SLIDE 20: STRATEGIC SALES TRAINING
+             CORPORATE INNOVATION SUPPORT
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
-            <div class="slide-inner">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: 100%; max-height: 100%;">
-                    <!-- Left: Content -->
-                    <div style="padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center;">
-                        <p class="t-label fade-up" style="color: var(--sl-red); margin-bottom: 0.75rem;">Corporate Sales Bootcamp</p>
-                        <h2 class="t-large fade-up" style="margin-bottom: 1.5rem; line-height: 1.15;">From knowledge<br>to know-how</h2>
-                        <p class="t-small fade-up" style="opacity: 0.7; margin-bottom: 1.75rem; max-width: 420px;">Practical, hands-on training. Whiteboard sessions, group exercises, and frameworks you can use the next day.</p>
-
-                        <div style="display: flex; flex-direction: column; gap: 1rem;" class="fade-up">
-                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">01</span>
-                                <div>
-                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Why selling and buying is hard</h4>
-                                    <p style="opacity: 0.5; font-size: 0.75rem;">Understanding and labeling common obstacles facing sellers and buyers.</p>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">02</span>
-                                <div>
-                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Creating strategic alignment</h4>
-                                    <p style="opacity: 0.5; font-size: 0.75rem;">Build a value pyramid. Link technical capability to high-level goals. Rise above the noise.</p>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">03</span>
-                                <div>
-                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Creating the case for change</h4>
-                                    <p style="opacity: 0.5; font-size: 0.75rem;">Control stakeholders, accelerate decisions. The "3 Whys" framework for getting initiatives rolling.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right: Photo stack -->
-                    <div style="display: flex; flex-direction: column; overflow: hidden;">
-                        <div style="flex: 1; overflow: hidden;">
-                            <img src="img/img-strategic-sales-workshop.jpg" alt="Whiteboard workshop session" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div style="flex: 1; overflow: hidden;">
-                            <img src="img/img-strategic-sales-conversation.jpg" alt="Participants in discussion" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- =============================================
-             SLIDE 22: SECTION DIVIDER - FOR CORPORATES
-             ============================================= -->
-        <div class="slide bg-red-dark" data-logo="white">
-            <div class="slide-inner">
-                <div class="section-divider">
-                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">For Corporates</p>
-                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">Access the innovators<br>already solving<br>your problems</h2>
-                </div>
-            </div>
-        </div>
-
-        <!-- =============================================
-             SLIDE 22: CORPORATE INNOVATION SUPPORT
-             ============================================= -->
-        <div class="slide bg-light" data-logo="red">
+        <div class="slide bg-light" data-logo="red" data-title="Corporate innovation support" data-section="For Corporates">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Corporate Readiness</p>
@@ -1592,7 +2076,7 @@
         <!-- =============================================
              SLIDE 23: INFRASTRUCTURE
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Infrastructure & foundation" data-section="Foundation">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Infrastructure</p>
@@ -1618,7 +2102,7 @@
         <!-- =============================================
              SLIDE 24: SUMMARY / IMPACT
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="13 years of impact" data-section="Foundation">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">13 Years of Impact</p>
@@ -1656,7 +2140,7 @@
         <!-- =============================================
              SLIDE BANK: WHY IT WORKS (testimonials)
              ============================================= -->
-        <div class="slide bg-light" data-logo="red">
+        <div class="slide bg-light" data-logo="red" data-title="Partner testimonials" data-section="Slide Bank">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Why It Works</p>
@@ -1696,71 +2180,43 @@
         <!-- =============================================
              SLIDE BANK: IN THE NEWS
              ============================================= -->
-        <div class="slide bg-white" data-logo="red">
+        <div class="slide bg-white" data-logo="red" data-title="In the News" data-section="Slide Bank">
             <div class="slide-inner" style="justify-content: center; padding: 60px 50px;">
                 <div class="fade-up">
                     <p class="t-label mb-md">In the News</p>
                 </div>
                 <h2 class="t-medium fade-up" style="color: var(--sl-black); margin-bottom: 1.5rem;">Startuplab companies making headlines</h2>
-                <div class="fade-up" style="display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr 1fr; gap: 0.75rem; flex: 1; min-height: 0; max-height: calc(100vh - 240px);">
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-rekordinteresse.jpg" alt="Rekordinteresse for norske startups - Finansavisen" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem; flex: 1; min-height: 0; max-height: calc(100vh - 220px); align-content: start;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-rekordinteresse.jpg" alt="Rekordinteresse for norske startups - Finansavisen" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-zivid-oda.png" alt="Zivid 3D-kameraer - Dagens Næringsliv" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-zivid-oda.png" alt="Zivid 3D-kameraer - Dagens Næringsliv" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-skiwo.png" alt="Skiwo 669% vekst - Finansavisen" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-skiwo.png" alt="Skiwo 669% vekst - Finansavisen" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-tise.png" alt="Tise halv milliard - Dagens Næringsliv" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-tise.png" alt="Tise halv milliard - Dagens Næringsliv" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-sensorita.png" alt="Sensorita Ulrikke Lien - Finansavisen" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-sensorita.png" alt="Sensorita Ulrikke Lien - Finansavisen" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-moller-sirken.png" alt="Møller satser på Sirken - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-moller-sirken.png" alt="Møller satser på Sirken - Shifter" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-sloyd.png" alt="Sloyd 3D-verktøy - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-sloyd.png" alt="Sloyd 3D-verktøy - Shifter" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-obos-parqio.png" alt="OBOS og AF Gruppen satser på Parqio - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-obos-parqio.png" alt="OBOS og AF Gruppen satser på Parqio - Shifter" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-dnb-lucidtech.png" alt="DNB valgte Lucidtech - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-dnb-lucidtech.png" alt="DNB valgte Lucidtech - Shifter" style="width: 100%; height: auto; display: block;">
                     </div>
-                    <div style="overflow: hidden; border: 1px solid var(--sl-gray-200); position: relative;">
-                        <img src="img/img-news-fremtind-klima.png" alt="Klimastartup og Fremtind - Shifter" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+                    <div style="border: 1px solid var(--sl-gray-200); background: #fff;">
+                        <img src="img/img-news-fremtind-klima.png" alt="Klimastartup og Fremtind - Shifter" style="width: 100%; height: auto; display: block;">
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- =============================================
-             SLIDE BANK: MEET:CORPORATE - WILHELMSEN CASE
-             ============================================= -->
-        <div class="slide bg-light" data-logo="red">
-            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
-                <div style="flex: 1; min-width: 0;">
-                    <div class="fade-up">
-                        <p class="t-label mb-md">MEET:Corporate Case</p>
-                    </div>
-                    <h2 class="t-medium fade-up mb-md" style="color: var(--sl-black);">Wilhelmsen + <span class="t-red">[Startup TBD]</span></h2>
-                    <p class="t-body fade-up" style="color: var(--sl-black); opacity: 0.7; max-width: 500px; margin-bottom: 1.5rem;">Placeholder: Detail a specific MEET:Corporate match that led to pilot or contract. Show the journey from curated session to outcome.</p>
-                    <div class="fade-up" style="display: flex; gap: 2rem;">
-                        <div class="stat-block">
-                            <div class="stat-number" style="color: var(--sl-red);">1:1</div>
-                            <div class="stat-label" style="color: var(--sl-black);">Curated match</div>
-                        </div>
-                        <div class="stat-block">
-                            <div class="stat-number" style="color: var(--sl-red);">3 mo</div>
-                            <div class="stat-label" style="color: var(--sl-black);">To pilot</div>
-                        </div>
-                    </div>
-                </div>
-                <div style="flex: 1; min-width: 0; height: 400px; background: var(--sl-gray-100); display: flex; align-items: center; justify-content: center; color: var(--sl-muted); font-size: 0.85rem;">
-                    Photo TBD
                 </div>
             </div>
         </div>
@@ -1768,7 +2224,7 @@
         <!-- =============================================
              SLIDE BANK: MEET:CORPORATE - RESULTS OVERVIEW
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="MEET:Corporate results" data-section="Slide Bank">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">MEET:Corporate</p>
@@ -1795,7 +2251,8 @@
         <!-- =============================================
              SLIDE BANK: SUMMIT - DETAILED FORMAT
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Summit detailed format" data-section="Slide Bank">
+            <img src="logos/summit-startuplab.png" alt="Startuplab Summit" style="position: absolute; top: 30px; right: 40px; height: 36px; opacity: 0.7; z-index: 10;">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Summit</p>
@@ -1830,7 +2287,8 @@
         <!-- =============================================
              SLIDE BANK: SUMMIT - 2025 HIGHLIGHTS
              ============================================= -->
-        <div class="slide bg-white" data-logo="red">
+        <div class="slide bg-white" data-logo="red" data-title="Summit 2025 highlights" data-section="Slide Bank">
+            <img src="logos/summit-startuplab.png" alt="Startuplab Summit" style="position: absolute; top: 30px; right: 40px; height: 36px; opacity: 0.5; z-index: 10; filter: brightness(0);">
             <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
                 <div style="flex: 1; min-width: 0;">
                     <div class="fade-up">
@@ -1862,7 +2320,7 @@
         <!-- =============================================
              SLIDE BANK: INDUSTRY PROGRAMS - OVERVIEW
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Industry programs overview" data-section="Slide Bank">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Industry Programs</p>
@@ -1892,7 +2350,7 @@
         <!-- =============================================
              SLIDE BANK: INDUSTRY - OBOS + FINDABLE CASE
              ============================================= -->
-        <div class="slide bg-light" data-logo="red">
+        <div class="slide bg-light" data-logo="red" data-title="Case: OBOS + Findable" data-section="Slide Bank">
             <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
                 <div style="flex: 1; min-width: 0;">
                     <div class="fade-up">
@@ -1920,7 +2378,7 @@
         <!-- =============================================
              SLIDE BANK: CASE - NYE VEIER + HIVE AUTONOMY
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Case: Nye Veier + Hive Autonomy" data-section="Slide Bank">
             <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: 100%; padding: 0;">
                 <!-- Left: Story -->
                 <div style="padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center;">
@@ -1970,9 +2428,7 @@
                         muted
                         loop
                         playsinline
-                        onmouseenter="this.play()"
-                        onmouseleave="this.pause()"
-                        poster=""
+                        autoplay
                     >
                     </video>
                 </div>
@@ -1980,40 +2436,9 @@
         </div>
 
         <!-- =============================================
-             SLIDE BANK: CIN - DEEP DIVE
-             ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
-            <div class="slide-inner justify-center">
-                <div class="fade-up">
-                    <p class="t-label mb-md">Corporate Innovation Network</p>
-                </div>
-                <h2 class="t-large fade-up mb-md">Learning from<br><span class="t-red">each other</span></h2>
-                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Placeholder: Elaborate on CIN format, topics covered, participation growth, and specific insights shared by host companies.</p>
-                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 900px;">
-                    <div class="glass-card">
-                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">How it works</h3>
-                        <p class="t-small" style="opacity: 0.8;">Monthly "Hjemme hos" format: one corporate hosts, shares their startup collaboration journey, open Q&A with peers.</p>
-                    </div>
-                    <div class="glass-card">
-                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Why it matters</h3>
-                        <p class="t-small" style="opacity: 0.8;">Corporates learn from peers, not consultants. Reduces fear, increases speed. "How did you actually do it?"</p>
-                    </div>
-                    <div class="glass-card">
-                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Topics covered</h3>
-                        <p class="t-small" style="opacity: 0.8;">Procurement hacks, internal buy-in, scaling pilots, legal frameworks, measuring innovation ROI.</p>
-                    </div>
-                    <div class="glass-card">
-                        <h3 style="color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem;">Growth</h3>
-                        <p class="t-small" style="opacity: 0.8;">Placeholder: Add member growth from 2022 to today, attendance rates, and expansion plans.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- =============================================
              SLIDE BANK: HACKATHONS & SPRINTS - KRAFTHACK
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Krafthack" data-section="Slide Bank">
             <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
                 <div style="flex: 1; min-width: 0;">
                     <div class="fade-up">
@@ -2045,7 +2470,7 @@
         <!-- =============================================
              SLIDE BANK: HACKATHONS & SPRINTS - OVERVIEW
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Hackathons & Sprints" data-section="Slide Bank">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Hackathons & Sprints</p>
@@ -2075,7 +2500,7 @@
         <!-- =============================================
              SLIDE BANK: CORPORATE READINESS - TRAINING
              ============================================= -->
-        <div class="slide bg-dark" data-logo="white">
+        <div class="slide bg-dark" data-logo="white" data-title="Corporate readiness training" data-section="Slide Bank">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Corporate Readiness</p>
@@ -2106,7 +2531,7 @@
         <!-- =============================================
              SLIDE BANK: CORPORATE READINESS - DNB CASE
              ============================================= -->
-        <div class="slide bg-light" data-logo="red">
+        <div class="slide bg-light" data-logo="red" data-title="Case: DNB partnership" data-section="Slide Bank">
             <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px;">
                 <div style="flex: 1; min-width: 0;">
                     <div class="fade-up">
@@ -2134,7 +2559,7 @@
         <!-- =============================================
              SLIDE BANK: CORPORATE READINESS - TOOLS
              ============================================= -->
-        <div class="slide bg-white" data-logo="red">
+        <div class="slide bg-white" data-logo="red" data-title="Readiness tools & templates" data-section="Slide Bank">
             <div class="slide-inner justify-center">
                 <div class="fade-up">
                     <p class="t-label mb-md">Corporate Readiness</p>
@@ -2162,9 +2587,171 @@
         </div>
 
         <!-- =============================================
+             SLIDE BANK: INNOVATION ACADEMY - DIVIDER
+             ============================================= -->
+        <div class="slide bg-red-dark" data-logo="white" data-title="Innovation Academy" data-section="Innovation Academy">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">Innovation Academy</p>
+                    <h2 class="t-hero fade-up">Learn from<br><span style="opacity: 0.7;">founders</span></h2>
+                    <p class="t-body fade-up" style="opacity: 0.6; max-width: 600px; margin-top: 1.5rem;">Hands-on courses and formats that give your teams real skills from the startup world.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INNOVATION ACADEMY - VIBECODING
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="VibeLabs / Vibecoding" data-section="Innovation Academy">
+            <div class="slide-inner" style="flex-direction: column; justify-content: center; padding: 70px 60px 50px;">
+                <div class="fade-up">
+                    <p class="t-label mb-sm" style="color: var(--sl-red);">VibeLabs by Startuplab</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 1.5rem;">Build with AI,<br><span class="t-red">not just talk about it</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Vibecoding workshops where your teams build real prototypes in hours, not months. From idea to working demo in a single session, using AI-assisted development.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1000px;">
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem;">1 day</div>
+                        <p style="font-size: 0.8rem; opacity: 0.5;">From zero to working prototype. No prior coding experience needed.</p>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem;">AI-native</div>
+                        <p style="font-size: 0.8rem; opacity: 0.5;">Participants use AI tools to build, not just brainstorm. Real output, real skills.</p>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem;">Tailored</div>
+                        <p style="font-size: 0.8rem; opacity: 0.5;">Customized to your industry and challenges. Build tools your teams will actually use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INNOVATION ACADEMY - STRATEGIC SALES
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="Strategic sales training" data-section="Innovation Academy">
+            <div class="slide-inner">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: 100%; max-height: 100%;">
+                    <!-- Left: Content -->
+                    <div style="padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center;">
+                        <p class="t-label fade-up" style="color: var(--sl-red); margin-bottom: 0.75rem;">Corporate Sales Bootcamp</p>
+                        <h2 class="t-large fade-up" style="margin-bottom: 1.5rem; line-height: 1.15;">From knowledge<br>to know-how</h2>
+                        <p class="t-small fade-up" style="opacity: 0.7; margin-bottom: 1.75rem; max-width: 420px;">Practical, hands-on training. Whiteboard sessions, group exercises, and frameworks you can use the next day.</p>
+
+                        <div style="display: flex; flex-direction: column; gap: 1rem;" class="fade-up">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">01</span>
+                                <div>
+                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Why selling and buying is hard</h4>
+                                    <p style="opacity: 0.5; font-size: 0.75rem;">Understanding and labeling common obstacles facing sellers and buyers.</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">02</span>
+                                <div>
+                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Creating strategic alignment</h4>
+                                    <p style="opacity: 0.5; font-size: 0.75rem;">Build a value pyramid. Link technical capability to high-level goals. Rise above the noise.</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="color: var(--sl-red); font-weight: 900; font-size: 1.1rem; line-height: 1.4;">03</span>
+                                <div>
+                                    <h4 style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem;">Creating the case for change</h4>
+                                    <p style="opacity: 0.5; font-size: 0.75rem;">Control stakeholders, accelerate decisions. The "3 Whys" framework for getting initiatives rolling.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Photo stack -->
+                    <div style="display: flex; flex-direction: column; overflow: hidden;">
+                        <div style="flex: 1; overflow: hidden;">
+                            <img src="img/img-strategic-sales-workshop.jpg" alt="Whiteboard workshop session" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="flex: 1; overflow: hidden;">
+                            <img src="img/img-strategic-sales-conversation.jpg" alt="Participants in discussion" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INNOVATION ACADEMY - PITCH TRAINING
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="Pitch training for corporates" data-section="Innovation Academy">
+            <div class="slide-inner" style="flex-direction: column; justify-content: center; padding: 70px 60px 50px;">
+                <div class="fade-up">
+                    <p class="t-label mb-sm" style="color: var(--sl-red);">Pitch Training</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 1.5rem;">Pitch like a<br><span class="t-red">founder</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">Internal innovation teams learn to pitch their ideas the way startups do: concise, compelling, and investor-ready. Get buy-in faster from leadership and stakeholders.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1000px;">
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Storytelling</div>
+                        <p style="font-size: 0.8rem; opacity: 0.5;">Structure your innovation case. Problem, solution, impact, ask.</p>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Live coaching</div>
+                        <p style="font-size: 0.8rem; opacity: 0.5;">Real-time feedback from founders and investors. Iterate on stage.</p>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Board-ready</div>
+                        <p style="font-size: 0.8rem; opacity: 0.5;">Walk out with a polished pitch deck and delivery you can use tomorrow.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INNOVATION ACADEMY - HACKATHON AS A SERVICE
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="Hackathon as a Service" data-section="Innovation Academy">
+            <div class="slide-inner" style="flex-direction: column; justify-content: center; padding: 70px 60px 50px;">
+                <div class="fade-up">
+                    <p class="t-label mb-sm" style="color: var(--sl-red);">Hackathon as a Service</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 1.5rem;">From challenge to<br><span class="t-red">prototype in 48h</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.7; max-width: 700px; margin-bottom: 2rem;">We design, recruit, and run hackathons tailored to your corporate challenges. Startups, developers, and domain experts co-create solutions at speed.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; max-width: 1100px;">
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 0.5rem;">Step 1</div>
+                        <div style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Scope</div>
+                        <p style="font-size: 0.75rem; opacity: 0.5;">Define challenge, success criteria, and participant mix.</p>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 0.5rem;">Step 2</div>
+                        <div style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Recruit</div>
+                        <p style="font-size: 0.75rem; opacity: 0.5;">Tap into 400+ startups and tech talent network.</p>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 0.5rem;">Step 3</div>
+                        <div style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Build</div>
+                        <p style="font-size: 0.75rem; opacity: 0.5;">48-hour sprint. Mentors, APIs, and working prototypes.</p>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--sl-red);"></div>
+                        <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 0.5rem;">Step 4</div>
+                        <div style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Scale</div>
+                        <p style="font-size: 0.75rem; opacity: 0.5;">Best solutions move to pilot. Follow-up pathway built in.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
              SLIDE 25: CLOSING
              ============================================= -->
-        <div class="slide bg-red" data-logo="white">
+        <div class="slide bg-red" data-logo="white" data-title="Closing" data-section="Closing">
             <div class="slide-inner justify-center" style="align-items: flex-start;">
                 <div class="fade-up">
                     <div class="red-line" style="background: var(--sl-white); width: 80px; height: 4px; margin-bottom: 2.5rem;"></div>
@@ -2190,88 +2777,665 @@
     </div>
 
     <script>
-        // Section start indices for visual grouping in dots
-        const sectionStarts = [0, 3, 4, 22];
+    // ============================================
+    // DECK BUILDER ENGINE
+    // ============================================
+    let allSlides = Array.from(document.querySelectorAll('.presentation > .slide'));
+    let totalSlides = allSlides.length;
+    const STORAGE_KEY = 'sl-deck-builder';
 
-        let current = 0;
-        const slides = document.querySelectorAll('.slide');
-        const total = slides.length;
+    function refreshSlides() {
+        allSlides = Array.from(document.querySelectorAll('.presentation > .slide'));
+        totalSlides = allSlides.length;
+    }
 
-        // Logo color management
-        const logoPaths = document.querySelectorAll('#logo-paths path');
-        function setLogoColor(color) {
-            const fill = color === 'white' ? '#FFFFFF' : '#FF3333';
-            logoPaths.forEach(p => p.setAttribute('fill', fill));
-        }
+    // State
+    let state = {
+        current: 0,
+        selected: new Set([...Array(totalSlides).keys()]), // all selected by default
+        presenting: false,
+        presets: {}
+    };
 
-        // Initialize dots
-        const dotsContainer = document.getElementById('dots');
-        for (let i = 0; i < total; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot' + (i === 0 ? ' active' : '') + (sectionStarts.includes(i) && i > 0 ? ' section-start' : '');
-            dot.onclick = () => goTo(i);
-            dot.style.cursor = 'pointer';
-            dotsContainer.appendChild(dot);
-        }
+    // Load state from localStorage
+    function loadState() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (saved) {
+                if (saved.selected) state.selected = new Set(saved.selected);
+                if (saved.presets) state.presets = saved.presets;
+            }
+        } catch(e) {}
+    }
+    function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            selected: [...state.selected],
+            presets: state.presets
+        }));
+    }
 
-        function goTo(index) {
-            if (index < 0 || index >= total) return;
-            slides[current].classList.remove('active');
-            current = index;
-            slides[current].classList.add('active');
+    // ============================================
+    // BUILD SIDEBAR
+    // ============================================
+    function buildSidebar() {
+        const container = document.getElementById('manager-slides');
+        container.innerHTML = '';
 
-            // Update dots
-            document.querySelectorAll('.dot').forEach((d, i) => {
-                d.classList.toggle('active', i === current);
+        // Group slides by section
+        const sections = [];
+        let currentSection = null;
+        allSlides.forEach((slide, i) => {
+            const sec = slide.dataset.section || 'Other';
+            if (!currentSection || currentSection.name !== sec) {
+                currentSection = { name: sec, slides: [] };
+                sections.push(currentSection);
+            }
+            currentSection.slides.push({ index: i, slide });
+        });
+
+        sections.forEach(section => {
+            const group = document.createElement('div');
+            group.className = 'section-group';
+            group.dataset.sectionName = section.name;
+
+            // Section header
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.setAttribute('draggable', 'true');
+
+            // Section drag handle
+            const sectionGrip = document.createElement('span');
+            sectionGrip.className = 'section-drag-handle';
+            sectionGrip.textContent = '\u2801';
+
+            const arrow = document.createElement('span');
+            arrow.className = 'section-arrow';
+            arrow.textContent = '\u25BE';
+
+            const name = document.createElement('span');
+            name.className = 'section-name';
+            name.textContent = section.name + ' (' + section.slides.length + ')';
+
+            const toggle = document.createElement('span');
+            toggle.className = 'section-toggle';
+            const allSelected = section.slides.every(s => state.selected.has(s.index));
+            toggle.textContent = allSelected ? 'deselect' : 'select all';
+
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const allSel = section.slides.every(s => state.selected.has(s.index));
+                section.slides.forEach(s => {
+                    if (allSel) state.selected.delete(s.index);
+                    else state.selected.add(s.index);
+                });
+                saveState();
+                buildSidebar();
+                updateCount();
             });
 
-            // Update counter
-            document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+            header.addEventListener('click', (e) => {
+                if (e.target === sectionGrip) return;
+                group.classList.toggle('collapsed');
+            });
 
-            // Update nav buttons
-            document.getElementById('prev-btn').disabled = current === 0;
-            document.getElementById('next-btn').disabled = current === total - 1;
+            // Section-level drag events
+            header.addEventListener('dragstart', (e) => {
+                // Only trigger section drag from the grip handle or header itself
+                dragState.sourceIndex = null;
+                dragState.sourceItem = null;
+                dragState.sectionName = section.name;
+                group.classList.add('dragging-section');
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', 'section:' + section.name);
+            });
 
-            // Update logo color based on slide background
-            const logoType = slides[current].getAttribute('data-logo') || 'white';
-            setLogoColor(logoType);
-        }
+            header.addEventListener('dragend', () => {
+                group.classList.remove('dragging-section');
+                clearDropIndicators();
+                document.querySelectorAll('.section-group').forEach(g => {
+                    g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                });
+                dragState.sectionName = null;
+            });
 
-        function next() { goTo(current + 1); }
-        function prev() { goTo(current - 1); }
+            group.addEventListener('dragover', (e) => {
+                // Only respond to section-level drags
+                if (!dragState.sectionName) return;
+                if (dragState.sectionName === section.name) return;
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                document.querySelectorAll('.section-group').forEach(g => {
+                    g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                });
+                const rect = group.getBoundingClientRect();
+                const midY = rect.top + rect.height / 2;
+                if (e.clientY < midY) {
+                    group.classList.add('drag-over-section-top');
+                } else {
+                    group.classList.add('drag-over-section-bottom');
+                }
+            });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
-            if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
-            if (e.key === 'Home') { e.preventDefault(); goTo(0); }
-            if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+            group.addEventListener('dragleave', (e) => {
+                // Only clear if leaving the group entirely
+                if (!group.contains(e.relatedTarget)) {
+                    group.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                }
+            });
+
+            group.addEventListener('drop', (e) => {
+                if (!dragState.sectionName) return;
+                if (dragState.sectionName === section.name) return;
+                e.preventDefault();
+                e.stopPropagation();
+                document.querySelectorAll('.section-group').forEach(g => {
+                    g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                });
+                const rect = group.getBoundingClientRect();
+                const midY = rect.top + rect.height / 2;
+                const insertBefore = e.clientY < midY;
+                reorderSection(dragState.sectionName, section.name, insertBefore);
+            });
+
+            header.appendChild(sectionGrip);
+            header.appendChild(arrow);
+            header.appendChild(name);
+            header.appendChild(toggle);
+            group.appendChild(header);
+
+            // Slides container
+            const slidesDiv = document.createElement('div');
+            slidesDiv.className = 'section-slides';
+
+            section.slides.forEach(({ index, slide }) => {
+                const item = document.createElement('div');
+                item.className = 'slide-item' + (state.selected.has(index) ? ' selected' : '') + (index === state.current ? ' active-preview' : '');
+                item.setAttribute('draggable', 'true');
+                item.dataset.slideIndex = index;
+
+                // Drag handle
+                const grip = document.createElement('span');
+                grip.className = 'slide-drag-handle';
+                grip.textContent = '\u2801\u2801';
+
+                // Checkbox
+                const check = document.createElement('div');
+                check.className = 'slide-check';
+                check.textContent = '\u2713';
+                check.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (state.selected.has(index)) state.selected.delete(index);
+                    else state.selected.add(index);
+                    saveState();
+                    item.classList.toggle('selected');
+                    check.textContent = '\u2713';
+                    updateCount();
+                    // Update section toggle text
+                    const allSel = section.slides.every(s => state.selected.has(s.index));
+                    toggle.textContent = allSel ? 'deselect' : 'select all';
+                });
+
+                // Background dot
+                const bgDot = document.createElement('div');
+                bgDot.className = 'slide-bg-dot';
+                const classes = slide.className;
+                if (classes.includes('bg-red-dark')) bgDot.classList.add('bg-red-dot');
+                else if (classes.includes('bg-red')) bgDot.classList.add('bg-red-dot');
+                else if (classes.includes('bg-light')) bgDot.classList.add('bg-light-dot');
+                else if (classes.includes('bg-white')) bgDot.classList.add('bg-white-dot');
+                else bgDot.classList.add('bg-dark-dot');
+
+                // Label
+                const label = document.createElement('span');
+                label.className = 'slide-label';
+                label.textContent = slide.dataset.title || 'Slide ' + (index + 1);
+
+                // Number
+                const num = document.createElement('span');
+                num.className = 'slide-num';
+                num.textContent = index + 1;
+
+                item.appendChild(grip);
+                item.appendChild(check);
+                item.appendChild(bgDot);
+                item.appendChild(label);
+                item.appendChild(num);
+
+                // Drag events
+                item.addEventListener('dragstart', (e) => {
+                    e.stopPropagation();
+                    dragState.sourceIndex = parseInt(item.dataset.slideIndex);
+                    dragState.sourceItem = item;
+                    dragState.sectionName = null;
+                    item.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', item.dataset.slideIndex);
+                    slidesDiv.classList.add('drag-active');
+                });
+
+                item.addEventListener('dragend', () => {
+                    item.classList.remove('dragging');
+                    clearDropIndicators();
+                    document.querySelectorAll('.section-slides').forEach(s => s.classList.remove('drag-active'));
+                    document.querySelectorAll('.section-group').forEach(g => {
+                        g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                    });
+                    dragState.sourceIndex = null;
+                    dragState.sourceItem = null;
+                    dragState.sectionName = null;
+                });
+
+                item.addEventListener('dragover', (e) => {
+                    if (dragState.sectionName) return; // Section drag, ignore slide targets
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.dataTransfer.dropEffect = 'move';
+                    if (dragState.sourceItem === item) return;
+                    clearDropIndicators();
+                    const rect = item.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    if (e.clientY < midY) {
+                        item.classList.add('drag-over-top');
+                    } else {
+                        item.classList.add('drag-over-bottom');
+                    }
+                });
+
+                item.addEventListener('dragleave', () => {
+                    item.classList.remove('drag-over-top', 'drag-over-bottom');
+                });
+
+                item.addEventListener('drop', (e) => {
+                    if (dragState.sectionName) return; // Section drag, ignore
+                    e.preventDefault();
+                    e.stopPropagation();
+                    clearDropIndicators();
+                    const fromIndex = dragState.sourceIndex;
+                    const toIndex = parseInt(item.dataset.slideIndex);
+                    if (fromIndex === null || fromIndex === toIndex) return;
+
+                    // Determine insert position
+                    const rect = item.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    const insertBefore = e.clientY < midY;
+
+                    reorderSlide(fromIndex, toIndex, insertBefore);
+                });
+
+                // Click to preview
+                item.addEventListener('click', () => {
+                    goTo(index);
+                });
+
+                slidesDiv.appendChild(item);
+            });
+
+            group.appendChild(slidesDiv);
+            container.appendChild(group);
         });
+    }
 
-        // Section navigation
-        const sectionBtns = document.querySelectorAll('.section-nav-btn');
-        const sectionSlideIndices = Array.from(sectionBtns).map(b => parseInt(b.dataset.slide));
+    // ============================================
+    // DRAG AND DROP REORDER
+    // ============================================
+    const dragState = { sourceIndex: null, sourceItem: null, sectionName: null };
 
-        sectionBtns.forEach(btn => {
-            btn.addEventListener('click', () => goTo(parseInt(btn.dataset.slide)));
+    function clearDropIndicators() {
+        document.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
+            el.classList.remove('drag-over-top', 'drag-over-bottom');
         });
+    }
 
-        function updateSectionNav() {
-            let activeIdx = 0;
-            for (let i = sectionSlideIndices.length - 1; i >= 0; i--) {
-                if (current >= sectionSlideIndices[i]) { activeIdx = i; break; }
+    function reorderSlide(fromIndex, toIndex, insertBefore) {
+        const slidesContainer = document.querySelector('.presentation');
+        const slideEl = allSlides[fromIndex];
+        const targetEl = allSlides[toIndex];
+
+        // Update data-section to match target's section
+        const targetSection = targetEl.dataset.section;
+        if (targetSection) slideEl.dataset.section = targetSection;
+
+        // Remember which slides were selected (by element reference)
+        const selectedElements = new Set();
+        state.selected.forEach(i => selectedElements.add(allSlides[i]));
+        const currentElement = allSlides[state.current];
+
+        // Move the DOM element
+        if (insertBefore) {
+            slidesContainer.insertBefore(slideEl, targetEl);
+        } else {
+            if (targetEl.nextElementSibling) {
+                slidesContainer.insertBefore(slideEl, targetEl.nextElementSibling);
+            } else {
+                slidesContainer.appendChild(slideEl);
             }
-            sectionBtns.forEach((btn, i) => btn.classList.toggle('active', i === activeIdx));
         }
 
-        // Patch goTo to also update section nav
-        const origGoTo = goTo;
-        goTo = function(index) {
-            origGoTo(index);
-            updateSectionNav();
-        };
+        rebuildAfterReorder(selectedElements, currentElement);
+    }
 
-        // Initialize
-        goTo(0);
+    function reorderSection(sectionName, targetSectionName, insertBefore) {
+        const slidesContainer = document.querySelector('.presentation');
+
+        // Collect all slides in the source section (contiguous block)
+        const sectionSlides = [];
+        let inSection = false;
+        for (const slide of allSlides) {
+            if (slide.dataset.section === sectionName) {
+                inSection = true;
+                sectionSlides.push(slide);
+            } else if (inSection) {
+                break; // End of contiguous section
+            }
+        }
+        if (sectionSlides.length === 0) return;
+
+        // Find first slide of the target section
+        let targetSlide = null;
+        let lastTargetSlide = null;
+        for (const slide of allSlides) {
+            if (slide.dataset.section === targetSectionName) {
+                if (!targetSlide) targetSlide = slide;
+                lastTargetSlide = slide;
+            }
+        }
+        if (!targetSlide) return;
+
+        // Remember state
+        const selectedElements = new Set();
+        state.selected.forEach(i => selectedElements.add(allSlides[i]));
+        const currentElement = allSlides[state.current];
+
+        // Move all section slides as a block
+        if (insertBefore) {
+            // Insert entire section before the target section
+            sectionSlides.forEach(el => {
+                slidesContainer.insertBefore(el, targetSlide);
+            });
+        } else {
+            // Insert entire section after the target section
+            const afterEl = lastTargetSlide.nextElementSibling;
+            sectionSlides.forEach(el => {
+                if (afterEl) {
+                    slidesContainer.insertBefore(el, afterEl);
+                } else {
+                    slidesContainer.appendChild(el);
+                }
+            });
+        }
+
+        rebuildAfterReorder(selectedElements, currentElement);
+    }
+
+    function rebuildAfterReorder(selectedElements, currentElement) {
+        refreshSlides();
+
+        // Rebuild selected set with new indices
+        state.selected = new Set();
+        allSlides.forEach((el, i) => {
+            if (selectedElements.has(el)) state.selected.add(i);
+        });
+
+        // Update current to follow the element
+        state.current = allSlides.indexOf(currentElement);
+        if (state.current === -1) state.current = 0;
+
+        saveState();
+        buildSidebar();
+        updateCount();
+        rebuildDots();
+        highlightCurrent();
+    }
+
+    function updateCount() {
+        document.getElementById('selected-count').textContent = state.selected.size;
+        document.getElementById('total-count').textContent = totalSlides;
+    }
+
+    function highlightCurrent() {
+        document.querySelectorAll('.slide-item').forEach(item => {
+            item.classList.remove('active-preview');
+        });
+        const items = document.querySelectorAll('.slide-item');
+        if (items[state.current]) {
+            items[state.current].classList.add('active-preview');
+            // Scroll into view
+            items[state.current].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+    }
+
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    const logoPaths = document.querySelectorAll('#logo-paths path');
+    function setLogoColor(color) {
+        const fill = color === 'white' ? '#FFFFFF' : '#FF3333';
+        logoPaths.forEach(p => p.setAttribute('fill', fill));
+    }
+
+    function goTo(index) {
+        if (index < 0 || index >= totalSlides) return;
+        allSlides[state.current].classList.remove('active');
+        state.current = index;
+        allSlides[state.current].classList.add('active');
+
+        // Update dots
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === state.current);
+        });
+
+        // Counter
+        if (state.presenting) {
+            const selectedArr = getSelectedArray();
+            const posInSelection = selectedArr.indexOf(state.current);
+            document.getElementById('counter').textContent = (posInSelection + 1) + ' / ' + selectedArr.length;
+        } else {
+            document.getElementById('counter').textContent = (state.current + 1) + ' / ' + totalSlides;
+        }
+
+        // Nav buttons
+        document.getElementById('prev-btn').disabled = state.current === 0;
+        document.getElementById('next-btn').disabled = state.current === totalSlides - 1;
+
+        // Logo color
+        const logoType = allSlides[state.current].getAttribute('data-logo') || 'white';
+        setLogoColor(logoType);
+
+        // Highlight in sidebar
+        highlightCurrent();
+
+        // Update section nav
+        updateSectionNav();
+    }
+
+    function getSelectedArray() {
+        return [...state.selected].sort((a, b) => a - b);
+    }
+
+    function next() {
+        if (state.presenting) {
+            const arr = getSelectedArray();
+            const pos = arr.indexOf(state.current);
+            if (pos < arr.length - 1) goTo(arr[pos + 1]);
+        } else {
+            goTo(state.current + 1);
+        }
+    }
+    function prev() {
+        if (state.presenting) {
+            const arr = getSelectedArray();
+            const pos = arr.indexOf(state.current);
+            if (pos > 0) goTo(arr[pos - 1]);
+        } else {
+            goTo(state.current - 1);
+        }
+    }
+
+    // ============================================
+    // PRESENT MODE
+    // ============================================
+    function enterPresent() {
+        if (state.selected.size === 0) return;
+        state.presenting = true;
+        document.body.classList.add('presenting');
+        document.body.classList.remove('manager-open');
+
+        // Jump to first selected slide
+        const arr = getSelectedArray();
+        goTo(arr[0]);
+
+        // Rebuild dots for selected only
+        rebuildDots();
+    }
+
+    function exitPresent() {
+        state.presenting = false;
+        document.body.classList.remove('presenting');
+        document.body.classList.add('manager-open');
+        document.getElementById('manager-panel').classList.remove('hidden');
+        rebuildDots();
+        goTo(state.current);
+    }
+
+    function rebuildDots() {
+        const dotsContainer = document.getElementById('dots');
+        dotsContainer.innerHTML = '';
+
+        if (state.presenting) {
+            const arr = getSelectedArray();
+            arr.forEach((slideIdx, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (slideIdx === state.current ? ' active' : '');
+                dot.onclick = () => goTo(slideIdx);
+                dot.style.cursor = 'pointer';
+                dotsContainer.appendChild(dot);
+            });
+        } else {
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === state.current ? ' active' : '');
+                dot.onclick = () => goTo(i);
+                dot.style.cursor = 'pointer';
+                dotsContainer.appendChild(dot);
+            }
+        }
+    }
+
+    // ============================================
+    // PRESETS
+    // ============================================
+    function loadPresets() {
+        const select = document.getElementById('preset-select');
+        // Clear existing options except first
+        while (select.options.length > 1) select.remove(1);
+        Object.keys(state.presets).forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            select.appendChild(opt);
+        });
+    }
+
+    document.getElementById('preset-select').addEventListener('change', function() {
+        if (this.value === '__all__') {
+            state.selected = new Set([...Array(totalSlides).keys()]);
+        } else if (state.presets[this.value]) {
+            state.selected = new Set(state.presets[this.value]);
+        }
+        saveState();
+        buildSidebar();
+        updateCount();
+    });
+
+    document.getElementById('btn-save-preset').addEventListener('click', () => {
+        const name = prompt('Preset name:');
+        if (!name || !name.trim()) return;
+        state.presets[name.trim()] = [...state.selected];
+        saveState();
+        loadPresets();
+        document.getElementById('preset-select').value = name.trim();
+    });
+
+    document.getElementById('btn-delete-preset').addEventListener('click', () => {
+        const select = document.getElementById('preset-select');
+        const name = select.value;
+        if (name === '__all__') return;
+        if (!confirm('Delete preset "' + name + '"?')) return;
+        delete state.presets[name];
+        saveState();
+        loadPresets();
+        select.value = '__all__';
+    });
+
+    // ============================================
+    // TOGGLE PANEL
+    // ============================================
+    function togglePanel() {
+        if (state.presenting) return;
+        document.body.classList.toggle('manager-open');
+        const panel = document.getElementById('manager-panel');
+        panel.classList.toggle('hidden', !document.body.classList.contains('manager-open'));
+    }
+
+    document.getElementById('manager-toggle').addEventListener('click', togglePanel);
+    document.getElementById('btn-present').addEventListener('click', enterPresent);
+
+    // ============================================
+    // KEYBOARD
+    // ============================================
+    document.addEventListener('keydown', (e) => {
+        // Don't capture if typing in an input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+        if (e.key === 'Tab' && !state.presenting) {
+            e.preventDefault();
+            togglePanel();
+        }
+        if (e.key === 'p' || e.key === 'P') {
+            if (!state.presenting) enterPresent();
+        }
+        if (e.key === 'Escape') {
+            if (state.presenting) exitPresent();
+        }
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            next();
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prev();
+        }
+        if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+        if (e.key === 'End') { e.preventDefault(); goTo(totalSlides - 1); }
+    });
+
+    // ============================================
+    // SECTION NAV (top bar)
+    // ============================================
+    const sectionBtns = document.querySelectorAll('.section-nav-btn');
+    const sectionSlideIndices = Array.from(sectionBtns).map(b => parseInt(b.dataset.slide));
+
+    sectionBtns.forEach(btn => {
+        btn.addEventListener('click', () => goTo(parseInt(btn.dataset.slide)));
+    });
+
+    function updateSectionNav() {
+        let activeIdx = 0;
+        for (let i = sectionSlideIndices.length - 1; i >= 0; i--) {
+            if (state.current >= sectionSlideIndices[i]) { activeIdx = i; break; }
+        }
+        sectionBtns.forEach((btn, i) => btn.classList.toggle('active', i === activeIdx));
+    }
+
+    // ============================================
+    // INIT
+    // ============================================
+    loadState();
+    buildSidebar();
+    updateCount();
+    loadPresets();
+    rebuildDots();
+    goTo(0);
     </script>
 </body>
 </html>
