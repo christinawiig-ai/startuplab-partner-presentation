@@ -1719,61 +1719,67 @@
              ============================================= -->
         <div class="slide bg-dark" data-logo="white" data-title="Startuplab Summit" data-section="Summit" style="overflow: hidden;">
             <img src="logos/summit-startuplab.png" alt="Startuplab Summit" style="position: absolute; top: 30px; right: 40px; height: 36px; opacity: 0.7; z-index: 10;">
-            <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: 100%; max-height: 100%; padding: 0;">
-                <!-- Left: Content -->
-                <div style="padding: 80px 2.5rem 50px 60px; display: flex; flex-direction: column; justify-content: center;">
-                    <h2 class="t-large fade-up" style="margin-bottom: 1.25rem;">Startuplab <span class="t-red">Summit</span></h2>
-                    <div class="fade-up" style="display: flex; gap: 2rem; margin-bottom: 1.5rem;">
+            <div class="slide-inner" style="padding: 80px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start;">
+                <!-- Title + stats row -->
+                <div class="fade-up" style="display: flex; align-items: flex-end; gap: 3rem; margin-bottom: 2rem;">
+                    <h2 class="t-large" style="margin: 0; line-height: 1;">Startuplab <span class="t-red">Summit</span></h2>
+                    <div style="display: flex; gap: 2rem; padding-bottom: 0.3rem;">
                         <div class="stat-block">
-                            <div class="stat-number" style="font-size: 2rem;">500+</div>
+                            <div class="stat-number" style="font-size: 1.75rem;">500+</div>
                             <div class="stat-label">Attendees</div>
                         </div>
                         <div class="stat-block">
-                            <div class="stat-number" style="font-size: 2rem;">100</div>
+                            <div class="stat-number" style="font-size: 1.75rem;">100</div>
                             <div class="stat-label">Nordic startups</div>
                         </div>
                         <div class="stat-block">
-                            <div class="stat-number" style="font-size: 2rem;">250+</div>
+                            <div class="stat-number" style="font-size: 1.75rem;">250+</div>
                             <div class="stat-label">VC firms</div>
                         </div>
                     </div>
-                    <div class="fade-up" style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
-                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
-                            <div class="step-num" style="font-size: 1rem;">01</div>
-                            <div class="step-label" style="font-size: 0.7rem;">Onboarding & kick-off</div>
-                        </div>
-                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
-                            <div class="step-num" style="font-size: 1rem;">02</div>
-                            <div class="step-label" style="font-size: 0.7rem;">MEET:Corporate</div>
-                        </div>
-                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
-                            <div class="step-num" style="font-size: 1rem;">03</div>
-                            <div class="step-label" style="font-size: 0.7rem;">Summit</div>
-                        </div>
-                        <div class="process-step" style="padding: 0.6rem 0.75rem;">
-                            <div class="step-num" style="font-size: 1rem;">04</div>
-                            <div class="step-label" style="font-size: 0.7rem;">Hackathons</div>
-                        </div>
-                    </div>
-                    <!-- Logo wall -->
-                    <div class="fade-up" style="flex: 1; overflow: hidden; min-height: 0;">
-                        <img src="img/img-summit-logos.png" alt="Summit startup logo wall" style="width: 100%; height: 100%; object-fit: contain; object-position: top left; display: block;">
-                    </div>
                 </div>
-                <!-- Right: Photo grid -->
-                <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 0; height: 100%; overflow: hidden;">
-                    <div style="position: relative; overflow: hidden;">
+
+                <!-- Photo strip -->
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; height: 220px;">
+                    <div style="position: relative; overflow: hidden; border-radius: 4px;">
                         <img src="img/summit-roundtable.png" alt="Summit roundtable discussions" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
                             <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">Thematic roundtables</p>
                         </div>
                     </div>
-                    <div style="position: relative; overflow: hidden;">
+                    <div style="position: relative; overflow: hidden; border-radius: 4px;">
                         <img src="img/summit-speeddating.png" alt="Startup speed-dating sessions" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
                             <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">Startup speed-dating</p>
                         </div>
                     </div>
+                </div>
+
+                <!-- Compact format strip -->
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
+                    <div style="padding: 0.75rem; border-left: 3px solid var(--sl-red); background: rgba(255,255,255,0.03);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 0.8rem; color: var(--sl-red);">01</span>
+                        <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.25rem;">Onboarding & kick-off</p>
+                    </div>
+                    <div style="padding: 0.75rem; border-left: 3px solid var(--sl-red); background: rgba(255,255,255,0.03);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 0.8rem; color: var(--sl-red);">02</span>
+                        <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.25rem;">MEET:Corporate</p>
+                    </div>
+                    <div style="padding: 0.75rem; border-left: 3px solid var(--sl-red); background: rgba(255,255,255,0.03);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 0.8rem; color: var(--sl-red);">03</span>
+                        <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.25rem;">Summit day</p>
+                    </div>
+                    <div style="padding: 0.75rem; border-left: 3px solid var(--sl-red); background: rgba(255,255,255,0.03);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 0.8rem; color: var(--sl-red);">04</span>
+                        <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.25rem;">Hackathons</p>
+                    </div>
+                </div>
+
+                <!-- Logo wall label -->
+                <p class="fade-up" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 0.5rem;">100 Nordic startups presented at Summit 2025</p>
+                <!-- Logo wall -->
+                <div class="fade-up" style="overflow: hidden; height: 140px; background: #fff; border-radius: 4px; padding: 0.5rem 0.75rem;">
+                    <img src="img/img-summit-logos.png" alt="Summit startup logo wall" style="width: 100%; height: auto; object-fit: contain; display: block; transform: translateY(-48%); opacity: 0.9;">
                 </div>
             </div>
         </div>
