@@ -1,0 +1,3105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startuplab × Ruter — Feb 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           STARTUPLAB CORPORATE DECK
+           Master presentation, arrow key navigation
+           ============================================ */
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Regular.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Bold.woff2') format('woff2');
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Heavy.woff2') format('woff2');
+            font-weight: 900;
+        }
+        @font-face {
+            font-family: 'Replica LL';
+            src: url('../brand-profile/fonts/Replica (Primary)/Replica - Latin - Web Fonts/Fonts/ReplicaLLWeb-Light.woff2') format('woff2');
+            font-weight: 300;
+        }
+
+        :root {
+            --sl-red: #FF3333;
+            --sl-red-soft: rgba(255, 51, 51, 0.1);
+            --sl-black: #131415;
+            --sl-deep-black: #050505;
+            --sl-dark-gray: #161819;
+            --sl-charcoal: #1a1a1a;
+            --sl-gray-800: #222222;
+            --sl-gray-200: #e5e5e5;
+            --sl-gray-100: #f5f5f5;
+            --sl-off-white: #f7f7f7;
+            --sl-white: #ffffff;
+            --sl-muted: #9ba1a5;
+            --sl-pink: #ffe5ea;
+            --sl-blue: #1c64ff;
+
+            --font-display: 'Replica LL', 'Inter', -apple-system, sans-serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--sl-deep-black);
+            color: var(--sl-white);
+            overflow: hidden;
+            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* ============================================
+           SLIDE SYSTEM
+           ============================================ */
+        .slide {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0; left: 0;
+            display: none;
+            overflow: hidden;
+        }
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-inner {
+            width: 100%;
+            height: 100vh;
+            padding: 130px 80px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+        /* All slides use flex-start with generous padding-top to clear the fixed logo.
+           No centering — content flows from top, padding provides visual balance. */
+
+        /* Backgrounds */
+        .bg-dark { background: linear-gradient(135deg, var(--sl-deep-black) 0%, var(--sl-black) 100%); color: var(--sl-white); }
+        .bg-black { background: var(--sl-black); color: var(--sl-white); }
+        .bg-white { background: var(--sl-white); color: var(--sl-black); }
+        .bg-light { background: var(--sl-off-white); color: var(--sl-black); }
+        .bg-red { background: linear-gradient(135deg, #FF3333 0%, #e62e2e 100%); color: var(--sl-white); }
+        .bg-red-dark { background: linear-gradient(135deg, #cc2929 0%, #991f1f 100%); color: var(--sl-white); }
+        .bg-warm { background: #faf8f5; color: var(--sl-black); }
+
+        /* Light background adaptations */
+        .bg-light .glass-card,
+        .bg-white .glass-card,
+        .bg-warm .glass-card {
+            background: var(--sl-white);
+            border: 1px solid var(--sl-gray-200);
+        }
+        .bg-light .glass-card::before,
+        .bg-white .glass-card::before,
+        .bg-warm .glass-card::before {
+            border-top-color: var(--sl-red);
+            border-left-color: var(--sl-red);
+        }
+        .bg-light .glass-card::after,
+        .bg-white .glass-card::after,
+        .bg-warm .glass-card::after {
+            border-bottom-color: var(--sl-red);
+            border-right-color: var(--sl-red);
+        }
+
+        /* Light/warm overrides for dark-mode card classes */
+        .bg-light .card-split,
+        .bg-warm .card-split,
+        .bg-white .card-split,
+        .bg-light .card-split-plain,
+        .bg-warm .card-split-plain,
+        .bg-white .card-split-plain {
+            border-color: rgba(0, 0, 0, 0.08);
+            background: var(--sl-white);
+        }
+        .bg-light .card-pad,
+        .bg-warm .card-pad,
+        .bg-white .card-pad,
+        .bg-light .card-pad-lg,
+        .bg-warm .card-pad-lg,
+        .bg-white .card-pad-lg,
+        .bg-light .card-pad-center,
+        .bg-warm .card-pad-center,
+        .bg-white .card-pad-center {
+            border-color: rgba(0, 0, 0, 0.08);
+            background: var(--sl-white);
+        }
+        .bg-light .card-dark,
+        .bg-warm .card-dark,
+        .bg-white .card-dark {
+            background: var(--sl-white);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        .bg-light .glass-card-sm,
+        .bg-warm .glass-card-sm,
+        .bg-white .glass-card-sm,
+        .bg-light .glass-card-lg,
+        .bg-warm .glass-card-lg,
+        .bg-white .glass-card-lg {
+            border-color: rgba(0, 0, 0, 0.08);
+            background: var(--sl-white);
+        }
+        .bg-light .flex-col-border,
+        .bg-warm .flex-col-border,
+        .bg-white .flex-col-border {
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        .bg-light .photo-tbd,
+        .bg-warm .photo-tbd,
+        .bg-white .photo-tbd {
+            background: var(--sl-gray-100);
+            color: var(--sl-muted);
+        }
+        .bg-light .quote-box,
+        .bg-warm .quote-box,
+        .bg-white .quote-box {
+            background: rgba(255, 51, 51, 0.04);
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        .t-hero {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+        }
+        .t-large {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .t-medium {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+        .t-section {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 3.5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .t-body {
+            font-size: clamp(1rem, 1.2vw, 1.25rem);
+            line-height: 1.6;
+        }
+        .t-small {
+            font-size: clamp(0.85rem, 1vw, 1rem);
+            line-height: 1.5;
+        }
+        .t-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--sl-red);
+        }
+        .t-red { color: var(--sl-red); }
+        .t-muted { color: var(--sl-muted); }
+        .t-white { color: var(--sl-white); }
+
+        /* ============================================
+           LAYOUT HELPERS
+           ============================================ */
+        .flex-col { display: flex; flex-direction: column; }
+        .flex-row { display: flex; flex-direction: row; }
+        .gap-sm { gap: 0.75rem; }
+        .gap-md { gap: 1.5rem; }
+        .gap-lg { gap: 2.5rem; }
+        .gap-xl { gap: 4rem; }
+        .items-center { align-items: center; }
+        .justify-center { /* kept for class compatibility, no centering — uses flex-start */ }
+        .flex-1 { flex: 1; }
+        .mb-sm { margin-bottom: 0.75rem; }
+        .mb-md { margin-bottom: 1.5rem; }
+        .mb-lg { margin-bottom: 2.5rem; }
+        .mb-xl { margin-bottom: 4rem; }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            height: 100%;
+        }
+        .two-col-wide {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 4rem;
+            align-items: center;
+            height: 100%;
+        }
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        /* ============================================
+           COMPONENTS
+           ============================================ */
+        .stat-block {
+            text-align: left;
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--sl-red);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .bg-red .stat-number,
+        .bg-red-dark .stat-number { color: var(--sl-white); }
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            position: relative;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 14px; height: 14px;
+            border-top: 2px solid var(--sl-red);
+            border-left: 2px solid var(--sl-red);
+        }
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 14px; height: 14px;
+            border-bottom: 2px solid var(--sl-red);
+            border-right: 2px solid var(--sl-red);
+        }
+
+        .card-light {
+            background: var(--sl-white);
+            border: 1px solid var(--sl-gray-200);
+            padding: 1.5rem;
+            border-radius: 2px;
+        }
+
+        .red-line {
+            width: 60px;
+            height: 3px;
+            background: var(--sl-red);
+            margin-bottom: 1.5rem;
+        }
+        .bg-red .red-line { background: var(--sl-white); }
+
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+        }
+        .bullet-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            line-height: 1.5;
+        }
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 6px;
+            height: 6px;
+            background: var(--sl-red);
+        }
+        .bg-red .bullet-list li::before { background: var(--sl-white); }
+
+        .case-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--sl-red-soft);
+            color: var(--sl-red);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bg-dark .case-tag {
+            background: rgba(255, 51, 51, 0.2);
+            color: #ff6666;
+        }
+        .bg-red .case-tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--sl-white);
+        }
+
+        .img-container {
+            width: 100%;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .logo-wall {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem 2rem;
+            align-items: center;
+        }
+        .logo-wall .corp-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.3vw, 1.2rem);
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .logo-wall .corp-name:hover { opacity: 1; }
+
+        .quote-block {
+            border-left: 3px solid var(--sl-red);
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .quote-text {
+            font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .quote-attr {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--sl-red);
+        }
+
+        /* Process steps */
+        .process-steps {
+            display: flex;
+            gap: 0;
+            margin: 1.5rem 0;
+        }
+        .process-step {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 51, 51, 0.08);
+            border-right: 2px solid var(--sl-red);
+            position: relative;
+        }
+        .process-step:last-child { border-right: none; }
+        .process-step .step-num {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--sl-red);
+            margin-bottom: 0.25rem;
+        }
+        .process-step .step-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .bg-dark .process-step { background: rgba(255, 51, 51, 0.12); }
+
+        /* Section divider */
+        .section-divider {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100%;
+            padding: 0;
+        }
+        .section-divider .t-label { margin-bottom: 1rem; }
+
+        /* Formats grid */
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+        .format-card {
+            padding: 1.25rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: background 0.3s;
+        }
+        .format-card:hover { background: rgba(255, 255, 255, 0.1); }
+        .format-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .format-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Red accent circle for title slide */
+        .accent-circle {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 51, 51, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            margin: 2rem 0;
+        }
+        .timeline-item {
+            flex: 1;
+            padding: 1.25rem;
+            border-left: 2px solid rgba(255, 51, 51, 0.3);
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 1.25rem;
+            width: 8px;
+            height: 8px;
+            background: var(--sl-red);
+            border-radius: 50%;
+        }
+        .timeline-year {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: var(--sl-red);
+            margin-bottom: 0.5rem;
+        }
+        .timeline-text {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0.85;
+        }
+
+        /* Fade in children */
+        .slide.active .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        .slide.active .fade-up:nth-child(1) { animation-delay: 0.05s; }
+        .slide.active .fade-up:nth-child(2) { animation-delay: 0.15s; }
+        .slide.active .fade-up:nth-child(3) { animation-delay: 0.25s; }
+        .slide.active .fade-up:nth-child(4) { animation-delay: 0.35s; }
+        .slide.active .fade-up:nth-child(5) { animation-delay: 0.45s; }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           FIXED LOGO
+           ============================================ */
+        .logo-fixed {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 90;
+            opacity: 0.9;
+            width: 110px;
+        }
+        .logo-fixed svg { width: 100%; height: auto; }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav-bar {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 4px;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 4px;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+        .nav-btn:hover { color: var(--sl-white); }
+        .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+        .nav-counter {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            min-width: 50px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+        .progress-dots {
+            display: flex;
+            gap: 3px;
+        }
+        .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transition: all 0.3s;
+        }
+        .dot.active {
+            background: var(--sl-red);
+            transform: scale(1.5);
+        }
+        .dot.section-start {
+            margin-left: 4px;
+        }
+
+        /* ============================================
+           SECTION NAV BAR (top, hover-triggered)
+           ============================================ */
+        .section-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.92);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .section-nav-trigger {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 20px;
+            z-index: 998;
+        }
+        .section-nav-trigger:hover + .section-nav,
+        .section-nav:hover {
+            transform: translateY(0);
+        }
+        .section-nav-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.4rem 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .section-nav-btn:hover {
+            background: var(--sl-red);
+            border-color: var(--sl-red);
+            color: white;
+        }
+        .section-nav-btn.active {
+            background: rgba(255,51,51,0.2);
+            border-color: var(--sl-red);
+            color: var(--sl-red);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1200px) {
+            .slide-inner { padding: 110px 50px 30px; }
+            .two-col, .two-col-wide { grid-template-columns: 1fr; gap: 2rem; }
+            .format-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide-inner { padding: 100px 30px 20px; }
+            .three-col { grid-template-columns: 1fr; }
+            .format-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-steps { flex-direction: column; }
+            .timeline { flex-direction: column; }
+        }
+
+        /* Print styles */
+        @media print {
+            .nav-bar, .logo-fixed, .section-nav, .section-nav-trigger, .manager-panel { display: none; }
+            .slide { display: flex !important; position: relative !important; page-break-after: always; height: 100vh; }
+            .slide.active { animation: none; }
+        }
+
+        /* ============================================
+           DECK BUILDER / MANAGER PANEL
+           ============================================ */
+        .manager-panel {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 320px;
+            background: #0a0a0b;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(0);
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            font-family: var(--font-body);
+            overflow: hidden;
+        }
+        .manager-panel.hidden {
+            transform: translateX(-320px);
+        }
+        body.manager-open .presentation,
+        body.manager-open .nav-bar,
+        body.manager-open .logo-fixed {
+            margin-left: 320px;
+            transition: margin-left 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        body:not(.manager-open) .presentation,
+        body:not(.manager-open) .nav-bar,
+        body:not(.manager-open) .logo-fixed {
+            margin-left: 0;
+            transition: margin-left 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        body.presenting .manager-panel,
+        body.presenting .nav-bar,
+        body.presenting .section-nav-trigger,
+        body.presenting .section-nav,
+        body.presenting .manager-toggle {
+            display: none !important;
+        }
+
+        .manager-header {
+            padding: 20px 16px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+        }
+        .manager-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--sl-white);
+            margin-bottom: 10px;
+        }
+        .manager-stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .manager-count {
+            font-size: 0.75rem;
+            color: var(--sl-muted);
+        }
+        .manager-count strong {
+            color: var(--sl-red);
+            font-weight: 700;
+        }
+        .manager-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .btn-manager {
+            background: var(--sl-red);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: background 0.2s;
+        }
+        .btn-manager:hover { background: #e62e2e; }
+        .btn-manager.secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+        }
+        .btn-manager.secondary:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .manager-presets {
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .preset-select {
+            flex: 1;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--sl-white);
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+            padding: 5px 8px;
+            cursor: pointer;
+        }
+        .preset-select option { background: #111; }
+        .btn-icon {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .btn-icon:hover { border-color: var(--sl-red); color: var(--sl-red); }
+
+        .manager-slides {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        .manager-slides::-webkit-scrollbar { width: 4px; }
+        .manager-slides::-webkit-scrollbar-track { background: transparent; }
+        .manager-slides::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+        .section-group {
+            margin-bottom: 4px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s;
+        }
+        .section-header:hover { background: rgba(255,255,255,0.03); }
+        .section-arrow {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.3);
+            transition: transform 0.2s;
+            width: 12px;
+            text-align: center;
+        }
+        .section-group.collapsed .section-arrow { transform: rotate(-90deg); }
+        .section-group.collapsed .section-slides { display: none; }
+        .section-name {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.5);
+            flex: 1;
+        }
+        .section-toggle {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.25);
+            cursor: pointer;
+            padding: 2px 4px;
+        }
+        .section-toggle:hover { color: var(--sl-red); }
+
+        .slide-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 16px 5px 28px;
+            cursor: pointer;
+            transition: background 0.15s;
+            position: relative;
+        }
+        .slide-item:hover { background: rgba(255,255,255,0.04); }
+        .slide-item.active-preview {
+            background: rgba(255,51,51,0.1);
+        }
+        .slide-item.active-preview::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--sl-red);
+        }
+        .slide-check {
+            width: 14px; height: 14px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.15s;
+            font-size: 0.55rem;
+            color: transparent;
+        }
+        .slide-item.selected .slide-check {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: var(--sl-white);
+        }
+        .slide-bg-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .slide-bg-dot.bg-dark-dot { background: #333; }
+        .slide-bg-dot.bg-red-dot { background: var(--sl-red); }
+        .slide-bg-dot.bg-light-dot { background: #ddd; }
+        .slide-bg-dot.bg-white-dot { background: #fff; border: 1px solid #ccc; }
+        .slide-label {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.3;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .slide-item.selected .slide-label { color: var(--sl-white); }
+        .slide-num {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.2);
+            font-variant-numeric: tabular-nums;
+            width: 16px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Drag and drop */
+        .slide-drag-handle {
+            cursor: grab;
+            color: rgba(255,255,255,0.15);
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            padding: 2px 2px 2px 0;
+            flex-shrink: 0;
+            user-select: none;
+            line-height: 1;
+        }
+        .slide-drag-handle:hover { color: rgba(255,255,255,0.4); }
+        .slide-item.dragging {
+            opacity: 0.3;
+            background: rgba(255,51,51,0.05);
+        }
+        .slide-item.drag-over-top {
+            box-shadow: 0 -2px 0 0 var(--sl-red) inset;
+        }
+        .slide-item.drag-over-bottom {
+            box-shadow: 0 2px 0 0 var(--sl-red) inset;
+        }
+        .section-slides.drag-active .slide-item {
+            transition: none;
+        }
+        /* Section-level drag */
+        .section-header[draggable="true"] {
+            cursor: grab;
+        }
+        .section-header .section-drag-handle {
+            color: rgba(255,255,255,0.15);
+            font-size: 0.6rem;
+            margin-right: 2px;
+            cursor: grab;
+        }
+        .section-header:hover .section-drag-handle { color: rgba(255,255,255,0.35); }
+        .section-group.dragging-section { opacity: 0.3; }
+        .section-group.drag-over-section-top {
+            border-top: 2px solid var(--sl-red);
+        }
+        .section-group.drag-over-section-bottom {
+            border-bottom: 2px solid var(--sl-red);
+        }
+
+        .manager-footer {
+            padding: 10px 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+        }
+        .manager-hint {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.25);
+            text-align: center;
+        }
+        .manager-hint kbd {
+            background: rgba(255,255,255,0.08);
+            padding: 1px 5px;
+            border-radius: 2px;
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+        }
+
+        .manager-toggle {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            z-index: 999;
+            background: rgba(10,10,10,0.85);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-left: none;
+            color: rgba(255,255,255,0.5);
+            width: 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        body.manager-open .manager-toggle { left: 320px; }
+        .manager-toggle:hover { color: var(--sl-white); background: rgba(255,51,51,0.3); }
+
+        /* ============================================
+           V2: PASS 3 UTILITY CLASSES
+           ============================================ */
+        .t-key-label { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem; }
+        .t-hint { font-size: 0.8rem; opacity: 0.55; line-height: 1.4; }
+        .t-section-muted { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 0.5rem; }
+        .t-footnote { font-size: 0.7rem; opacity: 0.5; margin-top: 0.75rem; line-height: 1.4; }
+        .t-footnote-sm { font-size: 0.7rem; opacity: 0.7; margin-top: 0.25rem; }
+        .t-caption-dim { font-size: 0.65rem; opacity: 0.4; margin-bottom: 1rem; }
+        .t-stat-display { font-family: var(--font-display); font-weight: 900; font-size: 1.75rem; color: var(--sl-red); margin-bottom: 1.25rem; }
+        .t-phase-num { font-family: var(--font-display); font-weight: 900; font-size: 1.25rem; }
+        .t-phase-label-bold { font-family: var(--font-display); font-weight: 900; font-size: 0.8rem; color: var(--sl-red); }
+        .t-phase-heading { font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+        .t-display-heading { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
+        .t-display-name { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .t-red-accent { color: var(--sl-red); font-size: 1rem; margin-bottom: 0.75rem; }
+        .t-red-label-bold { color: var(--sl-red); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .t-075-muted { font-size: 0.75rem; opacity: 0.5; }
+        .t-045-sm { opacity: 0.45; font-size: 0.75rem; }
+        .t-070-sm { opacity: 0.7; font-size: 0.8rem; }
+        .t-xs-muted { opacity: 0.5; font-size: 0.8rem; }
+
+        .slide-inner-centered { flex-direction: column; justify-content: flex-start; padding: 130px 60px 50px; }
+        .phase-col { flex: 1; text-align: center; position: relative; padding: 0 0.75rem; }
+        .flex-overflow { flex: 1; overflow: hidden; }
+        .flex-col-gap-xs { display: flex; flex-direction: column; gap: 0.4rem; }
+        .grid-3-max { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1000px; }
+        .card-split-plain { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
+        .card-split-light { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(0,0,0,0.08); overflow: hidden; height: 180px; background: var(--sl-white); }
+        .glass-card-sm { border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; position: relative; }
+        .glass-card-lg { border: 1px solid rgba(255,255,255,0.1); padding: 1.75rem; position: relative; }
+        .kbd-badge { background: var(--sl-red); padding: 0.35rem 0.7rem; font-size: 0.8rem; font-weight: 700; border-radius: 4px; white-space: nowrap; min-width: 52px; text-align: center; }
+        .icon-circle { width: 36px; height: 36px; background: rgba(255,51,51,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .photo-tbd { overflow: hidden; height: 180px; background: var(--sl-gray-800); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+        .logo-corner { position: absolute; top: 30px; right: 40px; height: 36px; opacity: 0.7; z-index: 10; }
+
+        /* ============================================
+           V2: PASS 2 UTILITY CLASSES
+           ============================================ */
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-1h { margin-bottom: 0.75rem; }
+        .mb-1-5 { margin-bottom: 1.5rem; }
+        .mb-1-25 { margin-bottom: 1.25rem; }
+
+        .flex-inline-sm { display: inline-flex; align-items: center; gap: 0.4rem; }
+        .flex-between-sm { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; }
+        .flex-col-border { display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
+        .card-col-pad { padding: 1rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
+        .card-pad-light { padding: 1.75rem 1.25rem; border: 1px solid rgba(0,0,0,0.08); position: relative; overflow: hidden; background: var(--sl-white); }
+
+        .overlay-gradient-strong { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%); }
+        .photo-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem 1rem; }
+        .photo-caption-lg { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; z-index: 1; }
+        .photo-card { flex: 1; min-width: 150px; position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 3/4; }
+        .flex-1-min { flex: 1; min-width: 0; }
+
+        .side-bar-red { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--sl-red); }
+        .quote-box { padding: 0.75rem; border-left: 3px solid var(--sl-red); background: rgba(255,255,255,0.03); }
+        .card-pad-center { padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+
+        .t-stat-hero { font-family: var(--font-display); font-weight: 900; font-size: 1.75rem; color: var(--sl-red); margin-bottom: 0.75rem; line-height: 1; }
+        .t-lead-muted { opacity: 0.7; max-width: 700px; margin-bottom: 2rem; }
+        .t-fw-700 { font-weight: 700; margin-bottom: 0.4rem; }
+        .t-card-heading { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .t-card-heading-lg { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .t-caption-xs { font-size: 0.65rem; opacity: 0.5; margin-bottom: 0.75rem; }
+        .o-15 { opacity: 0.15; }
+        .o-55 { opacity: 0.55; }
+        .t-055-sm { opacity: 0.55; font-size: 0.8rem; }
+        .t-080-sm { opacity: 0.8; font-size: 0.8rem; }
+        .logo-inverted { height: 24px; opacity: 0.8; filter: brightness(0) invert(1); }
+        .stat-number-plain { font-size: 2.5rem; }
+        .phase-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1; }
+        .slide-inner.slide-inner-split { flex-direction: row; align-items: center; gap: 3rem; padding: 130px 60px 60px; }
+
+        /* ============================================
+           V2: HIGH-FREQUENCY UTILITY CLASSES
+           ============================================ */
+        .flex-start-gap-sm { display: flex; align-items: flex-start; gap: 0.5rem; }
+        .flex-start-gap-md { display: flex; align-items: flex-start; gap: 0.6rem; }
+        .flex-center-gap-sm { display: flex; align-items: center; gap: 0.6rem; }
+        .flex-col-gap-sm { display: flex; flex-direction: column; gap: 0.6rem; }
+        .flex-gap-row { display: flex; gap: 1rem; align-items: flex-start; }
+
+        .t-card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .t-card-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .t-card-stat { font-size: 2rem; font-weight: 900; color: var(--sl-red); margin-bottom: 0.5rem; }
+        .t-card-stat-lg { font-family: var(--font-display); font-weight: 900; font-size: 1.75rem; color: var(--sl-red); margin-bottom: 0.5rem; }
+        .t-card-stat-xl { font-size: 2.5rem; color: var(--sl-red); }
+        .t-section-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-red); }
+        .t-detail { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .t-caption { font-size: 0.78rem; color: var(--sl-black); opacity: 0.7; }
+        .t-caption-light { font-size: 0.78rem; opacity: 0.8; }
+        .t-caption-sm { font-size: 0.65rem; opacity: 0.4; }
+        .t-weight-600 { font-weight: 600; font-size: 0.75rem; }
+        .t-xs-muted { font-size: 0.8rem; opacity: 0.5; }
+        .t-black { color: var(--sl-black); }
+
+        .check-red { color: var(--sl-red); font-weight: 900; font-size: 0.8rem; flex-shrink: 0; margin-top: 1px; }
+        .check-red-sm { color: var(--sl-red); font-size: 0.75rem; }
+        .tag-red-pill { background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.3); padding: 0.35rem 0.75rem; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+
+        .card-split { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; height: 180px; }
+        .card-split-light { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(0,0,0,0.08); overflow: hidden; height: 180px; background: var(--sl-white); }
+        .card-pad { padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .card-pad-lg { padding: 1.75rem; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .card-info { font-size: 0.85rem; line-height: 1.4; opacity: 0.8; flex: 1; }
+        .overflow-h-180 { overflow: hidden; height: 180px; }
+        .photo-abs { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .photo-relative { position: relative; overflow: hidden; border-radius: 4px; }
+        .img-block { width: 100%; height: auto; display: block; }
+        .img-cover { width: 100%; height: 100%; object-fit: cover; }
+        .card-body { padding: 1.25rem; display: flex; flex-direction: column; justify-content: center; }
+
+        .avatar-xs { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        .avatar-team { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+
+        .logo-partner { height: 38px; opacity: 0.7; }
+        .border-light { border: 1px solid var(--sl-gray-200); background: #fff; }
+        .t-white-sm { font-size: 0.75rem; color: #fff; }
+        .t-micro { font-size: 0.6rem; opacity: 0.5; }
+
+        /* ============================================
+           V2: EXTRACTED INLINE PATTERNS
+           ============================================ */
+        .accent-bar-top { position: relative; overflow: hidden; }
+        .accent-bar-top::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--sl-red);
+        }
+
+        .check-list { list-style: none; padding: 0; margin: 0; }
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+        .check-icon {
+            color: var(--sl-red);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.1em;
+        }
+
+        .t-card-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--sl-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .o-40 { opacity: 0.4; }
+        .o-45 { opacity: 0.45; }
+        .o-50 { opacity: 0.5; }
+        .o-55 { opacity: 0.55; }
+        .o-60 { opacity: 0.6; }
+        .o-70 { opacity: 0.7; }
+        .o-80 { opacity: 0.8; }
+        .o-85 { opacity: 0.85; }
+        .o-90 { opacity: 0.9; }
+
+        .t-desc {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            opacity: 0.7;
+        }
+        .t-desc-strong {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .t-micro {
+            font-size: 0.6rem;
+            opacity: 0.5;
+        }
+
+        .img-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-body-lg {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .t-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.15rem;
+        }
+        .t-role {
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .avatar-sm {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+        .avatar-md {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        .team-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+        }
+        .team-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .card-dark {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .card-white {
+            background: var(--sl-white);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .overlay-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.15) 60%);
+        }
+
+        .step-num {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: var(--sl-red);
+        }
+        .step-num-lg {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 2rem;
+            color: var(--sl-red);
+        }
+
+        .logo-card-dark img {
+            filter: invert(1);
+        }
+        .logo-row-dark {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .logo-row-dark img {
+            height: 38px;
+            opacity: 0.7;
+        }
+
+        .slide-inner-row {
+            width: 100%;
+            height: 100vh;
+            padding: 130px 60px 60px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+        .slide-inner-compact {
+            width: 100%;
+            height: 100vh;
+            padding: 130px 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            max-width: 1920px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .slide-inner-top {
+            width: 100%;
+            height: 100vh;
+            padding: 130px 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           V2: PHOTO SYSTEM
+           ============================================ */
+        .photo-frame-dark {
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0;
+        }
+        .photo-frame-light {
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border-radius: 0;
+        }
+        .photo-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+        .photo-grid-2 { grid-template-columns: 1fr 1fr; }
+        .photo-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .photo-feature {
+            overflow: hidden;
+            position: relative;
+            border-radius: 0;
+        }
+        .photo-headshot {
+            border-radius: 50%;
+            border: 2px solid rgba(255, 51, 51, 0.2);
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="manager-open">
+    <!-- DECK BUILDER PANEL -->
+    <div class="manager-panel" id="manager-panel">
+        <div class="manager-header">
+            <div class="manager-title">Deck Builder</div>
+            <div class="manager-stats">
+                <div class="manager-count"><strong id="selected-count">0</strong> of <span id="total-count">0</span> selected</div>
+                <div class="manager-actions">
+                    <button class="btn-manager" id="btn-present" title="Present selected slides (P)">Present</button>
+                </div>
+            </div>
+        </div>
+        <div class="manager-presets">
+            <select class="preset-select" id="preset-select">
+                <option value="__all__">All slides</option>
+            </select>
+            <button class="btn-icon" id="btn-save-preset" title="Save current selection as preset">+</button>
+            <button class="btn-icon" id="btn-delete-preset" title="Delete selected preset">&times;</button>
+        </div>
+        <div class="manager-slides" id="manager-slides"></div>
+        <div class="manager-footer">
+            <div class="manager-hint"><kbd>Tab</kbd> toggle panel &middot; <kbd>P</kbd> present &middot; <kbd>Esc</kbd> exit</div>
+        </div>
+    </div>
+    <div class="manager-toggle" id="manager-toggle">&#9776;</div>
+
+    <!-- FIXED LOGO (white for dark, switches) -->
+    <div class="logo-fixed" id="logo-container">
+        <svg viewBox="0 0 371.47 195.18" xmlns="http://www.w3.org/2000/svg" id="sl-logo">
+            <g id="logo-paths">
+                <path d="M65.01,92.69c-12.87,0-18.67-6.44-18.67-14.81l0.64-0.64h7.72l0.64,0.64c0,4.51,2.57,7.08,10.3,7.08c5.79,0,9.01-1.93,9.01-5.79c0-4.51-2.57-5.79-11.59-7.08c-9.01-1.29-16.09-4.51-16.09-13.52c0-6.44,5.15-12.23,17.38-12.23c12.23,0,17.38,5.79,17.38,13.52l-0.64,0.64h-7.72l-0.64-0.64c0-3.86-1.93-5.79-9.01-5.79C57.93,54.07,56,56,56,58.58c0,3.86,2.57,5.15,11.59,6.44c9.01,1.29,16.09,5.15,16.09,14.16C83.68,86.26,78.53,92.69,65.01,92.69z"/>
+                <path d="M121.62,54.71h-12.87l-0.64,0.64V91.4l-0.64,0.64h-7.72l-0.64-0.64V55.36l-0.64-0.64H85.57l-0.64-0.64v-6.44l0.64-0.64h36.05l0.64,0.64v6.44L121.62,54.71z"/>
+                <path d="M158.01,92.05h-5.79l-0.64-0.64l-3.22-8.37l-1.29-0.64h-16.09l-1.29,0.64l-3.22,8.37l-0.64,0.64h-5.79l-0.64-0.64v-6.44l14.8-37.33l0.64-0.64h8.37l0.64,0.64l14.81,37.33v6.44L158.01,92.05z M139.35,58.58h-0.64l-5.79,15.45l0.64,0.64h10.94l0.64-0.64L139.35,58.58z"/>
+                <path d="M79.17,148.84H51.2l-0.64-0.64v-43.77l0.64-0.64h7.72l0.64,0.64v36.05l0.64,0.64h18.95l0.64,0.64v6.44L79.17,148.84z"/>
+                <path d="M122.61,148.84h-5.79l-0.64-0.64l-3.22-8.37l-1.29-0.64H95.58l-1.29,0.64l-3.22,8.37l-0.64,0.64h-5.79l-0.64-0.64v-6.44l14.81-37.33l0.64-0.64h8.37l0.64,0.64l14.81,37.33v6.44L122.61,148.84z M103.94,115.36h-0.64l-5.79,15.45l0.64,0.64h10.94l0.64-0.64L103.94,115.36z"/>
+                <path d="M150.26,148.84h-21.89l-0.64-0.64v-43.77l0.64-0.64h20.6c6.44,0,12.87,3.22,12.87,11.59c0,4.51-1.93,8.37-6.44,9.66v0.64c5.15,1.29,7.72,5.15,7.72,10.94C163.13,145.62,156.7,148.84,150.26,148.84z M147.68,111.5h-10.3l-0.64,0.64v9.01l0.64,0.64h10.3c3.86,0,5.15-2.57,5.15-5.15C152.83,113.43,151.55,111.5,147.68,111.5z M147.68,129.52h-10.3l-0.64,0.64v10.3l0.64,0.64h10.3c4.51,0,6.44-1.93,6.44-5.79C154.12,131.46,152.19,129.52,147.68,129.52z"/>
+                <path d="M190.81,73.38v0.64l8.37,10.94v6.44l-0.64,0.64h-3.86l-1.29-0.64l-12.87-16.74l-1.29-0.64h-6.44l-0.64,0.64V91.4l-0.64,0.64h-7.72l-0.64-0.64V47.63l0.64-0.64h21.24c9.01,0,15.45,4.51,15.45,13.52C200.47,67.59,195.96,72.09,190.81,73.38z M185.02,54.71h-12.23l-0.64,0.64v10.3l0.64,0.64h12.23c3.86,0,6.44-1.29,6.44-5.79C191.46,56,188.88,54.71,185.02,54.71z"/>
+                <path d="M240.35,54.71h-12.87l-0.64,0.64V91.4l-0.64,0.64h-7.72l-0.64-0.64V55.36l-0.64-0.64H204.3l-0.64-0.64v-6.44l0.64-0.64h36.05l0.64,0.64v6.44L240.35,54.71z"/>
+                <path d="M281.72,74.67c0,11.59-6.44,18.02-18.02,18.02c-11.59,0-18.02-6.44-18.02-18.02V47.63l0.64-0.64h7.72l0.64,0.64v27.04c0,6.44,2.57,10.3,9.01,10.3c6.44,0,9.01-3.86,9.01-10.3V47.63l0.64-0.64h7.72l0.64,0.64V74.67z"/>
+                <path d="M309.68,74.03h-12.23l-0.64,0.64V91.4l-0.64,0.64h-7.73l-0.64-0.64V47.63l0.64-0.64h21.24c9.01,0,15.45,4.51,15.45,13.52C325.13,69.52,318.69,74.03,309.68,74.03z M309.68,54.71h-12.23l-0.64,0.64v10.3l0.64,0.64h12.23c3.86,0,6.44-1.29,6.44-5.79C316.12,56,313.54,54.71,309.68,54.71z"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- SECTION NAVIGATION (hover top edge to reveal) -->
+    <div class="section-nav-trigger"></div>
+    <div class="section-nav" id="section-nav">
+        <button class="section-nav-btn" data-slide="0">Intro</button>
+        <button class="section-nav-btn" data-slide="4">Formats</button>
+        <button class="section-nav-btn" data-slide="5">MEET</button>
+        <button class="section-nav-btn" data-slide="6">Cases</button>
+        <button class="section-nav-btn" data-slide="7">Events</button>
+        <button class="section-nav-btn" data-slide="9">Mobility</button>
+        <button class="section-nav-btn" data-slide="13">Corporates</button>
+        <button class="section-nav-btn" data-slide="20">Team</button>
+    </div>
+
+    <div class="presentation">
+
+        <div class="slide active bg-dark" data-logo="white" data-title="Helping corporates stay ahead" data-section="Overview">
+            <div class="accent-circle" style="top: -100px; right: -100px;"></div>
+            <div class="accent-circle" style="bottom: -150px; left: -50px; width: 300px; height: 300px;"></div>
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <div class="red-line" style="width: 80px; height: 4px; margin-bottom: 2rem;"></div>
+                </div>
+                <h1 class="t-hero fade-up mb-1-5">Helping corporates<br>stay ahead in a world<br>that <span class="t-red">won't wait</span></h1>
+                <p class="t-body fade-up" style="opacity: 0.6; max-width: 500px;">Norway's leading tech incubator and innovation hub. 13+ years of building the startup ecosystem.</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             AGENDA: RUTER MEETING
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="Today's agenda" data-section="Overview">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Agenda</p>
+                </div>
+                <h2 class="t-large fade-up mb-lg">Today's <span class="t-red">agenda</span></h2>
+                <div class="fade-up" style="display: flex; flex-direction: column; gap: 1rem; max-width: 700px;">
+                    <div style="display: flex; align-items: baseline; gap: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: var(--sl-red); min-width: 60px;">01</span>
+                        <div>
+                            <p style="font-size: 1rem; font-weight: 600;">Startuplab &amp; the ecosystem</p>
+                            <p class="t-small o-50">Who we are, what we do, 13 years of building</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: baseline; gap: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: var(--sl-red); min-width: 60px;">02</span>
+                        <div>
+                            <p style="font-size: 1rem; font-weight: 600;">Formats &amp; delivery</p>
+                            <p class="t-small o-50">How we work with corporate partners</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: baseline; gap: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: var(--sl-red); min-width: 60px;">03</span>
+                        <div>
+                            <p style="font-size: 1rem; font-weight: 600;">Mobility &amp; transport landscape</p>
+                            <p class="t-small o-50">Global trends, Nordic deeptech, Startuplab portfolio</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: baseline; gap: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: var(--sl-red); min-width: 60px;">04</span>
+                        <div>
+                            <p style="font-size: 1rem; font-weight: 600;">Partnership model</p>
+                            <p class="t-small o-50">Tiers, formats, and next steps</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: baseline; gap: 1.5rem;">
+                        <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: var(--sl-red); min-width: 60px;">05</span>
+                        <div>
+                            <p style="font-size: 1rem; font-weight: 600;">Discussion</p>
+                            <p class="t-small o-50">Questions, alignment, potential pilot ideas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             BACKING THE BUILDERS
+             ============================================= -->
+        <div class="slide bg-dark" data-logo="white" data-title="Backing the builders of the future" data-section="Overview">
+            <div class="slide-inner justify-center" style="align-items: center; text-align: center;">
+                <h2 class="t-large fade-up mb-lg">Backing the builders<br>of the <span class="t-red">future</span></h2>
+                <div class="fade-up" style="margin-bottom: 2rem;">
+                    <img src="img/partner-logos-all.png" alt="Corporate Partners" style="max-width: 800px; width: 100%; opacity: 0.9;">
+                </div>
+                <p class="t-body fade-up o-60" style="max-width: 600px;">Fueling the next generation of Norwegian innovation — tomorrow's customers, employers, and industry leaders</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 2B: WHY OPEN INNOVATION
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 2: OPEN INNOVATION IS MISSION CRITICAL
+             ============================================= -->
+
+        <div class="slide bg-light" data-logo="red" data-title="Open innovation is mission critical" data-section="Overview">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">The Case for Open Innovation</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 3rem;">Open innovation is no longer optional.<br>It's <span class="t-red">mission critical.</span></h2>
+
+                <!-- Stats grid -->
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin-bottom: 2.5rem;">
+                    <!-- Stat 1 -->
+                    <div style="padding: 2rem; border: 1px solid rgba(0,0,0,0.08); position: relative; overflow: hidden; background: var(--sl-white);">
+                        <div style="font-family: var(--font-display); font-weight: 900; font-size: 3.5rem; color: var(--sl-red); line-height: 1;">80%</div>
+                        <p class="t-small" style="opacity: 0.6; margin-top: 0.75rem;">of European corporates consider open innovation important or mission critical</p>
+                        <p style="font-size: 0.7rem; opacity: 0.35; margin-top: 0.5rem;">Up from 67% in 2023</p>
+                    </div>
+                    <!-- Stat 2 -->
+                    <div style="padding: 2rem; border: 1px solid rgba(0,0,0,0.08); position: relative; overflow: hidden; background: var(--sl-white);">
+                        <div style="font-family: var(--font-display); font-weight: 900; font-size: 3.5rem; color: var(--sl-red); line-height: 1;">7/10</div>
+                        <p class="t-small" style="opacity: 0.6; margin-top: 0.75rem;">view startup partnerships as vital to their AI strategy</p>
+                    </div>
+                    <!-- Stat 3 -->
+                    <div style="padding: 2rem; border: 1px solid rgba(0,0,0,0.08); position: relative; overflow: hidden; background: var(--sl-white);">
+                        <div style="font-family: var(--font-display); font-weight: 900; font-size: 3.5rem; color: var(--sl-red); line-height: 1;">22%</div>
+                        <p class="t-small" style="opacity: 0.6; margin-top: 0.75rem;">have deployed generative AI at scale. Startups are critical for closing the gap.</p>
+                    </div>
+                </div>
+
+                <!-- Bottom bar: success trend + source -->
+                <div class="fade-up" style="display: flex; align-items: center; gap: 3rem; max-width: 1100px;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="padding: 0.75rem 1.5rem; background: rgba(255,51,51,0.08); border: 1px solid rgba(255,51,51,0.15);">
+                            <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;">58%</span>
+                            <span style="opacity: 0.5; margin: 0 0.5rem;">&rarr;</span>
+                            <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--sl-red);">65%</span>
+                        </div>
+                        <span style="font-size: 0.85rem; opacity: 0.6;">Open innovation success rates, 2023 to 2025</span>
+                    </div>
+                </div>
+                <p class="fade-up" style="font-size: 0.7rem; opacity: 0.35; margin-top: 1.5rem; max-width: 1100px;">Source: Sopra Steria Open Innovation Report 2025. 1,643 organisations across 12 European countries. In collaboration with INSEAD.</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 3: AT A GLANCE
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 3: 13 YEARS OF ECOSYSTEM BUILDING
+             ============================================= -->
+
+        <div class="slide bg-dark" data-logo="white" data-title="Six formats for collaboration" data-section="Formats & Delivery">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">What We Deliver</p>
+                </div>
+                <h2 class="t-medium fade-up" style="margin-bottom: 2.5rem;">Six formats for startup-corporate collaboration</h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; width: 100%; max-width: 1100px;">
+                    <div class="card-pad-lg">
+                        <div class="t-card-title">MEET:Corporate</div>
+                        <p class="t-small o-60">Curated 1:1 sessions between startups and corporate decision-makers with mandate to act.</p>
+                    </div>
+                    <div class="card-pad-lg">
+                        <div class="t-card-title">Summit</div>
+                        <p class="t-small o-60">Annual 500+ attendee event with scouting, pitching and structured matchmaking. Nordic expansion 2026.</p>
+                    </div>
+                    <div class="card-pad-lg">
+                        <div class="t-card-title">Industry Programs</div>
+                        <p class="t-small o-60">Sector-specific programs (Construction, Energy) with dedicated scouting, events and international reach.</p>
+                    </div>
+                    <div class="card-pad-lg">
+                        <div class="t-card-title">Corporate Innovation Network</div>
+                        <p class="t-small o-60">Monthly "Hjemme hos" workshops on how to succeed working with startups. 50+ corporates.</p>
+                    </div>
+                    <div class="card-pad-lg">
+                        <div class="t-card-title">Hackathons & Sprints</div>
+                        <p class="t-small o-60">Intensive problem-solving around specific corporate challenges. Krafthack, Mobility, Circular Economy.</p>
+                    </div>
+                    <div class="card-pad-lg">
+                        <div class="t-card-title">Corporate Readiness</div>
+                        <p class="t-small o-60">Training, tools and procurement support for corporates new to startup collaboration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 7B: PARTNERSHIP JOURNEY MAP
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 5: PARTNERSHIP JOURNEY MAP
+             ============================================= -->
+
+        <div class="slide bg-dark" data-logo="white" data-title="MEET:Corporate" data-section="MEET:Corporate">
+            <div class="slide-inner slide-inner-split">
+                <!-- Left: Content -->
+                <div class="flex-1-min">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Curated Format</p>
+                    </div>
+                    <h2 class="t-large fade-up mb-md">MEET:<span class="t-red">CORPORATE</span></h2>
+                    <p class="t-body fade-up" style="max-width: 500px; opacity: 0.8; margin-bottom: 1.5rem;">A curated format that goes beyond inspiration into concrete business dialogue.</p>
+                    <div class="process-steps fade-up mb-1-5">
+                        <div class="process-step">
+                            <div class="step-num">01</div>
+                            <div class="step-label">Targeted scouting</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-num">02</div>
+                            <div class="step-label">4-8 startups selected</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-num">03</div>
+                            <div class="step-label">Senior team with mandate</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-num">04</div>
+                            <div class="step-label">Structured 1:1 sessions</div>
+                        </div>
+                    </div>
+                    <div class="glass-card fade-up">
+                        <p class="t-small mb-1"><strong class="t-red">Case: Wilhelmsen</strong></p>
+                        <p class="t-small o-80">16 challenges, 4,000+ startups screened, 40 sent, 10 met stakeholders, 5 continued dialogue.</p>
+                    </div>
+                </div>
+                <!-- Right: Two stacked photos -->
+                <div style="flex: 0 0 38%; display: flex; flex-direction: column; gap: 1rem; max-height: calc(100vh - 140px);">
+                    <div style="flex: 1; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="../corporate-deck-v2/img/img-meet-corporate-1.jpg" alt="MEET:Corporate session" class="img-cover">
+                    </div>
+                    <div style="flex: 1; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="../corporate-deck-v2/img/img-meet-corporate-2.jpg" alt="MEET:Corporate matchmaking" class="img-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 10: LARGE-SCALE EVENTS
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 7: MEETCORPORATES OSLO & BEYOND
+             ============================================= -->
+
+        <div class="slide bg-light" data-logo="red" data-title="Case: Nye Veier + Hive Autonomy" data-section="Cases">
+            <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 130px 60px 60px;">
+                <!-- Left: Story -->
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <div class="fade-up">
+                        <p class="t-label mb-sm t-red">Case Study</p>
+                        <p style="font-size: 0.7rem; opacity: 0.4; margin-bottom: 1.5rem;">SL Construction Program</p>
+                    </div>
+                    <h2 class="t-medium fade-up" style="margin-bottom: 0.5rem; line-height: 1.15;">Nye Veier + <span class="t-red">Hive Autonomy</span></h2>
+                    <p class="fade-up" style="font-size: 0.8rem; opacity: 0.5; margin-bottom: 1.5rem; font-style: italic;">Europe's first industrial test of autonomous machines in tunnel and quarry operations</p>
+
+                    <!-- How they met -->
+                    <div class="fade-up mb-1-25">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                            <span style="color: var(--sl-red); font-weight: 900; font-size: 0.75rem;">HOW THEY MET</span>
+                        </div>
+                        <p class="t-small t-070-sm">Through a Startuplab Construction excursion to Nye Veier in Kristiansand, where Hive Autonomy presented their autonomous machine technology.</p>
+                    </div>
+
+                    <!-- The pilot -->
+                    <div class="fade-up mb-1-25">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                            <span style="color: var(--sl-red); font-weight: 900; font-size: 0.75rem;">THE PILOT</span>
+                        </div>
+                        <p class="t-small t-070-sm">Nye Veier and Hive Autonomy ran the first test of autonomous machines in Nordic construction. A robot dog and an autonomous wheel loader operated side by side, controlled and monitored in real time from Oslo, 100 km from site.</p>
+                    </div>
+
+                    <!-- Why it matters -->
+                    <div class="fade-up mb-1-25">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                            <span style="color: var(--sl-red); font-weight: 900; font-size: 0.75rem;">WHY IT MATTERS</span>
+                        </div>
+                        <p class="t-small t-070-sm">Proved that autonomous technology works in demanding construction environments with high demands for precision and safe production. Not replacing people, but making the work safer and better.</p>
+                    </div>
+
+                    <div class="fade-up" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <span class="case-tag">SL Construction</span>
+                        <span class="case-tag">Autonomous machines</span>
+                        <span class="case-tag">Remote operations</span>
+                    </div>
+                </div>
+
+                <!-- Right: Video -->
+                <div style="display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px; max-height: 100%;">
+                    <video
+                        src="../corporate-deck-v2/nyeveier-hive-autonomy.mp4"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"
+                        muted
+                        loop
+                        playsinline
+                        autoplay
+                    >
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 15: CASE: DNB PARTNERSHIP
+             ============================================= -->
+
+        <div class="slide bg-light" data-logo="red" data-title="CIN: The format" data-section="Events">
+            <div class="slide-inner slide-inner-split">
+                <!-- Left: Concept -->
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Corporate Innovation Network</p>
+                    </div>
+                    <h2 class="t-large fade-up mb-1-5">Learning from<br><span class="t-red">each other</span></h2>
+                    <p class="t-body fade-up" style="opacity: 0.6; max-width: 480px; margin-bottom: 2rem;">A rotating "Hjemme hos" format where one corporate hosts, shares their real startup collaboration journey, and peers tackle the hard questions together.</p>
+
+                    <div class="fade-up" style="display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2rem;">
+                        <div class="flex-gap-row">
+                            <div class="icon-circle">
+                                <span style="color: var(--sl-red); font-weight: 900; font-family: var(--font-display); font-size: 0.9rem;">4-6</span>
+                            </div>
+                            <div>
+                                <h4 class="t-card-name">Events per year</h4>
+                                <p class="t-xs-muted">Quarterly sessions with additional deep-dives on hot topics like AI, procurement, and sustainability.</p>
+                            </div>
+                        </div>
+                        <div class="flex-gap-row">
+                            <div class="icon-circle">
+                                <span style="color: var(--sl-red); font-weight: 900; font-family: var(--font-display); font-size: 1.1rem;">&#x21C4;</span>
+                            </div>
+                            <div>
+                                <h4 class="t-card-name">Peer-to-peer, not top-down</h4>
+                                <p class="t-xs-muted">Corporates learn from corporates. Real cases, real friction, real solutions. "How did you actually get procurement to say yes?"</p>
+                            </div>
+                        </div>
+                        <div class="flex-gap-row">
+                            <div class="icon-circle">
+                                <span style="color: var(--sl-red); font-weight: 900; font-family: var(--font-display); font-size: 0.9rem;">HH</span>
+                            </div>
+                            <div>
+                                <h4 class="t-card-name">"Hjemme hos" format</h4>
+                                <p class="t-xs-muted">The host opens their doors and shares openly. Internal buy-in, scaling pilots, legal shortcuts, innovation ROI.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fade-up" style="padding: 1rem 1.25rem; background: rgba(255,51,51,0.06); border-left: 3px solid var(--sl-red);">
+                        <p style="font-size: 0.85rem; font-style: italic; opacity: 0.7;">"The most valuable thing about CIN is hearing how others solved problems we're struggling with right now."</p>
+                        <p style="font-size: 0.75rem; color: var(--sl-red); font-weight: 600; margin-top: 0.4rem;">CIN member feedback</p>
+                    </div>
+                </div>
+
+                <!-- Right: Photo stack -->
+                <div style="flex: 0 0 45%; display: flex; flex-direction: column; gap: 0.5rem; max-height: calc(100vh - 140px);">
+                    <div style="flex: 1; overflow: hidden; border-radius: 2px;">
+                        <img src="../corporate-deck-v2/img/img-cin-skanska.jpg" alt="CIN session at Skanska" class="img-cover">
+                    </div>
+                    <div style="flex: 1; overflow: hidden; border-radius: 2px;">
+                        <img src="../corporate-deck-v2/img/img-cin-dnb.jpg" alt="CIN networking at DNB" class="img-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             CIN - CORPORATE INNOVATION NETWORK
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 17: CIN: PREVIOUS SESSIONS
+             ============================================= -->
+
+        <div class="slide bg-light" data-logo="red" data-title="Events & Workshops" data-section="Events">
+            <div class="slide-inner slide-inner-split">
+                <!-- Left: Content -->
+                <div class="flex-1-min">
+                    <div class="fade-up">
+                        <p class="t-label mb-md">Workshops & Events</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md">Success Case Events & Workshops</h2>
+                    <p class="t-body fade-up mb-lg" style="max-width: 500px; opacity: 0.8;">"How to Work with Startups" regular sessions for corporates, combined with live case presentations from successful collaborations.</p>
+                    <div class="fade-up" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span class="case-tag">Gjensidige x Mitigrate</span>
+                        <span class="case-tag">Fremtind x 7analytics</span>
+                        <span class="case-tag">Equinor x F3NICE</span>
+                        <span class="case-tag">OBOS x Parqio</span>
+                    </div>
+                </div>
+                <!-- Right: Two photos stacked -->
+                <div style="flex: 0 0 42%; display: flex; flex-direction: column; gap: 1rem; max-height: calc(100vh - 140px);">
+                    <div class="flex-overflow">
+                        <img src="../corporate-deck-v2/img/img-cin-session.jpg" alt="CIN workshop session" class="img-cover">
+                    </div>
+                    <div class="flex-overflow">
+                        <img src="../corporate-deck-v2/img/img-workshop-statkraft.jpg" alt="Statkraft workshop presentation" class="img-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             MOBILITY SECTION: RUTER-SPECIFIC CONTENT
+             ============================================= -->
+
+        <!-- MOBILITY DIVIDER -->
+        <div class="slide bg-red" data-logo="white" data-title="Mobility & transport" data-section="Mobility">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">Mobility &amp; Transport</p>
+                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">The startup landscape<br>reshaping <span style="opacity: 0.85;">how we move</span></h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE: GLOBAL MOBILITY TRENDS -->
+        <div class="slide bg-dark" data-logo="white" data-title="Global mobility trends" data-section="Mobility">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Global Trends 2024–2026</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Where the world is <span class="t-red">heading</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1100px; margin-bottom: 1.5rem;">
+                    <div class="card-pad">
+                        <p class="t-card-label">MaaS &amp; Integration</p>
+                        <p class="t-small o-70">Single-app multimodal journeys going mainstream. Whim (Finland) pivoted; Transit App, Moovit (Intel) scaling. Public operators becoming platforms.</p>
+                        <p class="t-small o-50" style="margin-top: 0.5rem; font-style: italic;">Key shift: From owning vehicles to orchestrating trips</p>
+                    </div>
+                    <div class="card-pad">
+                        <p class="t-card-label">Autonomous Mobility</p>
+                        <p class="t-small o-70">Waymo at 150K+ rides/week in US cities. Zoox, Cruise rebuilding. Europe: shuttle pilots (EasyMile, Navya) in controlled routes. L4 on fixed corridors now viable.</p>
+                        <p class="t-small o-50" style="margin-top: 0.5rem; font-style: italic;">Key shift: From pilot to scaled deployment on defined routes</p>
+                    </div>
+                    <div class="card-pad">
+                        <p class="t-card-label">Micro-Mobility</p>
+                        <p class="t-small o-70">Tier, Voi profitable after consolidation. Docked e-bikes outperforming scooters. Integration with public transit the winning model.</p>
+                        <p class="t-small o-50" style="margin-top: 0.5rem; font-style: italic;">Key shift: Standalone → integrated first/last mile</p>
+                    </div>
+                </div>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 730px;">
+                    <div class="card-pad">
+                        <p class="t-card-label">AI in Route Planning</p>
+                        <p class="t-small o-70">Real-time demand prediction, dynamic fleet allocation. Optibus, Spare Labs powering transit agencies. 15–30% efficiency gains documented.</p>
+                    </div>
+                    <div class="card-pad">
+                        <p class="t-card-label">Investment Trends</p>
+                        <p class="t-small o-70">$38B+ into mobility tech (2024). Shift from hardware to software/data layer. Transit-tech and fleet management rising fast.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE: NORDIC DEEPTECH IN MOBILITY -->
+        <div class="slide bg-light" data-logo="red" data-title="Nordic deeptech in mobility" data-section="Mobility">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Nordic Deeptech</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Nordics leading in <span class="t-red">mobility innovation</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 1000px; margin-bottom: 1.5rem;">
+                    <div class="card-split-light">
+                        <div class="card-body">
+                            <p class="t-card-label">Holo (Norway)</p>
+                            <p class="t-small o-70" style="margin-bottom: 0.5rem;">Autonomous mobility platform. Operating self-driving shuttles in Nordre Follo and Gjesdal. Partnership with Via for demand-responsive AV transit.</p>
+                            <p class="t-small" style="color: var(--sl-red); font-weight: 600;">Ruter relevance: Direct experience deploying AV in Norwegian regulatory context</p>
+                        </div>
+                    </div>
+                    <div class="card-split-light">
+                        <div class="card-body">
+                            <p class="t-card-label">Einride (Sweden)</p>
+                            <p class="t-small o-70" style="margin-bottom: 0.5rem;">Electric autonomous freight. 250+ fleet, operating in US &amp; Nordics. Raised $500M+. Proving the autonomous logistics model at industrial scale.</p>
+                            <p class="t-small" style="color: var(--sl-red); font-weight: 600;">Ruter relevance: Autonomous vehicle operations &amp; fleet orchestration learnings</p>
+                        </div>
+                    </div>
+                    <div class="card-split-light">
+                        <div class="card-body">
+                            <p class="t-card-label">Volocopter (Germany/Nordic)</p>
+                            <p class="t-small o-70" style="margin-bottom: 0.5rem;">Urban air mobility (eVTOL). Piloted in Helsinki &amp; Singapore. Targeting airport-to-city routes. EU certification underway.</p>
+                            <p class="t-small" style="color: var(--sl-red); font-weight: 600;">Ruter relevance: Future multimodal integration, airport corridor potential</p>
+                        </div>
+                    </div>
+                    <div class="card-split-light">
+                        <div class="card-body">
+                            <p class="t-card-label">Vay (Germany) &amp; Fernride (Germany)</p>
+                            <p class="t-small o-70" style="margin-bottom: 0.5rem;">Remote-operated vehicles as stepping stone to full autonomy. Vay launched teledriving in Hamburg. Lower risk path to driverless fleets.</p>
+                            <p class="t-small" style="color: var(--sl-red); font-weight: 600;">Ruter relevance: Pragmatic bridge tech — supervised autonomy for transit</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE: STARTUPLAB PORTFOLIO — SENSORS FOR MOBILITY -->
+        <div class="slide bg-dark" data-logo="white" data-title="Startuplab portfolio: sensors for mobility" data-section="Mobility">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Startuplab Portfolio</p>
+                </div>
+                <h2 class="t-large fade-up mb-md">Sensors for <span class="t-red">future mobility</span></h2>
+                <p class="t-body fade-up o-60 mb-1-5" style="max-width: 700px;">Three Startuplab companies building core sensing technology relevant for autonomous and predictive transit operations.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px;">
+                    <div class="card-pad-lg">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(255,51,51,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.7rem; color: var(--sl-red);">Z</div>
+                            <div>
+                                <p style="font-weight: 700; font-size: 0.9rem;">Zivid</p>
+                                <p class="t-small o-50">Human-like vision for robots</p>
+                            </div>
+                        </div>
+                        <p class="t-small o-70 mb-md">Industrial 3D cameras with sub-millimeter accuracy. Used by Amazon, ABB, and logistics leaders for pick-and-place automation.</p>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.75rem;">
+                            <p class="t-card-label" style="margin-bottom: 0.25rem;">Ruter use case</p>
+                            <p class="t-small o-80">Automated depot operations — robotic inspection and maintenance of bus/tram fleet. 3D scanning for damage detection, parts inventory, loading verification.</p>
+                        </div>
+                    </div>
+                    <div class="card-pad-lg">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(255,51,51,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.7rem; color: var(--sl-red);">S</div>
+                            <div>
+                                <p style="font-weight: 700; font-size: 0.9rem;">Sonair</p>
+                                <p class="t-small o-50">3D ultrasonic sensors</p>
+                            </div>
+                        </div>
+                        <p class="t-small o-70 mb-md">Acoustic 3D sensing that works in rain, snow, fog, and darkness — where cameras and LiDAR struggle. Complementary sensor for Nordic conditions.</p>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.75rem;">
+                            <p class="t-card-label" style="margin-bottom: 0.25rem;">Ruter use case</p>
+                            <p class="t-small o-80">Safety layer for autonomous shuttles in Norwegian weather. Pedestrian and obstacle detection at bus stops, depots, and low-speed urban zones where optical sensors fail.</p>
+                        </div>
+                    </div>
+                    <div class="card-pad-lg">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(255,51,51,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.6rem; color: var(--sl-red);">SS</div>
+                            <div>
+                                <p style="font-weight: 700; font-size: 0.9rem;">Soundsensing</p>
+                                <p class="t-small o-50">Predictive maintenance via sound</p>
+                            </div>
+                        </div>
+                        <p class="t-small o-70 mb-md">AI-powered acoustic monitoring that detects mechanical failures before they happen. Deployed in HVAC, industry, and infrastructure.</p>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.75rem;">
+                            <p class="t-card-label" style="margin-bottom: 0.25rem;">Ruter use case</p>
+                            <p class="t-small o-80">Predictive maintenance for bus and tram fleets. Acoustic sensors on engines, brakes, and HVAC systems flag issues days before breakdown — reducing downtime and emergency repairs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             FOR CORPORATES SECTION
+             ============================================= -->
+
+        <div class="slide bg-red" data-logo="white" data-title="For Corporates" data-section="For Corporates">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">For Corporates</p>
+                    <h2 class="t-hero fade-up" style="margin-top: 1rem;">Access the innovators<br>already solving<br>your problems</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             WHY PARTNER - VALUE PILLARS
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 25: FIVE REASONS TO PARTNER
+             ============================================= -->
+
+        <div class="slide bg-light" data-logo="red" data-title="Five reasons to partner" data-section="For Corporates">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">The Partnership</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 2.5rem;">Five reasons corporates<br>choose <span class="t-red">Startuplab</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; max-width: 1200px;">
+                    <!-- Pillar 1: Deal Flow -->
+                    <div class="card-pad-light">
+                        <div class="t-stat-hero">01</div>
+                        <div class="t-card-heading-lg">Curated Deal Flow</div>
+                        <p class="t-small t-055-sm">Access to 4,000+ startups through AI-powered scouting and deep sector expertise. We find the right solutions for your specific challenges.</p>
+                    </div>
+                    <!-- Pillar 2: Innovation Platform -->
+                    <div class="card-pad-light">
+                        <div class="t-stat-hero">02</div>
+                        <div class="t-card-heading-lg">Innovation Platform</div>
+                        <p class="t-small t-055-sm">Use Startuplab as your external innovation engine. From matchmaking and pilots to hackathons and structured collaboration programmes.</p>
+                    </div>
+                    <!-- Pillar 3: Peer Network -->
+                    <div class="card-pad-light">
+                        <div class="t-stat-hero">03</div>
+                        <div class="t-card-heading-lg">Peer Network</div>
+                        <p class="t-small t-055-sm">Join 22+ corporate partners sharing real experiences. Learn how others succeed with startups through CIN, events, and direct peer exchange.</p>
+                    </div>
+                    <!-- Pillar 4: Capability Building -->
+                    <div class="card-pad-light">
+                        <div class="t-stat-hero">04</div>
+                        <div class="t-card-heading-lg">Capability Building</div>
+                        <p class="t-small t-055-sm">Build internal innovation muscle. From vibecoding workshops and pitch training to procurement transformation and startup mindset programmes.</p>
+                    </div>
+                    <!-- Pillar 5: Ecosystem Intelligence -->
+                    <div class="card-pad-light">
+                        <div class="t-stat-hero">05</div>
+                        <div class="t-card-heading-lg">Ecosystem Position</div>
+                        <p class="t-small t-055-sm">Norway's largest tech incubator with Nordic reach. Summit, industry programmes, and VC network give your brand visibility across the ecosystem.</p>
+                    </div>
+                </div>
+                <div class="fade-up" style="margin-top: 2.5rem; display: flex; align-items: center; gap: 3rem;">
+                    <div class="stat-block">
+                        <div class="stat-number stat-number-plain">4,000+</div>
+                        <div class="stat-label">Startups in network</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number stat-number-plain">22</div>
+                        <div class="stat-label">Corporate partners</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number stat-number-plain">200+</div>
+                        <div class="stat-label">Pilots facilitated</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-number stat-number-plain">13+</div>
+                        <div class="stat-label">Years of track record</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             WHAT YOU GET - CONCRETE PARTNER BENEFITS
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 26: WHAT PARTNERS GET
+             ============================================= -->
+
+        <div class="slide bg-light" data-logo="red" data-title="Partnership levels" data-section="For Corporates">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Investment</p>
+                </div>
+                <h2 class="t-medium fade-up" style="color: var(--sl-black); margin-bottom: 2.5rem;">Choose your level of <span class="t-red">partnership</span></h2>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 1200px; align-items: start;">
+
+                    <!-- Tier 4: Ecosystem -->
+                    <div style="background: var(--sl-white); border: 1px solid var(--sl-gray-200); padding: 1.75rem 1.25rem; border-radius: 2px; position: relative;">
+                        <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-muted); margin-bottom: 0.5rem;">Tier 4</p>
+                        <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--sl-black); margin-bottom: 0.25rem;">Ecosystem Access</h3>
+                        <div class="t-stat-display">300K</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid var(--sl-gray-200); padding-top: 1rem;">
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">CIN quarterly (4 sessions/yr)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">CVC Forum quarterly</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Demo Days (2/yr)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Startuplab Summit</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Northbase startup database</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Logo profiling &amp; SL branding</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Meeting rooms at Forskningsparken</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Tier 3: Innovation Partner -->
+                    <div style="background: var(--sl-white); border: 1px solid var(--sl-gray-200); padding: 1.75rem 1.25rem; border-radius: 2px; position: relative;">
+                        <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-muted); margin-bottom: 0.5rem;">Tier 3</p>
+                        <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--sl-black); margin-bottom: 0.25rem;">Innovation Partner</h3>
+                        <div class="t-stat-display">500-750K</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid var(--sl-gray-200); padding-top: 1rem;">
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Innovation Radar (2x/yr scouting)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">AI-driven matchmaking (4,000+ startups)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Industry programme participation</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">1 major event/yr</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Vibecoding course (1x, 25 pers.)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">AI demo for leadership team</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Champions program (5 people)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Dedicated KAM + 30 sparring hrs</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">2 desks + venue access</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Tier 2: Strategic Partner (highlighted) -->
+                    <div style="background: var(--sl-white); border: 2px solid var(--sl-red); padding: 1.75rem 1.25rem; border-radius: 2px; position: relative; box-shadow: 0 4px 20px rgba(255,51,51,0.1);">
+                        <div style="position: absolute; top: -1px; left: -1px; right: -1px; background: var(--sl-red); color: white; text-align: center; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; padding: 4px 0;">Most popular</div>
+                        <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-muted); margin-bottom: 0.5rem; margin-top: 0.75rem;">Tier 2</p>
+                        <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--sl-black); margin-bottom: 0.25rem;">Strategic Partner</h3>
+                        <div class="t-stat-display">1M</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid var(--sl-gray-200); padding-top: 1rem;">
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Innovation Radar (4x/yr)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Challenge-based matchmaking</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Pilot-to-Production Bridge</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Innovation Academy: 2x basic + 1x advanced</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Vibecoding Roll-out (10-15 Champions)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">On-demand workshops included</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Hackathon as a Service (discount)</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">50 sparring hrs + dedicated KAM</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption">Employer Branding &amp; Student Accelerator</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Tier 1: Accelerator Partner -->
+                    <div style="background: var(--sl-black); border: 1px solid rgba(255,255,255,0.15); padding: 1.75rem 1.25rem; border-radius: 2px; position: relative; color: var(--sl-white);">
+                        <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-muted); margin-bottom: 0.5rem;">Tier 1</p>
+                        <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">Accelerator Partner</h3>
+                        <div class="t-stat-display">3M+</div>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption-light">Everything in Strategic +</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption-light">Co-branded accelerator programme</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption-light">Industry exclusivity</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption-light">Primary logo placement</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption-light">Unlimited AI courses &amp; workshops</span></div>
+                            <div class="flex-start-gap-sm"><span class="check-red-sm">&#10003;</span><span class="t-caption-light">100+ sparring hours</span></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="fade-up" style="font-size: 0.8rem; color: var(--sl-muted); margin-top: 2rem; max-width: 800px;">All tiers include peer exchange with other partners, event access, and meeting rooms at Forskningsparken. Annual agreements. Tier 3 and 4 include everything from the tier below.</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE 28: CORPORATE INNOVATION SUPPORT
+             ============================================= -->
+
+        <div class="slide bg-warm" data-logo="red" data-title="Corporate innovation support" data-section="For Corporates">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Corporate Readiness</p>
+                </div>
+                <h2 class="t-medium fade-up" style="color: var(--sl-black); margin-bottom: 0.75rem;">We don't just connect you with startups.<br>We make you <span class="t-red">ready to collaborate.</span></h2>
+                <p class="t-body fade-up" style="opacity: 0.55; max-width: 750px; margin-bottom: 2.5rem;">Most corporate-startup collaborations fail because the corporate side isn't prepared. We fix that.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; max-width: 1100px;">
+                    <div class="card-light">
+                        <div class="t-card-stat-lg">200+</div>
+                        <h3 class="t-detail">Pilots facilitated</h3>
+                        <p class="t-small o-55">From scoping and vendor matching to structured 90-day pilots with clear KPIs. 85% of pilots lead to continued collaboration.</p>
+                    </div>
+                    <div class="card-light">
+                        <div class="t-card-stat-lg">50+</div>
+                        <h3 class="t-detail">Corporates trained</h3>
+                        <p class="t-small o-55">"How to Work with Startups": full-day course on procurement, legal, pilot design, and internal championing. Run quarterly.</p>
+                    </div>
+                    <div class="card-light">
+                        <div class="t-card-stat-lg">Weeks&rarr;Days</div>
+                        <h3 class="t-detail">Procurement shortcuts</h3>
+                        <p class="t-small o-55">Standardized NDA, pilot agreements, and evaluation templates. Used by DNB, Oslo kommune, and Nye Veier to cut legal friction.</p>
+                    </div>
+                    <div class="card-light">
+                        <div class="t-card-stat-lg">1:1</div>
+                        <h3 class="t-detail">Innovation sparring</h3>
+                        <p class="t-small o-55">Dedicated partner manager helps define innovation focus areas, identify startups, and navigate internal stakeholders.</p>
+                    </div>
+                    <div class="card-light">
+                        <div class="t-card-stat-lg">Live</div>
+                        <h3 class="t-detail">Case-based learning</h3>
+                        <p class="t-small o-55">Real stories from Gjensidige x Mitigrate, OBOS x Findable, Equinor x Fieldmade. What worked, what didn't, and why.</p>
+                    </div>
+                    <div class="card-light">
+                        <div class="t-card-stat-lg">AI</div>
+                        <h3 class="t-detail">Innovation Radar scouting</h3>
+                        <p class="t-small o-55">AI-powered startup scouting from 4,000+ companies in NorthBase. Tailored shortlists matched to your strategic focus areas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             CIN - DEEP DIVE
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 29: INNOVATION ACADEMY
+             ============================================= -->
+
+        <div class="slide bg-red-dark" data-logo="white" data-title="Innovation Academy" data-section="For Corporates">
+            <div class="slide-inner">
+                <div class="section-divider">
+                    <p class="t-label fade-up" style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">Innovation Academy</p>
+                    <h2 class="t-hero fade-up">Learn from<br><span class="o-70">founders</span></h2>
+                    <p class="t-body fade-up" style="opacity: 0.6; max-width: 600px; margin-top: 1.5rem;">Hands-on courses and formats that give your teams real skills from the startup world.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INNOVATION ACADEMY - VIBECODING
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 30: VIBELABS / VIBECODING
+             ============================================= -->
+
+        <div class="slide bg-dark" data-logo="white" data-title="VibeLabs: AI superskills" data-section="For Corporates">
+            <div class="slide-inner slide-inner-split">
+                <!-- Left: Content -->
+                <div class="flex-1-min">
+                    <div class="fade-up">
+                        <p class="t-label mb-sm t-red">VibeLabs by Startuplab</p>
+                    </div>
+                    <h2 class="t-medium fade-up mb-md">Learn AI superskills with <span class="t-red">vibecoding</span></h2>
+                    <p class="t-body fade-up o-70 mb-1-25" style="max-width: 480px;">Upskilling hundreds of people with modern AI tools way past ChatGPT and Co-pilot. Letting anyone build smarter workflows and internal tools.</p>
+                    <div class="fade-up" style="border-left: 3px solid var(--sl-red); padding-left: 1.25rem; margin-bottom: 1.5rem;">
+                        <p style="font-style: italic; font-size: 0.85rem; opacity: 0.8; line-height: 1.5;">&laquo;Jeg er imponert over hvor raskt folk bygget sm&aring; apper og verkt&oslash;y som l&oslash;ser helt konkrete ting i arbeidshverdagen, etter bare noen timer&raquo;</p>
+                        <p style="font-size: 0.75rem; opacity: 0.5; margin-top: 0.5rem;">— Line H&oslash;dal-S&oslash;rgaard, Konserndirekt&oslash;r Strategi og Transformasjon, Mesta</p>
+                    </div>
+                    <div class="fade-up" style="display: flex; gap: 2rem;">
+                        <div>
+                            <div class="t-card-stat">1 day</div>
+                            <p class="t-xs-muted">Zero to prototype</p>
+                        </div>
+                        <div>
+                            <div class="t-card-stat">AI-native</div>
+                            <p class="t-xs-muted">Real tools, real output</p>
+                        </div>
+                        <div>
+                            <div class="t-card-stat">Tailored</div>
+                            <p class="t-xs-muted">Your industry challenges</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right: Photo -->
+                <div class="flex-1-min" style="max-width: 45%;">
+                    <div style="overflow: hidden; border-radius: 4px;">
+                        <img src="img/vibelabs-workshop.jpg" alt="VibeLabs Workshop" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             SLIDE BANK: INNOVATION ACADEMY - STRATEGIC SALES
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 31: STRATEGIC SALES TRAINING
+             ============================================= -->
+
+        <div class="slide bg-dark" data-logo="white" data-title="Hackathon as a Service" data-section="For Corporates">
+            <div class="slide-inner slide-inner-centered">
+                <div class="fade-up">
+                    <p class="t-label mb-sm t-red">Hackathon as a Service</p>
+                </div>
+                <h2 class="t-large fade-up mb-1-5">From challenge to<br><span class="t-red">prototype in 48h</span></h2>
+                <p class="t-body fade-up t-lead-muted">We design, recruit, and run hackathons tailored to your corporate challenges. Startups, developers, and domain experts co-create solutions at speed.</p>
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; max-width: 1100px;">
+                    <div class="card-pad">
+                        <div class="t-section-muted">Step 1</div>
+                        <div class="t-card-heading">Scope</div>
+                        <p class="t-075-muted">Define challenge, success criteria, and participant mix.</p>
+                    </div>
+                    <div class="card-pad">
+                        <div class="t-section-muted">Step 2</div>
+                        <div class="t-card-heading">Recruit</div>
+                        <p class="t-075-muted">Tap into 4,000+ startups and tech talent network.</p>
+                    </div>
+                    <div class="card-pad">
+                        <div class="t-section-muted">Step 3</div>
+                        <div class="t-card-heading">Build</div>
+                        <p class="t-075-muted">48-hour sprint. Mentors, APIs, and working prototypes.</p>
+                    </div>
+                    <div class="card-pad">
+                        <div class="t-section-muted">Step 4</div>
+                        <div class="t-card-heading">Scale</div>
+                        <p class="t-075-muted">Best solutions move to pilot. Follow-up pathway built in.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================
+             TEAM: WHO YOU'LL WORK WITH
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 34: PARTNER TESTIMONIALS
+             ============================================= -->
+
+        <div class="slide bg-dark" data-logo="white" data-title="The team" data-section="Slide Bank">
+            <div class="slide-inner justify-center">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Built by operators</p>
+                </div>
+                <h2 class="t-large fade-up" style="margin-bottom: 1.75rem;">Meet the <span class="t-red">team</span></h2>
+
+                <!-- Leadership row -->
+                <div class="fade-up" style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <img src="../corporate-deck-v2/img/team-marie.jpg" alt="Marie Mostad" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--sl-red); flex-shrink: 0;">
+                        <div><p style="font-weight: 700; font-size: 0.85rem;">Marie Mostad</p><p style="font-size: 0.65rem; opacity: 0.5;">CEO</p></div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <img src="../corporate-deck-v2/img/team-renate.jpg" alt="Renate Hjertson" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.15); flex-shrink: 0;">
+                        <div><p style="font-weight: 700; font-size: 0.85rem;">Renate Hjertson</p><p style="font-size: 0.65rem; opacity: 0.5;">CFO</p></div>
+                    </div>
+                    <div style="width: 1px; height: 32px; background: rgba(255,255,255,0.1);"></div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <img src="../corporate-deck-v2/img/team-pereinar.jpg" alt="Per Einar Dybvik" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.15); flex-shrink: 0;">
+                        <div><p style="font-weight: 700; font-size: 0.85rem;">Per Einar Dybvik</p><p style="font-size: 0.65rem; opacity: 0.5;">Special Advisor</p></div>
+                    </div>
+                </div>
+
+                <!-- Four teams -->
+                <div class="fade-up" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; max-width: 1200px;">
+
+                    <!-- Team Lab -->
+                    <div class="glass-card-sm">
+                        <h3 class="t-display-name">Team Lab</h3>
+                        <p class="t-caption-dim">Incubator & programmes</p>
+                        <div class="flex-col-gap-sm">
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-nissik.jpg" alt="Nissik Juell" class="avatar-team">
+                                <div><p class="t-weight-600">Nissik Juell</p><p class="t-micro">COO</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-harrshinny.jpg" alt="Harrshinny Vallipuram" class="avatar-team">
+                                <div><p class="t-weight-600">Harrshinny Vallipuram</p><p class="t-micro">Incubator and Growth Manager</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-henock.jpg" alt="Henock Sintaye Abeba" class="avatar-team">
+                                <div><p class="t-weight-600">Henock Sintaye Abeba</p><p class="t-micro">Incubator Manager</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-kristian.jpg" alt="Kristian Hesthaug" class="avatar-team">
+                                <div><p class="t-weight-600">Kristian Hesthaug</p><p class="t-micro">Head of SL Hardware</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Corporate -->
+                    <div class="glass-card-sm">
+                        <h3 class="t-display-name">Team Corporate</h3>
+                        <p class="t-caption-dim">Partnerships & innovation</p>
+                        <div class="flex-col-gap-sm">
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-christina.jpg" alt="Christina Wiig" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,51,51,0.3); flex-shrink: 0;">
+                                <div><p class="t-weight-600">Christina Wiig</p><p class="t-micro">Head of Corporate</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-anniken.jpg" alt="Anniken Holst" class="avatar-team">
+                                <div><p class="t-weight-600">Anniken Holst</p><p class="t-micro">Head of SL Construction</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-ola.jpg" alt="Ola Jacobsen" class="avatar-team">
+                                <div><p class="t-weight-600">Ola Jacobsen</p><p class="t-micro">Partner Manager</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-bettina.webp" alt="Bettina Lycke" class="avatar-team">
+                                <div><p class="t-weight-600">Bettina Lycke</p><p class="t-micro">joining Aug '26</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <div style="width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.45rem; color: var(--sl-muted);">NN</div>
+                                <div><p class="t-weight-600">NN</p><p class="t-micro">Partner Manager</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Ventures -->
+                    <div class="glass-card-sm">
+                        <h3 class="t-display-name">Team Ventures</h3>
+                        <p class="t-caption-dim">Investment & startup growth</p>
+                        <div class="flex-col-gap-sm">
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-gisle.jpg" alt="Gisle Østereng" class="avatar-team">
+                                <div><p class="t-weight-600">Gisle Østereng</p><p class="t-micro">Head of SL Ventures</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-victoria.jpg" alt="Victoria Somdalen" class="avatar-team">
+                                <div><p class="t-weight-600">Victoria Somdalen</p><p class="t-micro">Investment Manager</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-iris.jpg" alt="Iris Krigsvoll Auran" class="avatar-team">
+                                <div><p class="t-weight-600">Iris Krigsvoll Auran</p><p class="t-micro">Investment Manager</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-jorgen.jpg" alt="Jørgen Veiby" class="avatar-team">
+                                <div><p class="t-weight-600">Jørgen Veiby</p><p class="t-micro">Investment Manager</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Startuplab Vestland -->
+                    <div class="glass-card-sm">
+                        <h3 class="t-display-name">Startuplab Vestland</h3>
+                        <p class="t-caption-dim">West coast operations</p>
+                        <div class="flex-col-gap-sm">
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-erlendw.jpg" alt="Erlend Waaler" class="avatar-team">
+                                <div><p class="t-weight-600">Erlend Waaler</p><p class="t-micro">Head of SL Vestland</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-erlendh.jpg" alt="Erlend Hausken" class="avatar-team">
+                                <div><p class="t-weight-600">Erlend Hausken</p><p class="t-micro">Startup Fueler</p></div>
+                            </div>
+                            <div class="flex-center-gap-sm">
+                                <img src="../corporate-deck-v2/img/team-sophie.jpg" alt="Sophie Dicko" class="avatar-team">
+                                <div><p class="t-weight-600">Sophie Dicko</p><p class="t-micro">Incubator Manager</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Board row -->
+                <div class="fade-up" style="margin-top: 1.75rem; display: flex; align-items: center; gap: 1.25rem; padding: 0.85rem 1.25rem; border: 1px solid rgba(255,255,255,0.06); max-width: 1200px; flex-wrap: wrap;">
+                    <span style="font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sl-muted); white-space: nowrap;">Board</span>
+                    <span class="flex-inline-sm"><img src="../corporate-deck-v2/img/board-birger.webp" alt="" class="avatar-xs"><span class="t-white-sm">Birger Magnus <span class="o-40">(Chair)</span></span></span>
+                    <span class="o-15">|</span>
+                    <span class="flex-inline-sm"><img src="../corporate-deck-v2/img/board-bjornerik.webp" alt="" class="avatar-xs"><span class="t-white-sm">Bjørn Erik Reinseth</span></span>
+                    <span class="o-15">|</span>
+                    <span class="flex-inline-sm"><img src="../corporate-deck-v2/img/board-anne.webp" alt="" class="avatar-xs"><span class="t-white-sm">Anne Dingstad</span></span>
+                    <span class="o-15">|</span>
+                    <span class="flex-inline-sm"><img src="../corporate-deck-v2/img/board-pereinar.jpg" alt="" class="avatar-xs"><span class="t-white-sm">Per Einar Dybvik</span></span>
+                    <span class="o-15">|</span>
+                    <span class="flex-inline-sm"><img src="../corporate-deck-v2/img/board-rolf.jpg" alt="" class="avatar-xs"><span class="t-white-sm">Rolf Assev</span></span>
+                    <span class="o-15">|</span>
+                    <span class="flex-inline-sm"><img src="../corporate-deck-v2/img/board-karl.jpg" alt="" class="avatar-xs"><span class="t-white-sm">Karl Munthe-Kaas</span></span>
+                </div>
+                <p class="fade-up" style="margin-top: 0.6rem; font-size: 0.55rem; opacity: 0.3; font-style: italic; max-width: 1200px;">Anders Christian Rønning joins as CFO Apr '26 · Tamara Pavlovic (Controller) on leave — Arian covering</p>
+            </div>
+        </div>
+
+        <!-- =============================================
+             NORDIC IGNITE: SHARED VISION
+             ============================================= -->
+
+        <!-- =============================================
+             SLIDE 43: NORDIC STARTUPS NEED TO SUCCEED
+
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="prev()">&#8249;</button>
+        <div class="progress-dots" id="dots"></div>
+        <span class="nav-counter" id="counter">1 / 24</span>
+        <button class="nav-btn" id="next-btn" onclick="next()">&#8250;</button>
+    </div>
+
+    <script>
+    // ============================================
+    // DECK BUILDER ENGINE
+    // ============================================
+    let allSlides = Array.from(document.querySelectorAll('.presentation > .slide'));
+    let totalSlides = allSlides.length;
+    const STORAGE_KEY = 'sl-deck-builder';
+
+    function refreshSlides() {
+        allSlides = Array.from(document.querySelectorAll('.presentation > .slide'));
+        totalSlides = allSlides.length;
+    }
+
+    // State
+    let state = {
+        current: 0,
+        selected: new Set([...Array(totalSlides).keys()]), // all selected by default
+        presenting: false,
+        presets: {}
+    };
+
+    // Load state from localStorage
+    function loadState() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (saved) {
+                if (saved.selected) state.selected = new Set(saved.selected);
+                if (saved.presets) state.presets = saved.presets;
+            }
+        } catch(e) {}
+    }
+    function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            selected: [...state.selected],
+            presets: state.presets
+        }));
+    }
+
+    // ============================================
+    // BUILD SIDEBAR
+    // ============================================
+    function buildSidebar() {
+        const container = document.getElementById('manager-slides');
+        container.innerHTML = '';
+
+        // Group slides by section
+        const sections = [];
+        let currentSection = null;
+        allSlides.forEach((slide, i) => {
+            const sec = slide.dataset.section || 'Other';
+            if (!currentSection || currentSection.name !== sec) {
+                currentSection = { name: sec, slides: [] };
+                sections.push(currentSection);
+            }
+            currentSection.slides.push({ index: i, slide });
+        });
+
+        sections.forEach(section => {
+            const group = document.createElement('div');
+            group.className = 'section-group';
+            group.dataset.sectionName = section.name;
+
+            // Section header
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.setAttribute('draggable', 'true');
+
+            // Section drag handle
+            const sectionGrip = document.createElement('span');
+            sectionGrip.className = 'section-drag-handle';
+            sectionGrip.textContent = '\u2801';
+
+            const arrow = document.createElement('span');
+            arrow.className = 'section-arrow';
+            arrow.textContent = '\u25BE';
+
+            const name = document.createElement('span');
+            name.className = 'section-name';
+            name.textContent = section.name + ' (' + section.slides.length + ')';
+
+            const toggle = document.createElement('span');
+            toggle.className = 'section-toggle';
+            const allSelected = section.slides.every(s => state.selected.has(s.index));
+            toggle.textContent = allSelected ? 'deselect' : 'select all';
+
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const allSel = section.slides.every(s => state.selected.has(s.index));
+                section.slides.forEach(s => {
+                    if (allSel) state.selected.delete(s.index);
+                    else state.selected.add(s.index);
+                });
+                saveState();
+                buildSidebar();
+                updateCount();
+            });
+
+            header.addEventListener('click', (e) => {
+                if (e.target === sectionGrip) return;
+                group.classList.toggle('collapsed');
+            });
+
+            // Section-level drag events
+            header.addEventListener('dragstart', (e) => {
+                // Only trigger section drag from the grip handle or header itself
+                dragState.sourceIndex = null;
+                dragState.sourceItem = null;
+                dragState.sectionName = section.name;
+                group.classList.add('dragging-section');
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', 'section:' + section.name);
+            });
+
+            header.addEventListener('dragend', () => {
+                group.classList.remove('dragging-section');
+                clearDropIndicators();
+                document.querySelectorAll('.section-group').forEach(g => {
+                    g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                });
+                dragState.sectionName = null;
+            });
+
+            group.addEventListener('dragover', (e) => {
+                // Only respond to section-level drags
+                if (!dragState.sectionName) return;
+                if (dragState.sectionName === section.name) return;
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                document.querySelectorAll('.section-group').forEach(g => {
+                    g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                });
+                const rect = group.getBoundingClientRect();
+                const midY = rect.top + rect.height / 2;
+                if (e.clientY < midY) {
+                    group.classList.add('drag-over-section-top');
+                } else {
+                    group.classList.add('drag-over-section-bottom');
+                }
+            });
+
+            group.addEventListener('dragleave', (e) => {
+                // Only clear if leaving the group entirely
+                if (!group.contains(e.relatedTarget)) {
+                    group.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                }
+            });
+
+            group.addEventListener('drop', (e) => {
+                if (!dragState.sectionName) return;
+                if (dragState.sectionName === section.name) return;
+                e.preventDefault();
+                e.stopPropagation();
+                document.querySelectorAll('.section-group').forEach(g => {
+                    g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                });
+                const rect = group.getBoundingClientRect();
+                const midY = rect.top + rect.height / 2;
+                const insertBefore = e.clientY < midY;
+                reorderSection(dragState.sectionName, section.name, insertBefore);
+            });
+
+            header.appendChild(sectionGrip);
+            header.appendChild(arrow);
+            header.appendChild(name);
+            header.appendChild(toggle);
+            group.appendChild(header);
+
+            // Slides container
+            const slidesDiv = document.createElement('div');
+            slidesDiv.className = 'section-slides';
+
+            section.slides.forEach(({ index, slide }) => {
+                const item = document.createElement('div');
+                item.className = 'slide-item' + (state.selected.has(index) ? ' selected' : '') + (index === state.current ? ' active-preview' : '');
+                item.setAttribute('draggable', 'true');
+                item.dataset.slideIndex = index;
+
+                // Drag handle
+                const grip = document.createElement('span');
+                grip.className = 'slide-drag-handle';
+                grip.textContent = '\u2801\u2801';
+
+                // Checkbox
+                const check = document.createElement('div');
+                check.className = 'slide-check';
+                check.textContent = '\u2713';
+                check.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (state.selected.has(index)) state.selected.delete(index);
+                    else state.selected.add(index);
+                    saveState();
+                    item.classList.toggle('selected');
+                    check.textContent = '\u2713';
+                    updateCount();
+                    // Update section toggle text
+                    const allSel = section.slides.every(s => state.selected.has(s.index));
+                    toggle.textContent = allSel ? 'deselect' : 'select all';
+                });
+
+                // Background dot
+                const bgDot = document.createElement('div');
+                bgDot.className = 'slide-bg-dot';
+                const classes = slide.className;
+                if (classes.includes('bg-red-dark')) bgDot.classList.add('bg-red-dot');
+                else if (classes.includes('bg-red')) bgDot.classList.add('bg-red-dot');
+                else if (classes.includes('bg-light')) bgDot.classList.add('bg-light-dot');
+                else if (classes.includes('bg-white')) bgDot.classList.add('bg-white-dot');
+                else bgDot.classList.add('bg-dark-dot');
+
+                // Label
+                const label = document.createElement('span');
+                label.className = 'slide-label';
+                label.textContent = slide.dataset.title || 'Slide ' + (index + 1);
+
+                // Number
+                const num = document.createElement('span');
+                num.className = 'slide-num';
+                num.textContent = index + 1;
+
+                item.appendChild(grip);
+                item.appendChild(check);
+                item.appendChild(bgDot);
+                item.appendChild(label);
+                item.appendChild(num);
+
+                // Drag events
+                item.addEventListener('dragstart', (e) => {
+                    e.stopPropagation();
+                    dragState.sourceIndex = parseInt(item.dataset.slideIndex);
+                    dragState.sourceItem = item;
+                    dragState.sectionName = null;
+                    item.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', item.dataset.slideIndex);
+                    slidesDiv.classList.add('drag-active');
+                });
+
+                item.addEventListener('dragend', () => {
+                    item.classList.remove('dragging');
+                    clearDropIndicators();
+                    document.querySelectorAll('.section-slides').forEach(s => s.classList.remove('drag-active'));
+                    document.querySelectorAll('.section-group').forEach(g => {
+                        g.classList.remove('drag-over-section-top', 'drag-over-section-bottom');
+                    });
+                    dragState.sourceIndex = null;
+                    dragState.sourceItem = null;
+                    dragState.sectionName = null;
+                });
+
+                item.addEventListener('dragover', (e) => {
+                    if (dragState.sectionName) return; // Section drag, ignore slide targets
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.dataTransfer.dropEffect = 'move';
+                    if (dragState.sourceItem === item) return;
+                    clearDropIndicators();
+                    const rect = item.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    if (e.clientY < midY) {
+                        item.classList.add('drag-over-top');
+                    } else {
+                        item.classList.add('drag-over-bottom');
+                    }
+                });
+
+                item.addEventListener('dragleave', () => {
+                    item.classList.remove('drag-over-top', 'drag-over-bottom');
+                });
+
+                item.addEventListener('drop', (e) => {
+                    if (dragState.sectionName) return; // Section drag, ignore
+                    e.preventDefault();
+                    e.stopPropagation();
+                    clearDropIndicators();
+                    const fromIndex = dragState.sourceIndex;
+                    const toIndex = parseInt(item.dataset.slideIndex);
+                    if (fromIndex === null || fromIndex === toIndex) return;
+
+                    // Determine insert position
+                    const rect = item.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    const insertBefore = e.clientY < midY;
+
+                    reorderSlide(fromIndex, toIndex, insertBefore);
+                });
+
+                // Click to preview
+                item.addEventListener('click', () => {
+                    goTo(index);
+                });
+
+                slidesDiv.appendChild(item);
+            });
+
+            group.appendChild(slidesDiv);
+            container.appendChild(group);
+        });
+    }
+
+    // ============================================
+    // DRAG AND DROP REORDER
+    // ============================================
+    const dragState = { sourceIndex: null, sourceItem: null, sectionName: null };
+
+    function clearDropIndicators() {
+        document.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
+            el.classList.remove('drag-over-top', 'drag-over-bottom');
+        });
+    }
+
+    function reorderSlide(fromIndex, toIndex, insertBefore) {
+        const slidesContainer = document.querySelector('.presentation');
+        const slideEl = allSlides[fromIndex];
+        const targetEl = allSlides[toIndex];
+
+        // Update data-section to match target's section
+        const targetSection = targetEl.dataset.section;
+        if (targetSection) slideEl.dataset.section = targetSection;
+
+        // Remember which slides were selected (by element reference)
+        const selectedElements = new Set();
+        state.selected.forEach(i => selectedElements.add(allSlides[i]));
+        const currentElement = allSlides[state.current];
+
+        // Move the DOM element
+        if (insertBefore) {
+            slidesContainer.insertBefore(slideEl, targetEl);
+        } else {
+            if (targetEl.nextElementSibling) {
+                slidesContainer.insertBefore(slideEl, targetEl.nextElementSibling);
+            } else {
+                slidesContainer.appendChild(slideEl);
+            }
+        }
+
+        rebuildAfterReorder(selectedElements, currentElement);
+    }
+
+    function reorderSection(sectionName, targetSectionName, insertBefore) {
+        const slidesContainer = document.querySelector('.presentation');
+
+        // Collect all slides in the source section (contiguous block)
+        const sectionSlides = [];
+        let inSection = false;
+        for (const slide of allSlides) {
+            if (slide.dataset.section === sectionName) {
+                inSection = true;
+                sectionSlides.push(slide);
+            } else if (inSection) {
+                break; // End of contiguous section
+            }
+        }
+        if (sectionSlides.length === 0) return;
+
+        // Find first slide of the target section
+        let targetSlide = null;
+        let lastTargetSlide = null;
+        for (const slide of allSlides) {
+            if (slide.dataset.section === targetSectionName) {
+                if (!targetSlide) targetSlide = slide;
+                lastTargetSlide = slide;
+            }
+        }
+        if (!targetSlide) return;
+
+        // Remember state
+        const selectedElements = new Set();
+        state.selected.forEach(i => selectedElements.add(allSlides[i]));
+        const currentElement = allSlides[state.current];
+
+        // Move all section slides as a block
+        if (insertBefore) {
+            // Insert entire section before the target section
+            sectionSlides.forEach(el => {
+                slidesContainer.insertBefore(el, targetSlide);
+            });
+        } else {
+            // Insert entire section after the target section
+            const afterEl = lastTargetSlide.nextElementSibling;
+            sectionSlides.forEach(el => {
+                if (afterEl) {
+                    slidesContainer.insertBefore(el, afterEl);
+                } else {
+                    slidesContainer.appendChild(el);
+                }
+            });
+        }
+
+        rebuildAfterReorder(selectedElements, currentElement);
+    }
+
+    function rebuildAfterReorder(selectedElements, currentElement) {
+        refreshSlides();
+
+        // Rebuild selected set with new indices
+        state.selected = new Set();
+        allSlides.forEach((el, i) => {
+            if (selectedElements.has(el)) state.selected.add(i);
+        });
+
+        // Update current to follow the element
+        state.current = allSlides.indexOf(currentElement);
+        if (state.current === -1) state.current = 0;
+
+        saveState();
+        buildSidebar();
+        updateCount();
+        rebuildDots();
+        highlightCurrent();
+    }
+
+    function updateCount() {
+        document.getElementById('selected-count').textContent = state.selected.size;
+        document.getElementById('total-count').textContent = totalSlides;
+    }
+
+    function highlightCurrent() {
+        document.querySelectorAll('.slide-item').forEach(item => {
+            item.classList.remove('active-preview');
+        });
+        const items = document.querySelectorAll('.slide-item');
+        if (items[state.current]) {
+            items[state.current].classList.add('active-preview');
+            // Scroll into view
+            items[state.current].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+    }
+
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    const logoPaths = document.querySelectorAll('#logo-paths path');
+    function setLogoColor(color) {
+        const fill = color === 'white' ? '#FFFFFF' : '#FF3333';
+        logoPaths.forEach(p => p.setAttribute('fill', fill));
+    }
+
+    function goTo(index) {
+        if (index < 0 || index >= totalSlides) return;
+        allSlides[state.current].classList.remove('active');
+        state.current = index;
+        allSlides[state.current].classList.add('active');
+
+        // Update dots
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === state.current);
+        });
+
+        // Counter
+        if (state.presenting) {
+            const selectedArr = getSelectedArray();
+            const posInSelection = selectedArr.indexOf(state.current);
+            document.getElementById('counter').textContent = (posInSelection + 1) + ' / ' + selectedArr.length;
+        } else {
+            document.getElementById('counter').textContent = (state.current + 1) + ' / ' + totalSlides;
+        }
+
+        // Nav buttons
+        document.getElementById('prev-btn').disabled = state.current === 0;
+        document.getElementById('next-btn').disabled = state.current === totalSlides - 1;
+
+        // Logo color
+        const logoType = allSlides[state.current].getAttribute('data-logo') || 'white';
+        setLogoColor(logoType);
+
+        // Highlight in sidebar
+        highlightCurrent();
+
+        // Update section nav
+        updateSectionNav();
+
+        // Persist slide in URL hash
+        history.replaceState(null, '', '#' + state.current);
+    }
+
+    function getSelectedArray() {
+        return [...state.selected].sort((a, b) => a - b);
+    }
+
+    function next() {
+        if (state.presenting) {
+            const arr = getSelectedArray();
+            const pos = arr.indexOf(state.current);
+            if (pos < arr.length - 1) goTo(arr[pos + 1]);
+        } else {
+            goTo(state.current + 1);
+        }
+    }
+    function prev() {
+        if (state.presenting) {
+            const arr = getSelectedArray();
+            const pos = arr.indexOf(state.current);
+            if (pos > 0) goTo(arr[pos - 1]);
+        } else {
+            goTo(state.current - 1);
+        }
+    }
+
+    // ============================================
+    // PRESENT MODE
+    // ============================================
+    function enterPresent() {
+        if (state.selected.size === 0) return;
+        state.presenting = true;
+        document.body.classList.add('presenting');
+        document.body.classList.remove('manager-open');
+
+        // Jump to first selected slide
+        const arr = getSelectedArray();
+        goTo(arr[0]);
+
+        // Rebuild dots for selected only
+        rebuildDots();
+    }
+
+    function exitPresent() {
+        state.presenting = false;
+        document.body.classList.remove('presenting');
+        document.body.classList.add('manager-open');
+        document.getElementById('manager-panel').classList.remove('hidden');
+        rebuildDots();
+        goTo(state.current);
+    }
+
+    function rebuildDots() {
+        const dotsContainer = document.getElementById('dots');
+        dotsContainer.innerHTML = '';
+
+        if (state.presenting) {
+            const arr = getSelectedArray();
+            arr.forEach((slideIdx, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (slideIdx === state.current ? ' active' : '');
+                dot.onclick = () => goTo(slideIdx);
+                dot.style.cursor = 'pointer';
+                dotsContainer.appendChild(dot);
+            });
+        } else {
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === state.current ? ' active' : '');
+                dot.onclick = () => goTo(i);
+                dot.style.cursor = 'pointer';
+                dotsContainer.appendChild(dot);
+            }
+        }
+    }
+
+    // ============================================
+    // PRESETS
+    // ============================================
+    function loadPresets() {
+        const select = document.getElementById('preset-select');
+        // Clear existing options except first
+        while (select.options.length > 1) select.remove(1);
+        Object.keys(state.presets).forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            select.appendChild(opt);
+        });
+    }
+
+    document.getElementById('preset-select').addEventListener('change', function() {
+        if (this.value === '__all__') {
+            state.selected = new Set([...Array(totalSlides).keys()]);
+        } else if (state.presets[this.value]) {
+            state.selected = new Set(state.presets[this.value]);
+        }
+        saveState();
+        buildSidebar();
+        updateCount();
+    });
+
+    document.getElementById('btn-save-preset').addEventListener('click', () => {
+        const name = prompt('Preset name:');
+        if (!name || !name.trim()) return;
+        state.presets[name.trim()] = [...state.selected];
+        saveState();
+        loadPresets();
+        document.getElementById('preset-select').value = name.trim();
+    });
+
+    document.getElementById('btn-delete-preset').addEventListener('click', () => {
+        const select = document.getElementById('preset-select');
+        const name = select.value;
+        if (name === '__all__') return;
+        if (!confirm('Delete preset "' + name + '"?')) return;
+        delete state.presets[name];
+        saveState();
+        loadPresets();
+        select.value = '__all__';
+    });
+
+    // ============================================
+    // TOGGLE PANEL
+    // ============================================
+    function togglePanel() {
+        if (state.presenting) return;
+        document.body.classList.toggle('manager-open');
+        const panel = document.getElementById('manager-panel');
+        panel.classList.toggle('hidden', !document.body.classList.contains('manager-open'));
+    }
+
+    document.getElementById('manager-toggle').addEventListener('click', togglePanel);
+    document.getElementById('btn-present').addEventListener('click', enterPresent);
+
+    // ============================================
+    // KEYBOARD
+    // ============================================
+    document.addEventListener('keydown', (e) => {
+        // Don't capture if typing in an input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+        if (e.key === 'Tab' && !state.presenting) {
+            e.preventDefault();
+            togglePanel();
+        }
+        if (e.key === 'p' || e.key === 'P') {
+            if (!state.presenting) enterPresent();
+        }
+        if (e.key === 'Escape') {
+            if (state.presenting) exitPresent();
+        }
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            next();
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prev();
+        }
+        if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+        if (e.key === 'End') { e.preventDefault(); goTo(totalSlides - 1); }
+    });
+
+    // ============================================
+    // SECTION NAV (top bar)
+    // ============================================
+    const sectionBtns = document.querySelectorAll('.section-nav-btn');
+    const sectionSlideIndices = Array.from(sectionBtns).map(b => parseInt(b.dataset.slide));
+
+    sectionBtns.forEach(btn => {
+        btn.addEventListener('click', () => goTo(parseInt(btn.dataset.slide)));
+    });
+
+    function updateSectionNav() {
+        let activeIdx = 0;
+        for (let i = sectionSlideIndices.length - 1; i >= 0; i--) {
+            if (state.current >= sectionSlideIndices[i]) { activeIdx = i; break; }
+        }
+        sectionBtns.forEach((btn, i) => btn.classList.toggle('active', i === activeIdx));
+    }
+
+    // ============================================
+    // INIT
+    // ============================================
+    loadState();
+    buildSidebar();
+    updateCount();
+    loadPresets();
+    rebuildDots();
+    // Start at hash slide if present, otherwise slide 0
+    const hashSlide = parseInt(location.hash.replace('#', ''), 10);
+    goTo(!isNaN(hashSlide) && hashSlide >= 0 && hashSlide < totalSlides ? hashSlide : 0);
+    </script>
+</body>
+</html>
