@@ -91,7 +91,7 @@
         .slide-inner {
             width: 100%;
             height: 100vh;
-            padding: 60px 80px;
+            padding: 100px 80px 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -672,12 +672,12 @@
            RESPONSIVE
            ============================================ */
         @media (max-width: 1200px) {
-            .slide-inner { padding: 40px 50px; }
+            .slide-inner { padding: 80px 50px 40px; }
             .two-col, .two-col-wide { grid-template-columns: 1fr; gap: 2rem; }
             .format-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
-            .slide-inner { padding: 24px 30px; }
+            .slide-inner { padding: 70px 30px 24px; }
             .three-col { grid-template-columns: 1fr; }
             .format-grid { grid-template-columns: repeat(2, 1fr); }
             .process-steps { flex-direction: column; }
@@ -1034,7 +1034,7 @@
         .t-070-sm { opacity: 0.7; font-size: 0.8rem; }
         .t-xs-muted { opacity: 0.5; font-size: 0.8rem; }
 
-        .slide-inner-centered { flex-direction: column; justify-content: center; padding: 70px 60px 50px; }
+        .slide-inner-centered { flex-direction: column; justify-content: center; padding: 100px 60px 50px; }
         .phase-col { flex: 1; text-align: center; position: relative; padding: 0 0.75rem; }
         .flex-overflow { flex: 1; overflow: hidden; }
         .flex-col-gap-xs { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -1085,7 +1085,7 @@
         .logo-inverted { height: 24px; opacity: 0.8; filter: brightness(0) invert(1); }
         .stat-number-plain { font-size: 2.5rem; }
         .phase-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1; }
-        .slide-inner.slide-inner-split { flex-direction: row; align-items: center; gap: 3rem; padding: 80px 60px 60px; }
+        .slide-inner.slide-inner-split { flex-direction: row; align-items: center; gap: 3rem; padding: 100px 60px 60px; }
 
         /* ============================================
            V2: HIGH-FREQUENCY UTILITY CLASSES
@@ -1295,7 +1295,7 @@
         .slide-inner-row {
             width: 100%;
             height: 100vh;
-            padding: 80px 60px 60px;
+            padding: 100px 60px 60px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -1307,7 +1307,7 @@
         .slide-inner-compact {
             width: 100%;
             height: 100vh;
-            padding: 80px 60px 50px;
+            padding: 100px 60px 50px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -1319,7 +1319,7 @@
         .slide-inner-top {
             width: 100%;
             height: 100vh;
-            padding: 80px 60px 50px;
+            padding: 100px 60px 50px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -1424,7 +1424,7 @@
              SLIDE 0: INTERNAL: HOW TO USE THIS DECK
              ============================================= -->
         <div class="slide active bg-dark" data-logo="white" data-title="Internal: How to use this deck" data-section="Overview" style="border-left: 4px solid var(--sl-red);">
-            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 2rem; padding: 80px 60px 60px;">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 2rem; padding: 100px 60px 60px;">
                 <!-- Left: Title -->
                 <div class="flex-1-min">
                     <div class="fade-up">
@@ -1785,7 +1785,7 @@
              SLIDE 8: INDUSTRY PROGRAMS
              ============================================= -->
         <div class="slide bg-dark" data-logo="white" data-title="Industry programs" data-section="Industry Programs">
-            <div class="slide-inner" style="padding: 80px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden;">
+            <div class="slide-inner" style="padding: 100px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden;">
                 <div class="fade-up mb-1-25">
                     <p class="t-label mb-sm">Industry Programs</p>
                     <h2 class="t-large mb-1">Sector-specific <span class="t-red">deep dives</span></h2>
@@ -1921,9 +1921,8 @@
              ============================================= -->
         <div class="slide bg-warm" data-logo="red" data-title="SL Hardware" data-section="Industry Programs">
             <div class="slide-inner justify-center">
-                <div class="fade-up" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;">
-                    <p class="t-label">Industry Programs</p>
-                    <img src="../brand-profile/industry-programs/SL_programs_hardware/svg/SL_pro_hardware_red.svg" alt="SL Hardware" style="height: 24px; opacity: 0.7;">
+                <div class="fade-up">
+                    <p class="t-label mb-md">Industry Programs</p>
                 </div>
                 <h2 class="t-large fade-up mb-md">SL <span class="t-red">Hardware</span></h2>
                 <div class="fade-up" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.25rem; max-width: 1100px; margin-bottom: 1.5rem;">
@@ -2133,7 +2132,7 @@
              SLIDE 14: CASE: NYE VEIER + HIVE AUTONOMY
              ============================================= -->
         <div class="slide bg-light" data-logo="red" data-title="Case: Nye Veier + Hive Autonomy" data-section="Cases">
-            <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 80px 60px 60px;">
+            <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 100px 60px 60px;">
                 <!-- Left: Story -->
                 <div style="display: flex; flex-direction: column; justify-content: center;">
                     <div class="fade-up">
@@ -2290,7 +2289,7 @@
              SLIDE 17: CIN: PREVIOUS SESSIONS
              ============================================= -->
         <div class="slide bg-dark" data-logo="white" data-title="CIN: Previous sessions" data-section="Events">
-            <div class="slide-inner" style="justify-content: center; padding: 60px 60px 50px;">
+            <div class="slide-inner" style="justify-content: center; padding: 100px 60px 50px;">
                 <div class="fade-up">
                     <p class="t-label mb-md">Network</p>
                 </div>
@@ -2444,7 +2443,7 @@
              ============================================= -->
         <div class="slide bg-dark" data-logo="white" data-title="Startuplab Summit" data-section="Events" style="overflow: hidden;">
             <img src="logos/summit-startuplab.png" alt="Startuplab Summit" class="logo-corner">
-            <div class="slide-inner" style="padding: 80px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start;">
+            <div class="slide-inner" style="padding: 100px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start;">
                 <!-- Title + stats row -->
                 <div class="fade-up" style="display: flex; align-items: flex-end; gap: 3rem; margin-bottom: 2rem;">
                     <h2 class="t-large" style="margin: 0; line-height: 1;">Startuplab <span class="t-red">Summit</span></h2>
@@ -3250,7 +3249,7 @@
              SLIDE 35: IN THE NEWS
              ============================================= -->
         <div class="slide bg-white" data-logo="red" data-title="In the News" data-section="Slide Bank">
-            <div class="slide-inner" style="justify-content: center; padding: 60px 50px;">
+            <div class="slide-inner" style="justify-content: center; padding: 100px 50px 50px;">
                 <div class="fade-up">
                     <p class="t-label mb-md">In the News</p>
                 </div>
