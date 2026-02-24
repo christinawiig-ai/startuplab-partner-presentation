@@ -91,7 +91,7 @@
         .slide-inner {
             width: 100%;
             height: 100vh;
-            padding: 100px 80px 60px;
+            padding: 130px 80px 40px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -99,27 +99,8 @@
             max-width: 1920px;
             margin: 0 auto;
         }
-        /* Safe centering: centers content when it fits, starts from top when it overflows.
-           Disabled for row layouts (split/row) where flex-direction is horizontal. */
-        .slide-inner::before,
-        .slide-inner::after {
-            content: '';
-            flex: 1 1 auto;
-        }
-        .slide-inner.slide-inner-split::before,
-        .slide-inner.slide-inner-split::after,
-        .slide-inner-row::before,
-        .slide-inner-row::after,
-        .slide-inner-compact::before,
-        .slide-inner-compact::after,
-        .slide-inner-top::before,
-        .slide-inner-top::after,
-        .slide-inner-centered::before,
-        .slide-inner-centered::after,
-        .slide-inner.no-spacers::before,
-        .slide-inner.no-spacers::after {
-            display: none;
-        }
+        /* All slides use flex-start with generous padding-top to clear the fixed logo.
+           No centering — content flows from top, padding provides visual balance. */
 
         /* Backgrounds */
         .bg-dark { background: linear-gradient(135deg, var(--sl-deep-black) 0%, var(--sl-black) 100%); color: var(--sl-white); }
@@ -264,7 +245,7 @@
         .gap-lg { gap: 2.5rem; }
         .gap-xl { gap: 4rem; }
         .items-center { align-items: center; }
-        .justify-center { /* centering handled by ::before/::after spacers */ }
+        .justify-center { /* kept for class compatibility, no centering — uses flex-start */ }
         .flex-1 { flex: 1; }
         .mb-sm { margin-bottom: 0.75rem; }
         .mb-md { margin-bottom: 1.5rem; }
@@ -693,12 +674,12 @@
            RESPONSIVE
            ============================================ */
         @media (max-width: 1200px) {
-            .slide-inner { padding: 80px 50px 40px; }
+            .slide-inner { padding: 110px 50px 30px; }
             .two-col, .two-col-wide { grid-template-columns: 1fr; gap: 2rem; }
             .format-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
-            .slide-inner { padding: 70px 30px 24px; }
+            .slide-inner { padding: 100px 30px 20px; }
             .three-col { grid-template-columns: 1fr; }
             .format-grid { grid-template-columns: repeat(2, 1fr); }
             .process-steps { flex-direction: column; }
@@ -1055,7 +1036,7 @@
         .t-070-sm { opacity: 0.7; font-size: 0.8rem; }
         .t-xs-muted { opacity: 0.5; font-size: 0.8rem; }
 
-        .slide-inner-centered { flex-direction: column; justify-content: flex-start; padding: 100px 60px 50px; }
+        .slide-inner-centered { flex-direction: column; justify-content: flex-start; padding: 130px 60px 50px; }
         .phase-col { flex: 1; text-align: center; position: relative; padding: 0 0.75rem; }
         .flex-overflow { flex: 1; overflow: hidden; }
         .flex-col-gap-xs { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -1106,7 +1087,7 @@
         .logo-inverted { height: 24px; opacity: 0.8; filter: brightness(0) invert(1); }
         .stat-number-plain { font-size: 2.5rem; }
         .phase-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--sl-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1; }
-        .slide-inner.slide-inner-split { flex-direction: row; align-items: center; gap: 3rem; padding: 100px 60px 60px; }
+        .slide-inner.slide-inner-split { flex-direction: row; align-items: center; gap: 3rem; padding: 130px 60px 60px; }
 
         /* ============================================
            V2: HIGH-FREQUENCY UTILITY CLASSES
@@ -1316,7 +1297,7 @@
         .slide-inner-row {
             width: 100%;
             height: 100vh;
-            padding: 100px 60px 60px;
+            padding: 130px 60px 60px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -1328,7 +1309,7 @@
         .slide-inner-compact {
             width: 100%;
             height: 100vh;
-            padding: 100px 60px 50px;
+            padding: 130px 60px 50px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -1340,7 +1321,7 @@
         .slide-inner-top {
             width: 100%;
             height: 100vh;
-            padding: 100px 60px 50px;
+            padding: 130px 60px 50px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -1445,7 +1426,7 @@
              SLIDE 0: INTERNAL: HOW TO USE THIS DECK
              ============================================= -->
         <div class="slide active bg-dark" data-logo="white" data-title="Internal: How to use this deck" data-section="Overview" style="border-left: 4px solid var(--sl-red);">
-            <div class="slide-inner no-spacers" style="flex-direction: row; align-items: center; gap: 2rem; padding: 100px 60px 60px;">
+            <div class="slide-inner" style="flex-direction: row; align-items: center; gap: 2rem; padding: 130px 60px 60px;">
                 <!-- Left: Title -->
                 <div class="flex-1-min">
                     <div class="fade-up">
@@ -1806,7 +1787,7 @@
              SLIDE 8: INDUSTRY PROGRAMS
              ============================================= -->
         <div class="slide bg-dark" data-logo="white" data-title="Industry programs" data-section="Industry Programs">
-            <div class="slide-inner no-spacers" style="padding: 100px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden;">
+            <div class="slide-inner" style="padding: 130px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden;">
                 <div class="fade-up mb-1-25">
                     <p class="t-label mb-sm">Industry Programs</p>
                     <h2 class="t-large mb-1">Sector-specific <span class="t-red">deep dives</span></h2>
@@ -2153,7 +2134,7 @@
              SLIDE 14: CASE: NYE VEIER + HIVE AUTONOMY
              ============================================= -->
         <div class="slide bg-light" data-logo="red" data-title="Case: Nye Veier + Hive Autonomy" data-section="Cases">
-            <div class="slide-inner no-spacers" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 100px 60px 60px;">
+            <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 130px 60px 60px;">
                 <!-- Left: Story -->
                 <div style="display: flex; flex-direction: column; justify-content: center;">
                     <div class="fade-up">
@@ -2310,7 +2291,7 @@
              SLIDE 17: CIN: PREVIOUS SESSIONS
              ============================================= -->
         <div class="slide bg-dark" data-logo="white" data-title="CIN: Previous sessions" data-section="Events">
-            <div class="slide-inner" style="padding: 100px 60px 50px;">
+            <div class="slide-inner" style="padding: 130px 60px 50px;">
                 <div class="fade-up">
                     <p class="t-label mb-md">Network</p>
                 </div>
@@ -2464,7 +2445,7 @@
              ============================================= -->
         <div class="slide bg-dark" data-logo="white" data-title="Startuplab Summit" data-section="Events" style="overflow: hidden;">
             <img src="logos/summit-startuplab.png" alt="Startuplab Summit" class="logo-corner">
-            <div class="slide-inner no-spacers" style="padding: 100px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start;">
+            <div class="slide-inner" style="padding: 130px 60px 50px; display: flex; flex-direction: column; justify-content: flex-start;">
                 <!-- Title + stats row -->
                 <div class="fade-up" style="display: flex; align-items: flex-end; gap: 3rem; margin-bottom: 2rem;">
                     <h2 class="t-large" style="margin: 0; line-height: 1;">Startuplab <span class="t-red">Summit</span></h2>
@@ -3270,7 +3251,7 @@
              SLIDE 35: IN THE NEWS
              ============================================= -->
         <div class="slide bg-white" data-logo="red" data-title="In the News" data-section="Slide Bank">
-            <div class="slide-inner" style="padding: 100px 50px 50px;">
+            <div class="slide-inner" style="padding: 130px 50px 50px;">
                 <div class="fade-up">
                     <p class="t-label mb-md">In the News</p>
                 </div>
