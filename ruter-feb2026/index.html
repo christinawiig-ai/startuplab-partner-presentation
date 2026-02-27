@@ -2663,6 +2663,7 @@
     // ============================================
     function buildSidebar() {
         const container = document.getElementById('manager-slides');
+        if (!container) return;
         container.innerHTML = '';
 
         // Group slides by section
@@ -3032,8 +3033,10 @@
     }
 
     function updateCount() {
-        document.getElementById('selected-count').textContent = state.selected.size;
-        document.getElementById('total-count').textContent = totalSlides;
+        const selCount = document.getElementById('selected-count');
+        const totCount = document.getElementById('total-count');
+        if (selCount) selCount.textContent = state.selected.size;
+        if (totCount) totCount.textContent = totalSlides;
     }
 
     function highlightCurrent() {
@@ -3093,6 +3096,15 @@
 
         // Persist slide in URL hash
         history.replaceState(null, '', '#' + state.current);
+
+        // Video mute button visibility
+        const _muteBtn = document.getElementById('video-mute-btn');
+        const _activeVideo = allSlides[state.current].querySelector('.sl-video');
+        if (_muteBtn) _muteBtn.style.display = _activeVideo ? 'flex' : 'none';
+        document.querySelectorAll('.sl-video').forEach(v => {
+            if (v.closest('.slide.active')) { v.play().catch(() => {}); }
+            else { v.pause(); v.muted = true; if (_muteBtn) { _muteBtn.querySelector('.mute-icon-off').style.display = ''; _muteBtn.querySelector('.mute-icon-on').style.display = 'none'; _muteBtn.style.animation = ''; } }
+        });
     }
 
     function getSelectedArray() {
@@ -3173,6 +3185,7 @@
     // ============================================
     function loadPresets() {
         const select = document.getElementById('preset-select');
+        if (!select) return;
         // Clear existing options except first
         while (select.options.length > 1) select.remove(1);
         Object.keys(state.presets).forEach(name => {
@@ -3183,7 +3196,7 @@
         });
     }
 
-    document.getElementById('preset-select').addEventListener('change', function() {
+    document.getElementById('preset-select')?.addEventListener('change', function() {
         if (this.value === '__all__') {
             state.selected = new Set([...Array(totalSlides).keys()]);
         } else if (state.presets[this.value]) {
@@ -3194,17 +3207,19 @@
         updateCount();
     });
 
-    document.getElementById('btn-save-preset').addEventListener('click', () => {
+    document.getElementById('btn-save-preset')?.addEventListener('click', () => {
         const name = prompt('Preset name:');
         if (!name || !name.trim()) return;
         state.presets[name.trim()] = [...state.selected];
         saveState();
         loadPresets();
-        document.getElementById('preset-select').value = name.trim();
+        const ps = document.getElementById('preset-select');
+        if (ps) ps.value = name.trim();
     });
 
-    document.getElementById('btn-delete-preset').addEventListener('click', () => {
+    document.getElementById('btn-delete-preset')?.addEventListener('click', () => {
         const select = document.getElementById('preset-select');
+        if (!select) return;
         const name = select.value;
         if (name === '__all__') return;
         if (!confirm('Delete preset "' + name + '"?')) return;
@@ -3221,11 +3236,11 @@
         if (state.presenting) return;
         document.body.classList.toggle('manager-open');
         const panel = document.getElementById('manager-panel');
-        panel.classList.toggle('hidden', !document.body.classList.contains('manager-open'));
+        if (panel) panel.classList.toggle('hidden', !document.body.classList.contains('manager-open'));
     }
 
-    document.getElementById('manager-toggle').addEventListener('click', togglePanel);
-    document.getElementById('btn-present').addEventListener('click', enterPresent);
+    document.getElementById('manager-toggle')?.addEventListener('click', togglePanel);
+    document.getElementById('btn-present')?.addEventListener('click', enterPresent);
 
     // ============================================
     // KEYBOARD
@@ -3282,11 +3297,7 @@
     updateCount();
     loadPresets();
     rebuildDots();
-    // Start at hash slide if present, otherwise slide 0
-    const hashSlide = parseInt(location.hash.replace('#', ''), 10);
-    goTo(!isNaN(hashSlide) && hashSlide >= 0 && hashSlide < totalSlides ? hashSlide : 0);
-
-    // Video mute/unmute handler
+    // Video mute button click handler
     const muteBtn = document.getElementById('video-mute-btn');
     if (muteBtn) {
         muteBtn.addEventListener('click', (e) => {
@@ -3300,20 +3311,9 @@
         });
     }
 
-    // Auto-play/pause video on slide change + show/hide mute button
-    const origGoTo = goTo;
-    goTo = function(n) {
-        origGoTo(n);
-        const activeVideo = document.querySelector('.slide.active .sl-video');
-        if (muteBtn) muteBtn.style.display = activeVideo ? 'flex' : 'none';
-        document.querySelectorAll('.sl-video').forEach(v => {
-            if (v.closest('.slide.active')) { v.play().catch(() => {}); }
-            else {
-                v.pause(); v.muted = true;
-                if (muteBtn) { muteBtn.querySelector('.mute-icon-off').style.display = ''; muteBtn.querySelector('.mute-icon-on').style.display = 'none'; muteBtn.style.animation = ''; }
-            }
-        });
-    };
+    // Start at hash slide if present, otherwise slide 0
+    const hashSlide = parseInt(location.hash.replace('#', ''), 10);
+    goTo(!isNaN(hashSlide) && hashSlide >= 0 && hashSlide < totalSlides ? hashSlide : 0);
     </script>
 </body>
 </html>
