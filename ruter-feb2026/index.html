@@ -1395,6 +1395,12 @@
         </svg>
     </div>
 
+    <!-- VIDEO MUTE BUTTON (fixed, outside slide stacking context) -->
+    <button id="video-mute-btn" class="sl-video-mute-btn" aria-label="Sl&aring; p&aring; lyd" style="position: fixed; top: 30px; right: 40px; background: rgba(255,51,51,0.85); border: 2px solid rgba(255,255,255,0.5); color: white; width: 52px; height: 52px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 100; transition: all 0.3s ease; animation: mutePulse 2s infinite;">
+        <svg class="mute-icon-off" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+        <svg class="mute-icon-on" viewBox="0 0 24 24" fill="currentColor" width="24" height="24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+    </button>
+
     <!-- SECTION NAVIGATION (hover top edge to reveal) -->
     <div class="section-nav-trigger"></div>
     <div class="section-nav" id="section-nav">
@@ -1526,10 +1532,6 @@
                     <source src="../corp-partner-gathering-jan26/assets/sl-recruitment-2025.mp4" type="video/mp4">
                 </video>
             </div>
-            <button class="sl-video-mute-btn" aria-label="Sl&aring; p&aring; lyd" style="position: fixed; top: 30px; right: 40px; background: rgba(255,51,51,0.85); border: 2px solid rgba(255,255,255,0.5); color: white; width: 52px; height: 52px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 100; transition: all 0.3s ease; animation: mutePulse 2s infinite;">
-                <svg class="mute-icon-off" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-                <svg class="mute-icon-on" viewBox="0 0 24 24" fill="currentColor" width="24" height="24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-            </button>
         </div>
 
         <!-- =============================================
@@ -3285,39 +3287,33 @@
     goTo(!isNaN(hashSlide) && hashSlide >= 0 && hashSlide < totalSlides ? hashSlide : 0);
 
     // Video mute/unmute handler
-    document.querySelectorAll('.sl-video-mute-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    const muteBtn = document.getElementById('video-mute-btn');
+    if (muteBtn) {
+        muteBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const video = btn.closest('.slide').querySelector('video');
+            const video = document.querySelector('.slide.active .sl-video');
             if (!video) return;
             video.muted = !video.muted;
-            btn.querySelector('.mute-icon-off').style.display = video.muted ? '' : 'none';
-            btn.querySelector('.mute-icon-on').style.display = video.muted ? 'none' : '';
-            if (!video.muted) btn.style.animation = 'none';
+            muteBtn.querySelector('.mute-icon-off').style.display = video.muted ? '' : 'none';
+            muteBtn.querySelector('.mute-icon-on').style.display = video.muted ? 'none' : '';
+            if (!video.muted) muteBtn.style.animation = 'none';
         });
-    });
+    }
 
     // Auto-play/pause video on slide change + show/hide mute button
     const origGoTo = goTo;
     goTo = function(n) {
         origGoTo(n);
-        document.querySelectorAll('.sl-video-mute-btn').forEach(btn => {
-            const isVideoSlide = btn.closest('.slide.active');
-            btn.style.display = isVideoSlide ? 'flex' : 'none';
-        });
+        const activeVideo = document.querySelector('.slide.active .sl-video');
+        if (muteBtn) muteBtn.style.display = activeVideo ? 'flex' : 'none';
         document.querySelectorAll('.sl-video').forEach(v => {
-            if (v.closest('.slide.active')) v.play().catch(() => {});
+            if (v.closest('.slide.active')) { v.play().catch(() => {}); }
             else {
                 v.pause(); v.muted = true;
-                const btn = v.closest('.slide').querySelector('.sl-video-mute-btn');
-                if (btn) { btn.querySelector('.mute-icon-off').style.display = ''; btn.querySelector('.mute-icon-on').style.display = 'none'; btn.style.animation = ''; }
+                if (muteBtn) { muteBtn.querySelector('.mute-icon-off').style.display = ''; muteBtn.querySelector('.mute-icon-on').style.display = 'none'; muteBtn.style.animation = ''; }
             }
         });
     };
-    // Hide mute button initially if not on video slide
-    document.querySelectorAll('.sl-video-mute-btn').forEach(btn => {
-        if (!btn.closest('.slide.active')) btn.style.display = 'none';
-    });
     </script>
 </body>
 </html>
