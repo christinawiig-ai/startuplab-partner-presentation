@@ -35,8 +35,12 @@ const C = {
   white: "FFFFFF",
   offWhite: "F7F7F7",
   lightGray: "F0F0F0",
-  stepGray: "CBD1D5", // synlig, men underordnet: inaktive steg
-  muted: "9BA1A5",
+  // #9BA1A5 gir 7:1 mot mørk bakgrunn, men bare 2,6:1 mot hvit. Samme token
+  // på begge flater gjorde sekundærteksten uleselig bakerst i salen på de
+  // lyse malene, så lys og mørk har hver sin gråtone.
+  muted: "9BA1A5",      // kun på mørk bakgrunn
+  mutedOnLight: "5A6166", // ~5,8:1 mot hvitt
+  stepGray: "5A6166",   // inaktive steg: underordnet rødt, men fortsatt lesbart
   pink: "FFE5EA",
 };
 
@@ -58,8 +62,8 @@ const T = {
   cardTitle: 23,
   body: 20,
   small: 18,
-  caption: 16,
-  label: 15, // kun versaler med sperring, aldri løpende tekst
+  caption: 18,
+  label: 16, // kun versaler med sperring, aldri løpende tekst
 };
 
 // ── Assets ─────────────────────────────────────────────────────────────

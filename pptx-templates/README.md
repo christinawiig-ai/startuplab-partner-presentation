@@ -52,9 +52,14 @@ oppå. Slett den røde sirkelen og trekanten når filmen er på plass.
 ## Regler som holder settet harmonisk
 
 - Ikke gå under 18 pt på tekst noen skal lese. Publikum sitter langt bak.
+  De små versal-etikettene over titlene er 16 pt, som er nedre grense og kun
+  fordi de er korte og har full kontrast.
 - Én rød ting per slide. Rødt som brukes overalt slutter å bety noe.
-- Hold bunnen av sliden fri (nederste ~1,1 cm), ellers kolliderer teksten med
-  logoen.
+- Grå tekst på lys bakgrunn må være den mørke gråtonen (`5A6166`), ikke den
+  lyse (`9BA1A5`). Den lyse hører hjemme på mørk bakgrunn og blir uleselig
+  fra bakerste rad når den brukes på hvitt.
+- Hold bunnen av sliden fri (under 16,1 cm fra toppen), ellers kolliderer
+  teksten med logoen.
 - Tall rundes av: salen husker 4 000, ikke 4 037.
 
 ## Fonter
@@ -109,5 +114,12 @@ merkevarefarge eller justerer skriftstørrelser samlet.
 - Teksten er også plassholdertekst. Den viser hvor mye tekst hver mal tåler,
   som er et poeng i seg selv: skriver du mye mer, sprekker layouten.
 - Fjerde portrett på slide 13 er en tom grå sirkel med vilje, klar til å byttes.
+  Navn og roller på de tre andre er hentet fra `brain/team-og-roller.md`.
+  **Sjekk at rollene fortsatt stemmer før du presenterer.**
+- Sitatsliden har med vilje ingen navngitt person. Et sitat bør komme fra en
+  partner, og en plassholdertekst skal ikke stå under ansiktet til en kollega.
 - Kontaktlinjen på siste slide har bare nettadressen. Legg til e-post selv,
   jeg ville ikke gjette på en adresse.
+- Bytter du et av bildene på programkort-sliden, kjør `prepare-media.py`
+  på det nye bildet. Den legger alle fem i samme lysstyrke og fargestyrke,
+  som er det som gjør at raden ser ut som ett sett.

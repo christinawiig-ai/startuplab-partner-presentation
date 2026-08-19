@@ -2,6 +2,9 @@
  * slides-light.js — de lyse malene.
  * Disse gir pusterom mellom de mørke og egner seg til innhold publikum
  * skal lese: program, sitat, folk, prosess og tall.
+ *
+ * Sekundærtekst bruker C.mutedOnLight, ikke C.muted: den lysere gråtonen
+ * hører hjemme på mørk bakgrunn og faller under lesbar kontrast på hvitt.
  */
 
 const K = require("./kit");
@@ -22,6 +25,7 @@ function agenda(pptx) {
     ["04", "Arbeidsøkt i grupper", "Alle · 45 min"],
   ];
   const y0 = Y.content + 0.05, rh = 0.98;
+  const metaX = 8.35;
 
   rows.forEach(([num, rowTitle, meta], i) => {
     const y = y0 + i * rh;
@@ -29,19 +33,22 @@ function agenda(pptx) {
       x: M.x, y, w: 0.95, h: 0.62,
       fontFace: F.display, fontSize: 28, color: C.red, margin: 0, valign: "middle",
     });
+    // Tittelboksen stopper før metakolonnen. Var den bredere, ville en lang
+    // programpost legge seg oppå navnet til høyre.
     s.addText(rowTitle, {
-      x: M.x + 1.05, y, w: 6.9, h: 0.62,
+      x: M.x + 1.05, y, w: metaX - (M.x + 1.05) - 0.15, h: 0.62,
       fontFace: F.head, fontSize: 26, bold: true, color: C.black, margin: 0, valign: "middle",
     });
     s.addText(meta, {
-      x: 8.35, y, w: 4.1, h: 0.62,
-      fontFace: F.body, fontSize: T.body, color: C.muted, margin: 0, valign: "middle",
+      x: metaX, y, w: 4.1, h: 0.62,
+      fontFace: F.body, fontSize: T.body, color: C.mutedOnLight, margin: 0, valign: "middle",
     });
   });
   K.logo(s, "red");
   s.addNotes(
-    "AGENDA. Fire til fem punkter er nok. Flere enn det leser ingen fra salen. " +
-    "Trenger du en femte rad, kopier en hel rad og flytt den 0,98 tommer ned."
+    "AGENDA. Fire rader er dimensjonert for plassen. Trenger du fem, marker " +
+    "alle radene og minsk avstanden mellom dem til ca. 0,8 tommer først, " +
+    "ellers havner den nederste raden oppå logoen."
   );
   return s;
 }
@@ -75,7 +82,7 @@ function textPhotoSplit(pptx) {
   return s;
 }
 
-/** 11 — Sitat: stort sitat med rundt portrett. */
+/** 11 — Sitat: stort sitat med portrett. */
 function quote(pptx) {
   const s = pptx.addSlide();
   K.fill(s, C.offWhite);
@@ -88,25 +95,35 @@ function quote(pptx) {
       lineSpacingMultiple: 1.15, margin: 0, valign: "top",
     }
   );
-  s.addText("Anniken Fjelberg", {
+  s.addText("Navn Navnesen", {
     x: M.x, y: 4.35, w: 7, h: 0.44,
     fontFace: F.head, fontSize: 22, bold: true, color: C.black, margin: 0, valign: "middle",
   });
-  s.addText("Partner, Startuplab", {
+  s.addText("Rolle, Selskap", {
     x: M.x, y: 4.82, w: 7, h: 0.42,
-    fontFace: F.body, fontSize: T.body, color: C.muted, margin: 0, valign: "middle",
+    fontFace: F.body, fontSize: T.body, color: C.mutedOnLight, margin: 0, valign: "middle",
   });
 
+  // Tom plass i stedet for et ekte portrett: et sitat skal komme fra en
+  // partner, og en oppdiktet uttalelse skal ikke stå under ansiktet til en
+  // navngitt kollega. Høyrekanten flukter med margen, som resten av settet.
+  // Litt mørkere enn plassholderen på teamsliden: bakgrunnen her er offwhite,
+  // og #F0F0F0 mot #F7F7F7 forsvant nesten helt.
   const d = 2.5;
-  s.addImage({
-    path: K.photoPath("portrait-2.jpg"),
-    x: 9.6, y: 2.05, w: d, h: d,
-    rounding: true, sizing: { type: "cover", w: d, h: d },
+  s.addShape(pptx.ShapeType.ellipse, {
+    x: W - M.x - d, y: 2.05, w: d, h: d,
+    fill: { color: "E6E9EB" }, line: { color: "D2D7DA", width: 1 },
+  });
+  s.addText("Sett inn\nportrett", {
+    x: W - M.x - d, y: 2.05 + d / 2 - 0.45, w: d, h: 0.9,
+    fontFace: F.body, fontSize: T.caption, color: C.mutedOnLight,
+    align: "center", lineSpacingMultiple: 1.2, margin: 0, valign: "middle",
   });
   K.logo(s, "red");
   s.addNotes(
     "SITAT. Hold sitatet under 25 ord, ellers slutter salen å lese før du er ferdig å snakke. " +
-    "Portrettet er rundt maskert: høyreklikk > Endre bilde beholder masken."
+    "Både sitatet og navnet er plassholdere: bytt dem før du presenterer. " +
+    "Sirkelen er rundt maskert, så et innsatt portrett beholder formen."
   );
   return s;
 }
@@ -145,7 +162,7 @@ function featureGrid(pptx) {
     });
     s.addText(body, {
       x, y: y + 0.9, w: cw, h: 0.85,
-      fontFace: F.body, fontSize: T.small, color: C.muted,
+      fontFace: F.body, fontSize: T.small, color: C.mutedOnLight,
       lineSpacingMultiple: 1.3, margin: 0, valign: "top",
     });
   });
@@ -165,52 +182,54 @@ function team(pptx) {
   K.eyebrow(s, "Teamet");
   K.title(s, "Folkene du kommer til å [jobbe med]", { color: C.black });
 
+  // Navn og roller er hentet fra brain/team-og-roller.md, ikke gjettet.
   const people = [
-    { name: "Christina Wiig", role: "Partner, Corporate", file: "portrait-1.jpg" },
-    { name: "Anniken Fjelberg", role: "Partner", file: "portrait-2.jpg" },
-    { name: "Ola Borten Moe", role: "Head of Programs", file: "portrait-3.jpg" },
-    { name: "Navn Navnesen", role: "Rolle her", file: null }, // tom plass, klar til utbytting
+    { name: "Christina Wiig", role: "Head of Corporate Partnerships", file: "portrait-1.jpg" },
+    { name: "Anniken Holst", role: "Partner Manager", file: "portrait-2.jpg" },
+    { name: "Ola Jacobsen", role: "Partner Manager", file: "portrait-3.jpg" },
+    { name: "Navn Navnesen", role: "Rolle her", file: null }, // ledig plass
   ];
-  const gap = 0.7;
+
+  // Raden spenner fra venstre til høyre marg, samme raster som tittelen.
+  // Var den sentrert på siden i stedet, stakk ytterkortene utenfor margen.
   const d = 2.45;
-  const totalW = d * 4 + gap * 3;
-  const x0 = (W - totalW) / 2;
-  const y = Y.content + 0.15;
+  const gap = (W - M.x * 2 - d * 4) / 3;
+  const y = 2.5;
 
   people.forEach((p, i) => {
-    const x = x0 + i * (d + gap);
+    const x = M.x + i * (d + gap);
     if (p.file) {
       s.addImage({
         path: K.photoPath(p.file), x, y, w: d, h: d,
         rounding: true, sizing: { type: "cover", w: d, h: d },
       });
     } else {
-      // Nøytral plassholder, tydelig at den skal byttes
       s.addShape(pptx.ShapeType.ellipse, {
         x, y, w: d, h: d,
-        fill: { color: C.lightGray }, line: { color: C.stepGray, width: 1 },
+        fill: { color: C.lightGray }, line: { color: "D8DCDF", width: 1 },
       });
       s.addText("Sett inn\nportrett", {
         x, y: y + d / 2 - 0.45, w: d, h: 0.9,
-        fontFace: F.body, fontSize: T.caption, color: C.muted,
+        fontFace: F.body, fontSize: T.caption, color: C.mutedOnLight,
         align: "center", lineSpacingMultiple: 1.2, margin: 0, valign: "middle",
       });
     }
     s.addText(p.name, {
-      x: x - 0.25, y: y + d + 0.24, w: d + 0.5, h: 0.4,
+      x, y: y + d + 0.22, w: d, h: 0.4,
       fontFace: F.head, fontSize: 21, bold: true, color: C.black,
       align: "center", margin: 0, valign: "middle",
     });
     s.addText(p.role, {
-      x: x - 0.25, y: y + d + 0.64, w: d + 0.5, h: 0.38,
-      fontFace: F.body, fontSize: 17, color: C.muted,
-      align: "center", margin: 0, valign: "middle",
+      x, y: y + d + 0.62, w: d, h: 0.76,
+      fontFace: F.body, fontSize: T.small, color: C.mutedOnLight,
+      align: "center", lineSpacingMultiple: 1.15, margin: 0, valign: "top",
     });
   });
   K.logo(s, "red");
   s.addNotes(
-    "FOLK. Fire portretter passer på bredden. Bytt portrett: høyreklikk > Endre bilde, " +
-    "den runde masken følger med. Den grå sirkelen er en ledig plass."
+    "FOLK. Fire portretter spenner fra marg til marg. Bytt portrett: " +
+    "høyreklikk > Endre bilde, den runde masken følger med. " +
+    "Den grå sirkelen er en ledig plass. Sjekk at rollene stemmer før du presenterer."
   );
   return s;
 }
@@ -235,6 +254,8 @@ function timeline(pptx) {
 
   steps.forEach(([num, stepTitle, body], i) => {
     const x = M.x + i * (cw + gap);
+    // Rødt markerer hvor du er. De øvrige skal være underordnet, men fortsatt
+    // lesbare fra bakerste rad: en nesten hvit gråtone forsvant på projektor.
     s.addText(num, {
       x, y, w: cw, h: 1.0,
       fontFace: F.display, fontSize: 56, color: i === 0 ? C.red : C.stepGray,
@@ -246,7 +267,7 @@ function timeline(pptx) {
     });
     s.addText(body, {
       x, y: y + 1.55, w: cw, h: 1.1,
-      fontFace: F.body, fontSize: T.small, color: C.muted,
+      fontFace: F.body, fontSize: T.small, color: C.mutedOnLight,
       lineSpacingMultiple: 1.3, margin: 0, valign: "top",
     });
   });
@@ -263,8 +284,10 @@ function statsRow(pptx) {
   const s = pptx.addSlide();
   K.fill(s, C.offWhite);
 
-  K.eyebrow(s, "Startuplab i tall", { y: 1.75 });
-  K.title(s, "Tretten år med [sammensatt] vekst", { y: 2.15, color: C.black });
+  // Samme tittelhøyde som de øvrige malene. Lå den lavere, hoppet
+  // overskriften synlig når man bladde mellom slidene.
+  K.eyebrow(s, "Startuplab i tall");
+  K.title(s, "Tretten år, oppsummert i [tre tall]", { color: C.black });
 
   const stats = [
     ["4 000+", "selskaper i nettverket"],
@@ -273,7 +296,7 @@ function statsRow(pptx) {
   ];
   const gap = 0.8;
   const cw = (W - M.x * 2 - gap * 2) / 3; // 3.67
-  const y = 3.8;
+  const y = 3.25;
 
   stats.forEach(([value, label], i) => {
     const x = M.x + i * (cw + gap);

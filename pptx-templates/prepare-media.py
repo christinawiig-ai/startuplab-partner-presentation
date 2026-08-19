@@ -10,7 +10,7 @@ ved den storrelsen. Kjor paa nytt ved behov:
 """
 
 import os
-from PIL import Image
+from PIL import Image, ImageEnhance, ImageStat
 
 HER = os.path.dirname(os.path.abspath(__file__))
 KILDE = os.path.join(HER, "..", "corp-partner-gathering-jan26", "assets")
@@ -34,6 +34,23 @@ JOBBER = [
     ("anniken.jpg", "portrait-2.jpg", 600, 600, 0.28),
     ("ola.jpg", "portrait-3.jpg", 600, 600, 0.28),
 ]
+
+
+def harmoniser_kort(im, mal_lysstyrke=68, metning=0.45):
+    """
+    Legger de fem programkortene i samme toneleie.
+
+    Kildebildene spriker kraftig: maalt snittlysstyrke gikk fra 46 til 82, og
+    ett av dem er helt uten farge mens et annet er sterkt blaatt. Et halv-
+    transparent slor i selve sliden jevner ikke ut det, fordi det legger
+    samme mengde svart paa et morkt og et lyst bilde. Her dempes metningen
+    forst, og deretter loftes eller senkes hvert bilde til samme snittnivaa.
+    """
+    im = ImageEnhance.Color(im).enhance(metning)
+    naa = ImageStat.Stat(im.convert("L")).mean[0]
+    if naa > 1:
+        im = ImageEnhance.Brightness(im).enhance(mal_lysstyrke / naa)
+    return im
 
 
 def beskjaer_og_skaler(im, mal_b, mal_h, vpos):
@@ -89,7 +106,10 @@ def main():
         if im.mode in ("RGBA", "P", "LA"):
             im = im.convert("RGB")
         ut_sti = os.path.join(UT, malnavn)
-        beskjaer_og_skaler(im, b, h, vpos).save(ut_sti, "JPEG", quality=82, optimize=True)
+        ferdig = beskjaer_og_skaler(im, b, h, vpos)
+        if malnavn.startswith("card-"):
+            ferdig = harmoniser_kort(ferdig)
+        ferdig.save(ut_sti, "JPEG", quality=82, optimize=True)
         kb = os.path.getsize(ut_sti) / 1024
         total += kb
         print(f"  {malnavn:26} {b}x{h}  {kb:7.0f} kB")

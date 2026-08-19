@@ -51,7 +51,7 @@ function sectionDivider(pptx) {
 /** 3 — Utsagn: én setning som skal lande. */
 function statement(pptx) {
   const s = pptx.addSlide();
-  K.fill(s, C.deepBlack);
+  K.fill(s, C.black);
 
   K.eyebrow(s, "Vårt standpunkt", { y: 2.15 });
   s.addText(
@@ -93,7 +93,7 @@ function fullBleedPhoto(pptx) {
 /** 5 — Film: hele flaten er filmen. */
 function video(pptx) {
   const s = pptx.addSlide();
-  K.fill(s, C.deepBlack);
+  K.fill(s, C.black);
 
   // Filmflate i hele slidens bredde, samme format som lerretet
   s.addShape(pptx.ShapeType.rect, {
@@ -144,14 +144,16 @@ function programCards(pptx) {
   ];
   const gap = 0.28;
   const cw = (W - M.x * 2 - gap * 4) / 5; // 2.10
-  const ch = 3.35;
+  const ch = 3.2;
   const cy = Y.content;
 
   items.forEach((it, i) => {
     const cx = M.x + i * (cw + gap);
     K.photo(s, it.file, { x: cx, y: cy, w: cw, h: ch });
-    // Lett slør holder de fem bildene i samme toneleie
-    K.scrim(s, pptx, { x: cx, y: cy, w: cw, h: ch, transparency: 55 });
+    // Bildene er allerede lagt i samme toneleie av prepare-media.py. Et slør
+    // her legger like mye svart på et lyst og et mørkt bilde og jevner derfor
+    // ikke ut noe; det er kun der for å dempe kortene mot bakgrunnen.
+    K.scrim(s, pptx, { x: cx, y: cy, w: cw, h: ch, transparency: 72 });
     s.addText(it.label, {
       x: cx, y: cy + ch + 0.22, w: cw, h: 0.44,
       fontFace: F.head, fontSize: 19, bold: true, color: C.white,
@@ -162,7 +164,8 @@ function programCards(pptx) {
   s.addNotes(
     "PROGRAMKORT. Fem kort er maks på bredden. Trenger du fire, slett ett kort " +
     "og dra de andre utover så mellomrommene blir like. " +
-    "Hvert kort har et slør oppå bildet som holder de fem i samme toneleie."
+    "Bytter du ut et bilde, kjør prepare-media.py på det først: den legger " +
+    "alle kortbildene i samme lysstyrke og fargestyrke, ellers spriker raden."
   );
   return s;
 }
@@ -186,7 +189,7 @@ function heroStat(pptx) {
   s.addText(
     "Porteføljen har passert 12,2 milliarder kroner i samlet omsetning. Tallet hentes fra Northbase og oppdateres hvert kvartal.",
     {
-      x: 7.9, y: 2.45, w: 4.55, h: 2.3,
+      x: 7.9, y: 2.32, w: 4.55, h: 2.3,
       fontFace: F.body, fontSize: T.body, color: C.muted,
       lineSpacingMultiple: 1.35, margin: 0, valign: "top",
     }
@@ -204,14 +207,17 @@ function closing(pptx) {
   const s = pptx.addSlide();
   K.fill(s, C.red);
 
-  s.addImage({ path: K.LOGO.white, x: M.x, y: 2.55, w: 4.6, h: 4.6 / K.LOGO_RATIO });
+  // Større blokk enn før: den forrige dekket bare venstre halvdel av en helt
+  // tom rød flate og virket underdimensjonert som siste bilde i en presentasjon.
+  const logoW = 5.8;
+  s.addImage({ path: K.LOGO.white, x: M.x, y: 2.25, w: logoW, h: logoW / K.LOGO_RATIO });
   s.addText("Empowering Tech Founders to Go Further", {
-    x: M.x, y: 4.55, w: 10, h: 0.6,
-    fontFace: F.head, fontSize: 28, color: C.white, margin: 0, valign: "middle",
+    x: M.x, y: 4.62, w: 11, h: 0.7,
+    fontFace: F.head, fontSize: 32, color: C.white, margin: 0, valign: "middle",
   });
   s.addText("startuplab.no", {
-    x: M.x, y: 5.3, w: 10, h: 0.45,
-    fontFace: F.body, fontSize: T.body, color: C.white, margin: 0, valign: "middle",
+    x: M.x, y: 5.5, w: 10, h: 0.5,
+    fontFace: F.body, fontSize: 22, color: C.white, margin: 0, valign: "middle",
   });
   s.addNotes(
     "AVSLUTNING. La den stå på skjermen mens du tar spørsmål. " +
