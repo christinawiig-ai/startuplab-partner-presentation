@@ -55,6 +55,28 @@ def beskjaer_og_skaler(im, mal_b, mal_h, vpos):
     return im.crop(boks).resize((mal_b, mal_h), Image.LANCZOS)
 
 
+def beskjaer_logo():
+    """
+    Logo-PNG-ene har 12,5 % gjennomsiktig luft i sidene og 23,7 % topp og bunn.
+    Plasseres de som de er, staar ikke venstrekanten paa logoen paa linje med
+    teksten under. Her klippes luften bort en gang for alle, saa plasseringen
+    i malene kan vaere rett frem.
+    """
+    kilde = os.path.join(HER, "..", "brand-profile", "logo", "png")
+    for variant in ("white", "red", "black"):
+        sti = os.path.join(kilde, f"SL_signature_{variant}.png")
+        if not os.path.exists(sti):
+            print(f"  MANGLER  {sti}")
+            continue
+        im = Image.open(sti).convert("RGBA")
+        boks = im.getbbox()  # ramme rundt alt som ikke er gjennomsiktig
+        klippet = im.crop(boks)
+        ut_sti = os.path.join(UT, f"logo-{variant}.png")
+        klippet.save(ut_sti, "PNG", optimize=True)
+        forhold = klippet.width / klippet.height
+        print(f"  logo-{variant}.png{'':13} {klippet.width}x{klippet.height}  forhold {forhold:.3f}")
+
+
 def main():
     os.makedirs(UT, exist_ok=True)
     total = 0
@@ -71,7 +93,8 @@ def main():
         kb = os.path.getsize(ut_sti) / 1024
         total += kb
         print(f"  {malnavn:26} {b}x{h}  {kb:7.0f} kB")
-    print(f"\n  Sum: {total / 1024:.1f} MB i {UT}")
+    beskjaer_logo()
+    print(f"\n  Bilder: {total / 1024:.1f} MB i {UT}")
 
 
 if __name__ == "__main__":

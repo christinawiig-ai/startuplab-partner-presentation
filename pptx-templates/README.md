@@ -74,14 +74,18 @@ ett sted og slå gjennom på alle 15.
 
 ```bash
 cd pptx-templates
-npm install          # engangs
-node build.js        # skriver Startuplab-slidemaler.pptx
+npm install                # engangs
+python prepare-media.py    # engangs, eller når du bytter kildebilder
+node build.js              # skriver Startuplab-slidemaler.pptx
 ```
 
-Visuell kontroll (renderer alle slides til PNG via PowerPoint):
+Visuell kontroll (renderer alle slides til PNG via PowerPoint, og setter dem i
+et rutenett så helheten kan vurderes på ett blikk):
 
 ```powershell
 powershell -File render.ps1 -Pptx Startuplab-slidemaler.pptx -Out render
+python contact-sheet.py                                  # lager oversikt.png
+powershell -File export-pdf.ps1 -Pptx Startuplab-slidemaler.pptx
 ```
 
 | Fil | Innhold |
@@ -90,7 +94,10 @@ powershell -File render.ps1 -Pptx Startuplab-slidemaler.pptx -Out render
 | `slides-dark.js` | De mørke og røde malene |
 | `slides-light.js` | De lyse malene |
 | `build.js` | Rekkefølgen slidene settes sammen i |
+| `prepare-media.py` | Beskjærer og skalerer bilder, og klipper luft av logoene |
 | `render.ps1` | Renderer til PNG for visuell kontroll |
+| `contact-sheet.py` | Setter alle slides i ett rutenett (`oversikt.png`) |
+| `export-pdf.ps1` | Eksporterer til PDF |
 
 Endrer du noe i `kit.js`, slår det gjennom på alle malene. Det er der du bytter
 merkevarefarge eller justerer skriftstørrelser samlet.

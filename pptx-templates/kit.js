@@ -70,12 +70,15 @@ const BRAND = path.join(__dirname, "..", "brand-profile");
 // blir .pptx-fila 39 MB i stedet for et par, uten at det synes på skjermen.
 const MEDIA = path.join(__dirname, "media");
 
+// Logoene er beskåret av prepare-media.py. Originalfilene har 12,5 %
+// gjennomsiktig luft i sidene, som gjorde at logoens venstrekant ikke sto på
+// linje med teksten under den.
 const LOGO = {
-  white: path.join(BRAND, "logo", "png", "SL_signature_white.png"),
-  red: path.join(BRAND, "logo", "png", "SL_signature_red.png"),
-  black: path.join(BRAND, "logo", "png", "SL_signature_black.png"),
+  white: path.join(MEDIA, "logo-white.png"),
+  red: path.join(MEDIA, "logo-red.png"),
+  black: path.join(MEDIA, "logo-black.png"),
 };
-const LOGO_RATIO = 1500 / 788;
+const LOGO_RATIO = 1128 / 416; // 2.712
 
 const photoPath = (name) => path.join(MEDIA, name);
 
@@ -99,8 +102,8 @@ function title(slide, text, { y = Y.title, w = 11.4, color = C.white, size = T.t
   });
 }
 
-/** Startuplab-signaturen, nede til venstre. */
-function logo(slide, variant = "white", { x = M.x, y = Y.logo, h = 0.42 } = {}) {
+/** Startuplab-signaturen, nede til venstre. h er synlig høyde på merket. */
+function logo(slide, variant = "white", { x = M.x, y = Y.logo, h = 0.34 } = {}) {
   slide.addImage({ path: LOGO[variant], x, y, w: h * LOGO_RATIO, h });
 }
 

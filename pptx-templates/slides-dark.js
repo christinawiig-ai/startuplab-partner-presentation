@@ -13,7 +13,8 @@ function cover(pptx) {
   K.photo(s, "cover.jpg", { x: 0, y: 0, w: W, h: H });
   K.scrim(s, pptx, { transparency: 46 });
 
-  K.eyebrow(s, "Startuplab · Partner Gathering", { y: 3.95 });
+  // Hvit, ikke rød: rødt på et mørkt foto blir for svakt til å leses bakerst i salen
+  K.eyebrow(s, "Startuplab · Partner Gathering", { y: 3.95, color: C.white });
   s.addText(K.accented("Bygger det [neste] kapittelet", { color: C.white, accent: C.red }), {
     x: M.x, y: 4.38, w: 10.6, h: 1.75,
     fontFace: F.display, fontSize: T.cover, lineSpacingMultiple: 0.92, margin: 0, valign: "top",
@@ -74,7 +75,8 @@ function fullBleedPhoto(pptx) {
   K.photo(s, "fullbleed.jpg", { x: 0, y: 0, w: W, h: H });
   K.scrim(s, pptx, { transparency: 38 });
 
-  K.eyebrow(s, "Startuplab Summit", { y: 4.3 });
+  // Hvit av samme grunn som på forsiden: rødt drukner i fotoet
+  K.eyebrow(s, "Startuplab Summit", { y: 4.3, color: C.white });
   s.addText("Der partnere og gründere\nfaktisk møtes", {
     x: M.x, y: 4.73, w: 9.8, h: 1.5,
     fontFace: F.head, fontSize: T.title, bold: true, color: C.white,
