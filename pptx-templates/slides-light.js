@@ -183,6 +183,64 @@ function photoGrid(pptx) {
   return s;
 }
 
+/**
+ * Rutenett med større bilder. Samme innhold som photoGrid, men plassen er
+ * flyttet fra tekstkolonnen til bildene. Tittelen er derfor 30 pt og
+ * brødteksten 18, ned fra 34 og 20, fortsatt over grensen for lesbarhet i sal.
+ *
+ * `variant` er "a" (bildene holder seg innenfor margen) eller "b" (høyre
+ * kolonne blør ut i lerretkanten, samme grep som fotoet på «tekst og bilde»).
+ */
+function photoGridStor(pptx, variant = "b") {
+  const s = pptx.addSlide();
+  K.fill(s, C.white);
+
+  const tekstW = 3.8;
+  K.eyebrow(s, "Året som gikk", { y: 2.05, w: tekstW });
+  s.addText(K.accented("Fire ting vi\ngjorde [mest] av", { color: C.black, accent: C.red }), {
+    x: M.x, y: 2.45, w: tekstW, h: 1.7,
+    fontFace: F.head, fontSize: 30, bold: true, lineSpacingMultiple: 1.02, margin: 0, valign: "top",
+  });
+  s.addText(
+    "Samlinger, befaringer og matchmaking gjennom hele året. 42 arrangementer i alt.",
+    {
+      x: M.x, y: 4.35, w: tekstW, h: 1.7,
+      fontFace: F.body, fontSize: T.small, color: C.black,
+      lineSpacingMultiple: 1.4, margin: 0, valign: "top",
+    }
+  );
+
+  const blor = variant === "b";
+  const gx = 4.95;
+  const gap = 0.28;
+  // Variant A stopper på høyremargen, B går ut i lerretkanten.
+  const iw = ((blor ? W : W - M.x) - gx - gap) / 2;
+  const ih = iw * 2 / 3; // liggende 3:2
+  const gy = (H - (ih * 2 + gap)) / 2; // sentrert loddrett
+
+  [1, 2, 3, 4].forEach((n, i) => {
+    const col = i % 2, row = Math.floor(i / 2);
+    s.addImage({
+      path: K.photoPath(`stor-${blor ? "b" : "a"}-${n}-rund.png`),
+      x: gx + col * (iw + gap),
+      y: gy + row * (ih + gap),
+      w: iw, h: ih,
+    });
+  });
+  K.logo(s, "red");
+  s.addNotes(
+    `RUTENETT MED STØRRE BILDER, variant ${variant.toUpperCase()}. ` +
+    (blor
+      ? "Høyre kolonne går ut i lerretkanten med vilje. De to bildene har " +
+        "skarpe høyrehjørner: et avrundet hjørne ute i kanten gir en hvit flekk. "
+      : "Bildene stopper på høyremargen, som resten av settet. ") +
+    "Plassen er tatt fra tekstkolonnen, så hold teksten kort: tittelen tåler " +
+    "to linjer og brødteksten tre. " +
+    "Bytt bilde: høyreklikk > Endre bilde, den avrundede formen følger med."
+  );
+  return s;
+}
+
 /** 12 — Punktgrid: seks korte poeng med tall. */
 function featureGrid(pptx) {
   const s = pptx.addSlide();
@@ -465,4 +523,4 @@ function statsRow(pptx) {
   return s;
 }
 
-module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, team5, timeline, statsRow, photoGrid };
+module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, team5, timeline, statsRow, photoGrid, photoGridStor };

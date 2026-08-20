@@ -99,6 +99,40 @@ def beskjaer_og_skaler(im, mal_b, mal_h, vpos):
     return im.crop(boks).resize((mal_b, mal_h), Image.LANCZOS)
 
 
+def lag_stort_rutenett():
+    """
+    Bildefiler til «storre bilder»-variantene av rutenett-malen.
+
+    Utledes fra de ferdige grid-bildene, ikke fra kildefilene, fordi de alt er
+    lagt i felles toneleie. To sett fordi bildene vises i ulik bredde, og
+    hjornradiusen regnes ut fra visningsbredden.
+
+    I variant B gaar hoyre kolonne ut i lerretkanten. De bildene far skarpe
+    hoyrehjorner: et avrundet hjorne ute i kanten gir en hvit flekk.
+    Hjornerekkefolgen er (topp-venstre, topp-hoyre, bunn-hoyre, bunn-venstre).
+    """
+    sett = [
+        ("stor-a", 3.627, {1: None, 2: None, 3: None, 4: None}),
+        ("stor-b", 4.05, {1: None, 2: (True, False, False, True),
+                          3: None, 4: (True, False, False, True)}),
+    ]
+    for prefiks, vis_bredde, hjorner_per_bilde in sett:
+        for n, hjorner in hjorner_per_bilde.items():
+            im = Image.open(os.path.join(UT, f"grid-{n}.jpg")).convert("RGB")
+            px = round(vis_bredde / LERRET_TOMMER * PROJEKTOR_PX * SLARK)
+            im = im.resize((px, round(im.height * px / im.width)), Image.LANCZOS)
+            radius = max(2, round(RADIUS_TOMMER / vis_bredde * im.width))
+            maske = Image.new("L", im.size, 0)
+            ImageDraw.Draw(maske).rounded_rectangle(
+                [0, 0, im.width - 1, im.height - 1], radius=radius, fill=255,
+                corners=hjorner or (True, True, True, True),
+            )
+            rund = im.convert("RGBA")
+            rund.putalpha(maske)
+            rund.save(os.path.join(UT, f"{prefiks}-{n}-rund.png"), "PNG", optimize=True)
+        print(f"  {prefiks}-*: 4 bilder, {vis_bredde} tommer bredt, r={radius} px")
+
+
 def beskjaer_logo():
     """
     Logo-PNG-ene har 12,5 % gjennomsiktig luft i sidene og 23,7 % topp og bunn.
@@ -202,6 +236,7 @@ def main():
             print(f"  {malnavn:26} {b}x{h}  {kb:7.0f} kB   + avrundet (r={radius} px)")
         else:
             print(f"  {malnavn:26} {b}x{h}  {kb:7.0f} kB")
+    lag_stort_rutenett()
     beskjaer_logo()
     print(f"\n  Bilder: {total / 1024:.1f} MB i {UT}")
 
