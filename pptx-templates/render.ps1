@@ -12,6 +12,12 @@ $outDir = Join-Path (Get-Location) $Out
 if (Test-Path $outDir) { Remove-Item $outDir -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
+# VIKTIG: Office kjorer bare EN COM-instans. Var PowerPoint alt apen med
+# dokumenter brukeren jobber i, vil $ppt.Quit() lukke HELE PowerPoint og ta
+# med ulagret arbeid. Derfor: avslutt bare instansen hvis vi startet den selv,
+# og lukk uansett bare presentasjonen vi apnet.
+$varAlleredeApen = [bool](Get-Process POWERPNT -ErrorAction SilentlyContinue)
+
 $ppt = $null
 $pres = $null
 try {
@@ -23,7 +29,11 @@ try {
 }
 finally {
   if ($pres) { $pres.Close() }
-  if ($ppt) { $ppt.Quit(); [void][System.Runtime.InteropServices.Marshal]::ReleaseComObject($ppt) }
+  if ($ppt) {
+    if (-not $varAlleredeApen) { $ppt.Quit() }
+    else { Write-Output "PowerPoint var alt apen, lot den sta (lukket bare var egen fil)" }
+    [void][System.Runtime.InteropServices.Marshal]::ReleaseComObject($ppt)
+  }
 }
 
 # PowerPoint lager en undermappe "slides" med Lysbilde1.PNG / Slide1.PNG

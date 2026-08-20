@@ -12,6 +12,11 @@ $pptxPath = (Resolve-Path $Pptx).Path
 if (-not $Out) { $Out = [IO.Path]::ChangeExtension($pptxPath, ".pdf") }
 elseif (-not [IO.Path]::IsPathRooted($Out)) { $Out = Join-Path (Get-Location) $Out }
 
+# Samme forbehold som i render.ps1: Quit() lukker HELE PowerPoint, ogsaa
+# dokumenter brukeren har apne med ulagret arbeid. Avslutt bare instansen
+# hvis vi startet den selv.
+$varAlleredeApen = [bool](Get-Process POWERPNT -ErrorAction SilentlyContinue)
+
 $ppt = $null
 $pres = $null
 try {
@@ -22,5 +27,9 @@ try {
 }
 finally {
   if ($pres) { $pres.Close() }
-  if ($ppt) { $ppt.Quit(); [void][System.Runtime.InteropServices.Marshal]::ReleaseComObject($ppt) }
+  if ($ppt) {
+    if (-not $varAlleredeApen) { $ppt.Quit() }
+    else { Write-Output "PowerPoint var alt apen, lot den sta" }
+    [void][System.Runtime.InteropServices.Marshal]::ReleaseComObject($ppt)
+  }
 }
