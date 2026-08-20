@@ -1,7 +1,8 @@
 # Startuplab — slidemaler for PowerPoint
 
 > Sist oppdatert: 20. august 2026 av Claude
-> Fil: `Startuplab-slidemaler.pptx` (18 maler, 16:9)
+> Filer: `Startuplab-slidemaler.pptx` (skarpe hjørner) og
+> `Startuplab-slidemaler-avrundet.pptx` (avrundede hjørner). 18 maler, 16:9.
 
 Atten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
 du slipper å be om små justeringer: du åpner fila, bytter tekst og bilder, og
@@ -60,6 +61,29 @@ løser det ulikt:
   dem. Vil du snu den: marker alle fire bildene og dra dem over, og flytt
   tekstblokken motsatt vei.
 
+## To utgaver: skarpe eller avrundede hjørner
+
+Begge bygges fra samme kode, så en endring slår gjennom i begge.
+
+- `Startuplab-slidemaler.pptx` — skarpe hjørner på alle bilder. Editorielt.
+- `Startuplab-slidemaler-avrundet.pptx` — avrundede hjørner på bildene som
+  ligger inne på sliden. Mykere.
+
+**Helflate-bilder rundes ikke i noen av utgavene** (forside, helflate-bilde og
+halvside-fotoet). De går ut i slidekanten, og et avrundet hjørne der gir en
+hvit flekk i kanten av lerretet.
+
+I den avrundede utgaven er portrettene på teamsliden avrundede firkanter i
+stedet for sirkler, slik at de følger resten.
+
+Radien er 0,13 tommer overalt, regnet om per bilde ut fra hvor stort bildet
+vises. Rundes hvert bilde med en prosent av sin egen bredde, får et lite kort
+og et stort hovedbilde ulike hjørner.
+
+Den avrundede fila er større (5,6 mot 1,9 MB). Runding krever PNG med
+gjennomsiktighet, og PNG er tapsfritt. Bildene skaleres derfor ned til det en
+projektor faktisk viser før de rundes.
+
 ## Slik gjør du de vanligste endringene
 
 **Bytte bilde:** høyreklikk bildet > Endre bilde > Fra en fil. Beskjæringen og
@@ -109,6 +133,12 @@ cd pptx-templates
 npm install                # engangs
 python prepare-media.py    # engangs, eller når du bytter kildebilder
 node build.js              # skriver Startuplab-slidemaler.pptx
+```
+
+Avrundet utgave (samme kode, bryter satt med miljøvariabel):
+
+```powershell
+$env:SL_RUNDE = "1"; node build.js; Remove-Item Env:\SL_RUNDE
 ```
 
 Visuell kontroll (renderer alle slides til PNG via PowerPoint, og setter dem i

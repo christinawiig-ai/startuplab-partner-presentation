@@ -59,7 +59,7 @@ function textPhotoSplit(pptx) {
   K.fill(s, C.white);
 
   const px = 6.95;
-  K.photo(s, "split.jpg", { x: px, y: 0, w: W - px, h: H });
+  K.photo(s, "split.jpg", { x: px, y: 0, w: W - px, h: H, helflate: true });
 
   K.eyebrow(s, "Slik jobber vi", { y: 1.95, w: 5.3 });
   s.addText(K.accented("Fra første møte\ntil signert [pilot]", { color: C.black, accent: C.red }), {
@@ -110,8 +110,9 @@ function quote(pptx) {
   // Litt mørkere enn plassholderen på teamsliden: bakgrunnen her er offwhite,
   // og #F0F0F0 mot #F7F7F7 forsvant nesten helt.
   const d = 2.5;
-  s.addShape(pptx.ShapeType.ellipse, {
+  s.addShape(K.RUNDE ? pptx.ShapeType.roundRect : pptx.ShapeType.ellipse, {
     x: W - M.x - d, y: 2.05, w: d, h: d,
+    ...(K.RUNDE ? { rectRadius: K.rectRadius(d) } : {}),
     fill: { color: "E6E9EB" }, line: { color: "D2D7DA", width: 1 },
   });
   s.addText("Sett inn\nportrett", {
@@ -253,13 +254,19 @@ function team(pptx) {
   people.forEach((p, i) => {
     const x = M.x + i * (d + gap);
     if (p.file) {
-      s.addImage({
-        path: K.photoPath(p.file), x, y, w: d, h: d,
-        rounding: true, sizing: { type: "cover", w: d, h: d },
-      });
+      if (K.RUNDE) {
+        // Avrundet firkant, som resten av bildene i den avrundede versjonen
+        K.photo(s, p.file, { x, y, w: d, h: d });
+      } else {
+        s.addImage({
+          path: K.photoPath(p.file), x, y, w: d, h: d,
+          rounding: true, sizing: { type: "cover", w: d, h: d },
+        });
+      }
     } else {
-      s.addShape(pptx.ShapeType.ellipse, {
+      s.addShape(K.RUNDE ? pptx.ShapeType.roundRect : pptx.ShapeType.ellipse, {
         x, y, w: d, h: d,
+        ...(K.RUNDE ? { rectRadius: K.rectRadius(d) } : {}),
         fill: { color: C.lightGray }, line: { color: "D8DCDF", width: 1 },
       });
       s.addText("Sett inn\nportrett", {

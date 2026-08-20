@@ -10,7 +10,13 @@ ved den storrelsen. Kjor paa nytt ved behov:
 """
 
 import os
-from PIL import Image, ImageEnhance, ImageStat
+from PIL import Image, ImageDraw, ImageEnhance, ImageStat
+
+# Fysisk hjornradius i tommer paa den ferdige sliden. Radiusen regnes om til
+# piksler per bilde ut fra hvor stort bildet vises, slik at et lite kort og et
+# stort hovedbilde faar samme runding paa skjermen. Rundes hvert bilde med en
+# prosent av sin egen bredde i stedet, blir hjornene ulike.
+RADIUS_TOMMER = 0.13
 
 HER = os.path.dirname(os.path.abspath(__file__))
 KILDE = os.path.join(HER, "..", "corp-partner-gathering-jan26", "assets")
@@ -110,6 +116,57 @@ def beskjaer_logo():
         print(f"  logo-{variant}.png{'':13} {klippet.width}x{klippet.height}  forhold {forhold:.3f}")
 
 
+# Hvor bredt bildet vises paa sliden, i tommer. Bare bilder som ligger INNE
+# paa sliden staar her. Helflate-bilder (cover, fullbleed, split) er utelatt
+# med vilje: runder man et bilde som gaar ut i slidekanten, faar man hvite
+# hjorner i kanten av lerretet.
+VISNINGSBREDDE = {
+    "card-": 2.10,
+    "portrait-": 2.45,
+    "row-": 3.611,
+    "grid-": 3.041,
+}
+
+
+def visningsbredde(malnavn):
+    for prefiks, bredde in VISNINGSBREDDE.items():
+        if malnavn.startswith(prefiks):
+            return bredde
+    return None
+
+
+# Lerretsbredde i tommer og projektorbredde i piksler, brukt til aa regne ut
+# hvor mange piksler et bilde faktisk trenger. 1.2 er slark for skarpere skjermer.
+LERRET_TOMMER = 13.333
+PROJEKTOR_PX = 1920
+SLARK = 1.2
+
+
+def lag_avrundet(im, vis_bredde, malnavn):
+    """Skriver en PNG med avrundede hjorner og alfakanal ved siden av JPEG-en.
+    PowerPoint kan runde hjornene paa en figur, men ikke paa et bilde, saa
+    formen maa bakes inn i fila.
+
+    PNG er tapsfritt og dermed tungt, saa bildet skaleres forst ned til det
+    en projektor faktisk kan vise. Et kort som er 2,1 tommer bredt paa et
+    13,3 tommers lerret dekker rundt 300 px av en 1920 px framvisning; da er
+    440 px bortkastet vekt.
+    """
+    mal_bredde = round(vis_bredde / LERRET_TOMMER * PROJEKTOR_PX * SLARK)
+    if im.width > mal_bredde:
+        ny_hoyde = round(im.height * mal_bredde / im.width)
+        im = im.resize((mal_bredde, ny_hoyde), Image.LANCZOS)
+
+    radius = max(2, round(RADIUS_TOMMER / vis_bredde * im.width))
+    maske = Image.new("L", im.size, 0)
+    ImageDraw.Draw(maske).rounded_rectangle([0, 0, im.width - 1, im.height - 1], radius=radius, fill=255)
+    rund = im.convert("RGBA")
+    rund.putalpha(maske)
+    ut_sti = os.path.join(UT, os.path.splitext(malnavn)[0] + "-rund.png")
+    rund.save(ut_sti, "PNG", optimize=True)
+    return radius, os.path.getsize(ut_sti) / 1024
+
+
 def main():
     os.makedirs(UT, exist_ok=True)
     total = 0
@@ -132,7 +189,13 @@ def main():
         ferdig.save(ut_sti, "JPEG", quality=82, optimize=True)
         kb = os.path.getsize(ut_sti) / 1024
         total += kb
-        print(f"  {malnavn:26} {b}x{h}  {kb:7.0f} kB")
+        vis = visningsbredde(malnavn)
+        if vis:
+            radius, rund_kb = lag_avrundet(ferdig, vis, malnavn)
+            total += rund_kb
+            print(f"  {malnavn:26} {b}x{h}  {kb:7.0f} kB   + avrundet (r={radius} px)")
+        else:
+            print(f"  {malnavn:26} {b}x{h}  {kb:7.0f} kB")
     beskjaer_logo()
     print(f"\n  Bilder: {total / 1024:.1f} MB i {UT}")
 

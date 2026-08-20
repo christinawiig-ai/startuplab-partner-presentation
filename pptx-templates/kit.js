@@ -84,7 +84,38 @@ const LOGO = {
 };
 const LOGO_RATIO = 1128 / 416; // 2.712
 
+/**
+ * Avrundede hjørner på bildene som ligger inne på sliden. Skrus på med
+ * miljøvariabelen SL_RUNDE=1, se README. Bryter, ikke en kopi av koden, så
+ * begge versjoner bygges fra samme kilde.
+ *
+ * Helflate-bilder (forside, helflate-bilde, halvside-fotoet) rundes ALDRI:
+ * de går ut i slidekanten, og et avrundet hjørne der gir en hvit flekk i
+ * kanten av lerretet. prepare-media.py lager derfor bare avrundede utgaver
+ * av bildene som har en visningsbredde definert.
+ */
+const RUNDE = process.env.SL_RUNDE === "1";
+
+// Samme fysiske hjørnradius som prepare-media.py bruker på bildene. Endres
+// den ene, må den andre endres likt, ellers får figurer og bilder ulik runding.
+const RADIUS_TOMMER = 0.13;
+
+/**
+ * pptxgenjs tolker rectRadius som en andel mellom 0 og 1 av halve den korteste
+ * siden, ikke som tommer. Denne regner om fra ønsket fysisk radius, slik at en
+ * liten og en stor figur får samme runding på skjermen.
+ */
+function rectRadius(korteste) {
+  return Math.min(1, RADIUS_TOMMER / (korteste / 2));
+}
+
 const photoPath = (name) => path.join(MEDIA, name);
+
+/** Filnavnet for et bilde, avrundet utgave når bryteren står på. */
+function bildeFil(name) {
+  if (!RUNDE) return name;
+  return name.replace(/\.(jpg|png)$/i, "-rund.png");
+}
 
 // ── Byggeklosser ───────────────────────────────────────────────────────
 
@@ -111,12 +142,16 @@ function logo(slide, variant = "white", { x = M.x, y = Y.logo, h = 0.34 } = {}) 
   slide.addImage({ path: LOGO[variant], x, y, w: h * LOGO_RATIO, h });
 }
 
-/** Bilde som fyller rammen sin (beskjærer, forvrenger aldri). */
-function photo(slide, file, { x, y, w, h }) {
-  slide.addImage({
-    path: photoPath(file), x, y, w, h,
-    sizing: { type: "cover", w, h },
-  });
+/**
+ * Bilde som fyller rammen sin (beskjærer, forvrenger aldri).
+ * `helflate: true` for bilder som går ut i slidekanten: de skal aldri rundes.
+ */
+function photo(slide, file, { x, y, w, h, helflate = false }) {
+  const navn = helflate ? file : bildeFil(file);
+  // De avrundede utgavene er ferdig beskåret til riktig format, så cover-
+  // beskjæring der ville bare vært en omregning uten virkning.
+  const sizing = helflate || !RUNDE ? { type: "cover", w, h } : undefined;
+  slide.addImage({ path: photoPath(navn), x, y, w, h, sizing });
 }
 
 /**
@@ -178,6 +213,6 @@ function footNote(slide, text, { color = C.muted } = {}) {
 }
 
 module.exports = {
-  W, H, M, Y, C, F, T, LOGO, LOGO_RATIO, MEDIA, BRAND,
-  photoPath, eyebrow, title, logo, photo, scrim, fill, accented, footNote,
+  W, H, M, Y, C, F, T, LOGO, LOGO_RATIO, MEDIA, BRAND, RUNDE, rectRadius,
+  photoPath, bildeFil, eyebrow, title, logo, photo, scrim, fill, accented, footNote,
 };

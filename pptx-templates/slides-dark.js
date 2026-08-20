@@ -10,7 +10,7 @@ const { C, F, T, W, H, M, Y } = K;
 /** 1 — Forside: helflate-bilde, slør, stor tittel. */
 function cover(pptx) {
   const s = pptx.addSlide();
-  K.photo(s, "cover.jpg", { x: 0, y: 0, w: W, h: H });
+  K.photo(s, "cover.jpg", { x: 0, y: 0, w: W, h: H, helflate: true });
   K.scrim(s, pptx, { transparency: 46 });
 
   // Hvit, ikke rød: rødt på et mørkt foto blir for svakt til å leses bakerst i salen
@@ -72,7 +72,7 @@ function statement(pptx) {
 /** 4 — Helflate-bilde med tittel: la fotoet fortelle. */
 function fullBleedPhoto(pptx) {
   const s = pptx.addSlide();
-  K.photo(s, "fullbleed.jpg", { x: 0, y: 0, w: W, h: H });
+  K.photo(s, "fullbleed.jpg", { x: 0, y: 0, w: W, h: H, helflate: true });
   K.scrim(s, pptx, { transparency: 38 });
 
   // Hvit av samme grunn som på forsiden: rødt drukner i fotoet

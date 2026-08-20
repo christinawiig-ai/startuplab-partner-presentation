@@ -38,6 +38,10 @@ const order = [
 
 order.forEach((fn) => fn(pptx));
 
-pptx
-  .writeFile({ fileName: "Startuplab-slidemaler.pptx" })
-  .then(() => console.log(`Skrev Startuplab-slidemaler.pptx (${order.length} slides)`));
+// To utgaver fra samme kilde. SL_RUNDE=1 gir avrundede hjorner paa bildene
+// som ligger inne paa sliden; helflate-bildene rundes aldri.
+const filnavn = require("./kit").RUNDE
+  ? "Startuplab-slidemaler-avrundet.pptx"
+  : "Startuplab-slidemaler.pptx";
+
+pptx.writeFile({ fileName: filnavn }).then(() => console.log(`Skrev ${filnavn} (${order.length} slides)`));
