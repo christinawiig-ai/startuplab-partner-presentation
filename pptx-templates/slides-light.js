@@ -308,6 +308,78 @@ function team(pptx, form = "sirkel") {
   return s;
 }
 
+/**
+ * Folk, fem på rad med avrundede hjørner.
+ *
+ * Egen mal og ikke en variant av fire-på-rad: med fem portretter må både
+ * bildebredden, mellomrommet og navnestørrelsen ned, ellers sprekker navnene
+ * ut av kolonnene sine. Portrettene har egne bildefiler fordi hjørnradiusen
+ * regnes ut fra visningsbredden, som er smalere her.
+ */
+function team5(pptx) {
+  const s = pptx.addSlide();
+  K.fill(s, C.white);
+
+  K.eyebrow(s, "Teamet");
+  K.title(s, "Folkene du kommer til å [jobbe med]", { color: C.black });
+
+  // Navn og roller er hentet fra brain/team-og-roller.md, ikke gjettet.
+  const people = [
+    { name: "Christina Wiig", role: "Head of Corporate Partnerships", file: "portrait5-1.jpg" },
+    { name: "Anniken Holst", role: "Partner Manager", file: "portrait5-2.jpg" },
+    { name: "Ola Jacobsen", role: "Partner Manager", file: "portrait5-3.jpg" },
+    { name: "Navn Navnesen", role: "Rolle her", file: null },
+    { name: "Navn Navnesen", role: "Rolle her", file: null },
+  ];
+
+  const gap = 0.4;
+  const d = (W - M.x * 2 - gap * 4) / 5; // 2.01
+  const y = 2.5;
+
+  people.forEach((p, i) => {
+    const x = M.x + i * (d + gap);
+    if (p.file) {
+      s.addImage({ path: K.photoPath(K.bildeRund(p.file)), x, y, w: d, h: d });
+    } else {
+      s.addShape(pptx.ShapeType.roundRect, {
+        x, y, w: d, h: d, rectRadius: K.rectRadius(d),
+        fill: { color: C.lightGray }, line: { color: "D8DCDF", width: 1 },
+      });
+      s.addText("Sett inn\nportrett", {
+        x, y: y + d / 2 - 0.45, w: d, h: 0.9,
+        fontFace: F.body, fontSize: T.caption, color: C.mutedOnLight,
+        align: "center", lineSpacingMultiple: 1.2, margin: 0, valign: "middle",
+      });
+    }
+    // 20 pt, ikke 21 som i fire-på-rad: kolonnen er 0,44 tommer smalere,
+    // og «Christina Wiig» ville ellers ligget helt ut i kanten.
+    s.addText(p.name, {
+      x, y: y + d + 0.2, w: d, h: 0.38,
+      fontFace: F.head, fontSize: 20, bold: true, color: C.black,
+      align: "center", margin: 0, valign: "middle",
+    });
+    // Rolleboksen er 0,32 tommer bredere enn portrettet og sentrert over det.
+    // Med bare portrettbredden brakk «Head of Corporate Partnerships» til tre
+    // linjer mens naboene hadde én, og raden ble skjev. Teksten er sentrert,
+    // så det er fortsatt 0,08 tommer luft mellom nabobokser.
+    s.addText(p.role, {
+      x: x - 0.16, y: y + d + 0.58, w: d + 0.32, h: 0.8,
+      fontFace: F.body, fontSize: T.small, color: C.mutedOnLight,
+      align: "center", lineSpacingMultiple: 1.15, margin: 0, valign: "top",
+    });
+  });
+  K.logo(s, "red");
+  s.addNotes(
+    "FOLK, FEM PÅ RAD. Bytt portrett: høyreklikk > Endre bilde, den avrundede " +
+    "formen følger med. Hold rollene korte: kolonnene er smalere enn på " +
+    "fire-på-rad, og en lang rolle brekker til tre linjer. " +
+    "formen følger med. De to grå plassene er ledige. " +
+    "Trenger du seks, blir bildene for små på denne bredden: bruk to rader " +
+    "på tre i stedet. Sjekk at rollene stemmer før du presenterer."
+  );
+  return s;
+}
+
 /** 14 — Prosess: fire steg på rad. */
 function timeline(pptx) {
   const s = pptx.addSlide();
@@ -393,4 +465,4 @@ function statsRow(pptx) {
   return s;
 }
 
-module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, timeline, statsRow, photoGrid };
+module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, team5, timeline, statsRow, photoGrid };

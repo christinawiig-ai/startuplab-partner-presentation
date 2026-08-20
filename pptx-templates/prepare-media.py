@@ -39,6 +39,11 @@ JOBBER = [
     ("christina.jpg", "portrait-1.jpg", 600, 600, 0.28),
     ("anniken.jpg", "portrait-2.jpg", 600, 600, 0.28),
     ("ola.jpg", "portrait-3.jpg", 600, 600, 0.28),
+    # Samme portretter til fem-paa-rad-varianten. Egne filer fordi de vises
+    # smalere der, og hjornradiusen regnes ut fra visningsbredden.
+    ("christina.jpg", "portrait5-1.jpg", 600, 600, 0.28),
+    ("anniken.jpg", "portrait5-2.jpg", 600, 600, 0.28),
+    ("ola.jpg", "portrait5-3.jpg", 600, 600, 0.28),
     # Bilderad, liggende 3:2
     ("image62.png", "row-1.jpg", 800, 533, 0.5),
     ("image16.png", "row-2.jpg", 800, 533, 0.5),
@@ -122,7 +127,8 @@ def beskjaer_logo():
 # hjorner i kanten av lerretet.
 VISNINGSBREDDE = {
     "card-": 2.10,
-    "portrait-": 2.45,
+    "portrait5-": 2.007,  # fem paa rad
+    "portrait-": 2.45,    # fire paa rad
     "row-": 3.611,
     "grid-": 3.041,
 }
