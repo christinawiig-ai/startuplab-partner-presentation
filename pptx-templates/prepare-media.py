@@ -37,6 +37,13 @@ JOBBER = [
     ("image62.png", "row-1.jpg", 800, 533, 0.5),
     ("image16.png", "row-2.jpg", 800, 533, 0.5),
     ("image13.png", "row-3.jpg", 800, 533, 0.5),
+    # 2x2-rutenett, liggende 3:2. Fire tydelig ulike scener: publikum,
+    # atrium, moterom, felt. To av dem finnes ogsa paa andre slides, men i
+    # helt andre storrelser, og alle bildene er plassholdere.
+    ("image96.png", "grid-1.jpg", 660, 440, 0.5),
+    ("image62.png", "grid-2.jpg", 660, 440, 0.5),
+    ("summit-roundtable.png", "grid-3.jpg", 660, 440, 0.5),
+    ("image13.png", "grid-4.jpg", 660, 440, 0.5),
 ]
 
 
@@ -119,7 +126,7 @@ def main():
         if malnavn.startswith("card-"):
             # Dempet, ensartet rad: hele veien til maalet
             ferdig = harmoniser(ferdig, mal_lysstyrke=68, metning=0.45, styrke=1.0)
-        elif malnavn.startswith("row-"):
+        elif malnavn.startswith(("row-", "grid-")):
             # Hovedbilder: behold fargen, jevn ut bare det groveste spriket
             ferdig = harmoniser(ferdig, mal_lysstyrke=98, metning=0.92, styrke=0.6)
         ferdig.save(ut_sti, "JPEG", quality=82, optimize=True)

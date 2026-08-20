@@ -157,6 +157,11 @@ function accented(text, { color, accent, ...rest }) {
 
       raw.split("\n").forEach((line, i) => {
         if (i > 0 && runs.length) runs[runs.length - 1].options.breakLine = true;
+        // Hopp over tomme biter. Star linjeskiftet rett foran et farget ord
+        // ("...gjorde\n[mest] av"), gir splittingen en tom tekstbit, og en
+        // tom tekstbit gjor at PowerPoint nekter a apne fila i det hele tatt.
+        // Linjeskiftet er allerede tatt vare pa av breakLine over.
+        if (line === "") return;
         runs.push({ text: line, options: { ...rest, color: runColor, breakLine: false } });
       });
     });

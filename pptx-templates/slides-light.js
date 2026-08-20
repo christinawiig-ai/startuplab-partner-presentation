@@ -128,6 +128,60 @@ function quote(pptx) {
   return s;
 }
 
+/**
+ * 16 — Tekst og bilderutenett: forklaring på én side, fire liggende bilder
+ * i 2x2 på den andre. Samme vertikale rytme som «tekst og bilde», så de to
+ * delte oppsettene harmonerer med hverandre.
+ */
+function photoGrid(pptx) {
+  const s = pptx.addSlide();
+  K.fill(s, C.white);
+
+  // Tekstsiden. Følger samme høyder som textPhotoSplit, ikke toppmargen,
+  // fordi dette er et delt oppsett og ikke en full-bredde tittel.
+  K.eyebrow(s, "Året som gikk", { y: 1.95, w: 4.8 });
+  s.addText(K.accented("Fire ting vi gjorde\n[mest] av", { color: C.black, accent: C.red }), {
+    x: M.x, y: 2.38, w: 4.7, h: 1.5,
+    fontFace: F.head, fontSize: 34, bold: true, lineSpacingMultiple: 1.02, margin: 0, valign: "top",
+  });
+  // Tre linjer. Fem linjer her presset den nederste linjen ned mot logoen.
+  s.addText(
+    "Samlinger, befaringer og matchmaking gjennom hele året. 42 arrangementer i alt.",
+    {
+      x: M.x, y: 4.15, w: 4.6, h: 1.6,
+      fontFace: F.body, fontSize: T.body, color: C.black,
+      lineSpacingMultiple: 1.4, margin: 0, valign: "top",
+    }
+  );
+
+  // Rutenettet. Toppen flukter med kickeren til venstre, og høyre kant med
+  // margen, så begge sider henger på samme raster.
+  const gx = 6.1;
+  const gap = 0.3;
+  const iw = (W - M.x - gx - gap) / 2; // 3.04
+  const ih = iw * 2 / 3; // liggende 3:2
+  const gy = 1.95;
+
+  ["grid-1.jpg", "grid-2.jpg", "grid-3.jpg", "grid-4.jpg"].forEach((file, i) => {
+    const col = i % 2, row = Math.floor(i / 2);
+    K.photo(s, file, {
+      x: gx + col * (iw + gap),
+      y: gy + row * (ih + gap),
+      w: iw, h: ih,
+    });
+  });
+  K.logo(s, "red");
+  s.addNotes(
+    "TEKST OG BILDERUTENETT. Fire liggende bilder i 2x2 med forklaringen samlet " +
+    "på venstre side, i stedet for bildetekst under hvert bilde. " +
+    "Bytt bilde: høyreklikk > Endre bilde, utsnittet beholdes. " +
+    "Vil du ha bildene til venstre og teksten til høyre: marker alle fire " +
+    "bildene og dra dem over, og flytt tekstblokken motsatt vei. " +
+    "Kjør prepare-media.py på nye bilder, så får de samme lysstyrke som de andre."
+  );
+  return s;
+}
+
 /** 12 — Punktgrid: seks korte poeng med tall. */
 function featureGrid(pptx) {
   const s = pptx.addSlide();
@@ -319,4 +373,4 @@ function statsRow(pptx) {
   return s;
 }
 
-module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, timeline, statsRow };
+module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, timeline, statsRow, photoGrid };

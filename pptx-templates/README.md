@@ -1,16 +1,16 @@
 # Startuplab — slidemaler for PowerPoint
 
 > Sist oppdatert: 20. august 2026 av Claude
-> Fil: `Startuplab-slidemaler.pptx` (16 maler, 16:9)
+> Fil: `Startuplab-slidemaler.pptx` (17 maler, 16:9)
 
-Seksten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
+Sytten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
 du slipper å be om små justeringer: du åpner fila, bytter tekst og bilder, og
 flytter på ting selv.
 
 **Hver slide har en forklaring i notatfeltet** (Vis > Notater, eller feltet under
 sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 
-## De 16 malene
+## De 17 malene
 
 | # | Mal | Bakgrunn | Til hva |
 |---|-----|----------|---------|
@@ -20,24 +20,34 @@ sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 | 4 | Stort tall | Mørk | Ett tall som skal huskes |
 | 5 | Tallrekke | Lys | Tre nøkkeltall side om side |
 | 6 | Helflate-bilde | Bilde | La fotoet bære, kort tittel |
-| 7 | Tekst og bilde | Lys | Forklaring med bilde ved siden |
+| 7 | Tekst og bilde | Lys | Forklaring med ett stort bilde ved siden |
 | 8 | Programkort | Mørk | Fem sektorer/programmer/kategorier |
 | 9 | Punktgrid | Lys | Seks korte poeng |
-| 10 | Utsagn | Mørk | Én setning som skal lande |
-| 11 | Sitat | Lys | Sitat fra partner |
-| 12 | **Bilderad** | Mørk | Tre store liggende bilder med bildetekst |
-| 13 | Prosess | Lys | Fire steg på rad |
-| 14 | Folk | Lys | Fire portretter |
-| 15 | Film | Sort | Video i full flate |
-| 16 | Avslutning | Rød | Takk og kontakt |
+| 10 | **Tekst og bilderutenett** | Lys | Fire bilder i 2x2, tekst samlet på siden |
+| 11 | Utsagn | Mørk | Én setning som skal lande |
+| 12 | Sitat | Lys | Sitat fra partner |
+| 13 | **Bilderad** | Mørk | Tre store liggende bilder med bildetekst |
+| 14 | Prosess | Lys | Fire steg på rad |
+| 15 | Folk | Lys | Fire portretter |
+| 16 | Film | Sort | Video i full flate |
+| 17 | Avslutning | Rød | Takk og kontakt |
 
 Rekkefølgen veksler med vilje mellom mørkt og lyst, så øyet får pause mellom
 de tunge slidene. Du kan bruke malene i hvilken rekkefølge du vil.
 
-**Bilderaden (12)** har bildeteksten under bildet, ikke oppå, så den beholder
-full kontrast og kan leses fra bakerste rad. Overskrift 20 pt hvit,
-forklaring 18 pt grå, maks to linjer. Vil du ha fire bilder i stedet for tre:
-kopier ett bildesett og sett bildebredden til 2,6 tommer på alle fire.
+### De to bildemalene
+
+Begge er bygget for at bildeteksten skal kunne leses fra bakerste rad, men de
+løser det ulikt:
+
+- **Bilderad (13)** har bildetekst under hvert bilde: overskrift 20 pt hvit,
+  forklaring 18 pt grå, maks to linjer. Bruk den når hvert bilde trenger sin
+  egen forklaring. Vil du ha fire bilder i stedet for tre: kopier ett
+  bildesett og sett bildebredden til 2,6 tommer på alle fire.
+- **Tekst og bilderutenett (10)** har fire bilder i 2x2 og all teksten samlet
+  på venstre side. Bruk den når bildene hører sammen og én forklaring dekker
+  dem. Vil du snu den: marker alle fire bildene og dra dem over, og flytt
+  tekstblokken motsatt vei.
 
 ## Slik gjør du de vanligste endringene
 
