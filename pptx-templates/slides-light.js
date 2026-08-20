@@ -229,8 +229,16 @@ function featureGrid(pptx) {
   return s;
 }
 
-/** 13 — Folk: runde portretter. */
-function team(pptx) {
+/**
+ * 13 — Folk: portretter på rad.
+ *
+ * `form` er "sirkel" eller "avrundet". Begge finnes i decket med vilje: sirkel
+ * er et etablert grep for mennesker, avrundet firkant er renere og følger
+ * bildeformene i den avrundede utgaven. Formen styres her, ikke av
+ * SL_RUNDE-bryteren, slik at begge er tilgjengelige i begge utgavene.
+ */
+function team(pptx, form = "sirkel") {
+  const rund = form === "avrundet";
   const s = pptx.addSlide();
   K.fill(s, C.white);
 
@@ -254,9 +262,12 @@ function team(pptx) {
   people.forEach((p, i) => {
     const x = M.x + i * (d + gap);
     if (p.file) {
-      if (K.RUNDE) {
-        // Avrundet firkant, som resten av bildene i den avrundede versjonen
-        K.photo(s, p.file, { x, y, w: d, h: d });
+      if (rund) {
+        // Ferdig maskert PNG: PowerPoint kan runde hjørnene på en figur,
+        // men ikke på et bilde, så formen må ligge i selve fila.
+        s.addImage({
+          path: K.photoPath(K.bildeRund(p.file)), x, y, w: d, h: d,
+        });
       } else {
         s.addImage({
           path: K.photoPath(p.file), x, y, w: d, h: d,
@@ -264,9 +275,9 @@ function team(pptx) {
         });
       }
     } else {
-      s.addShape(K.RUNDE ? pptx.ShapeType.roundRect : pptx.ShapeType.ellipse, {
+      s.addShape(rund ? pptx.ShapeType.roundRect : pptx.ShapeType.ellipse, {
         x, y, w: d, h: d,
-        ...(K.RUNDE ? { rectRadius: K.rectRadius(d) } : {}),
+        ...(rund ? { rectRadius: K.rectRadius(d) } : {}),
         fill: { color: C.lightGray }, line: { color: "D8DCDF", width: 1 },
       });
       s.addText("Sett inn\nportrett", {
@@ -288,9 +299,11 @@ function team(pptx) {
   });
   K.logo(s, "red");
   s.addNotes(
-    "FOLK. Fire portretter spenner fra marg til marg. Bytt portrett: " +
-    "høyreklikk > Endre bilde, den runde masken følger med. " +
-    "Den grå sirkelen er en ledig plass. Sjekk at rollene stemmer før du presenterer."
+    `FOLK, ${rund ? "avrundede firkanter" : "sirkler"}. Decket har begge formene, ` +
+    "så bruk den som passer resten av presentasjonen din, og slett den andre. " +
+    "Fire portretter spenner fra marg til marg. Bytt portrett: høyreklikk > " +
+    "Endre bilde, formen følger med. Den grå plassen er ledig. " +
+    "Sjekk at rollene stemmer før du presenterer."
   );
   return s;
 }

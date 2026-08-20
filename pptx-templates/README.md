@@ -2,16 +2,16 @@
 
 > Sist oppdatert: 20. august 2026 av Claude
 > Filer: `Startuplab-slidemaler.pptx` (skarpe hjørner) og
-> `Startuplab-slidemaler-avrundet.pptx` (avrundede hjørner). 18 maler, 16:9.
+> `Startuplab-slidemaler-avrundet.pptx` (avrundede hjørner). 19 maler, 16:9.
 
-Atten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
+Nitten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
 du slipper å be om små justeringer: du åpner fila, bytter tekst og bilder, og
 flytter på ting selv.
 
 **Hver slide har en forklaring i notatfeltet** (Vis > Notater, eller feltet under
 sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 
-## De 18 malene
+## De 19 malene
 
 | # | Mal | Bakgrunn | Til hva |
 |---|-----|----------|---------|
@@ -30,9 +30,10 @@ sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 | 13 | Sitat | Lys | Sitat fra partner |
 | 14 | Bilderad | Mørk | Tre store liggende bilder med bildetekst |
 | 15 | Prosess | Lys | Fire steg på rad |
-| 16 | Folk | Lys | Fire portretter |
-| 17 | Film | Sort | Video i full flate |
-| 18 | Avslutning | Rød | Takk og kontakt |
+| 16 | Folk, sirkler | Lys | Fire portretter, runde |
+| 17 | Folk, avrundede | Lys | Fire portretter, avrundede firkanter |
+| 18 | Film | Sort | Video i full flate |
+| 19 | Avslutning | Rød | Takk og kontakt |
 
 Rekkefølgen veksler med vilje mellom mørkt og lyst, så øyet får pause mellom
 de tunge slidene. Du kan bruke malene i hvilken rekkefølge du vil.
@@ -73,8 +74,9 @@ Begge bygges fra samme kode, så en endring slår gjennom i begge.
 halvside-fotoet). De går ut i slidekanten, og et avrundet hjørne der gir en
 hvit flekk i kanten av lerretet.
 
-I den avrundede utgaven er portrettene på teamsliden avrundede firkanter i
-stedet for sirkler, slik at de følger resten.
+**Begge portrettformene ligger i decket** som slide 16 og 17, i begge
+utgavene. Sirkel er et etablert grep for mennesker, avrundet firkant følger
+bildeformene. Velg én per presentasjon og slett den andre.
 
 Radien er 0,13 tommer overalt, regnet om per bilde ut fra hvor stort bildet
 vises. Rundes hvert bilde med en prosent av sin egen bredde, får et lite kort
@@ -96,7 +98,7 @@ Fargen heter `FF3333` under Flere farger > Egendefinert.
 bildet. Klikk den, høyreklikk > Formater figur > Gjennomsiktighet. Er ditt
 bilde lysere enn originalen, dra gjennomsiktigheten ned.
 
-**Legge inn film (slide 17):** Sett inn > Video > Denne enheten. Dra filmen så
+**Legge inn film (slide 18):** Sett inn > Video > Denne enheten. Dra filmen så
 den dekker flaten, høyreklikk > Send bakover, slik at tittelen blir liggende
 oppå. Slett den røde sirkelen og trekanten når filmen er på plass.
 
@@ -126,7 +128,7 @@ er det tryggere å sende PDF.
 ## Bygge malene på nytt
 
 Malene genereres fra kode, så et bytte av farge eller fontstørrelse kan gjøres
-ett sted og slå gjennom på alle 18.
+ett sted og slå gjennom på alle 19.
 
 ```bash
 cd pptx-templates
@@ -146,7 +148,8 @@ et rutenett så helheten kan vurderes på ett blikk):
 
 ```powershell
 powershell -File render.ps1 -Pptx Startuplab-slidemaler.pptx -Out render
-python contact-sheet.py                                  # lager oversikt.png
+python contact-sheet.py render oversikt.png
+python contact-sheet.py render-avrundet oversikt-avrundet.png
 powershell -File export-pdf.ps1 -Pptx Startuplab-slidemaler.pptx
 ```
 
@@ -170,7 +173,7 @@ merkevarefarge eller justerer skriftstørrelser samlet.
   plassholdere. Bytt dem ut med bilder som passer ditt innhold.
 - Teksten er også plassholdertekst. Den viser hvor mye tekst hver mal tåler,
   som er et poeng i seg selv: skriver du mye mer, sprekker layouten.
-- Fjerde portrett på slide 16 er en tom grå sirkel med vilje, klar til å byttes.
+- Fjerde portrett på slide 16 og 17 er en tom grå sirkel med vilje, klar til å byttes.
   Navn og roller på de tre andre er hentet fra `brain/team-og-roller.md`.
   **Sjekk at rollene fortsatt stemmer før du presenterer.**
 - Sitatsliden har med vilje ingen navngitt person. Et sitat bør komme fra en

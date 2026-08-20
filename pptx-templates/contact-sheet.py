@@ -4,16 +4,22 @@ contact-sheet.py — setter alle rendrede slides i ett rutenett.
 Nyttig for aa vurdere helheten: harmoni, veksling mellom morkt og lyst, og om
 noen slide skiller seg ut paa feil maate. Kjor etter render.ps1:
 
-    python contact-sheet.py
+    python contact-sheet.py                              # render/ -> oversikt.png
+    python contact-sheet.py render-avrundet oversikt-avrundet.png
+
+Mappe og utdatafil tas som argumenter med vilje. Et tidligere forsok byttet
+navn paa mappene rundt et kall uten argumenter, og da et av navnebyttene
+feilet, laa mappene igjen ombyttet og oversikten ble merket feil.
 """
 
 import os
 import re
+import sys
 from PIL import Image, ImageDraw
 
 HER = os.path.dirname(os.path.abspath(__file__))
-RENDER = os.path.join(HER, "render")
-UT = os.path.join(HER, "oversikt.png")
+RENDER = os.path.join(HER, sys.argv[1] if len(sys.argv) > 1 else "render")
+UT = os.path.join(HER, sys.argv[2] if len(sys.argv) > 2 else "oversikt.png")
 
 KOL = 3
 MINI_B = 640

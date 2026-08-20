@@ -30,10 +30,12 @@ const order = [
   dark.statement,       // 12 morkt
   light.quote,          // 13 lyst
   dark.photoRow,        // 14 morkt — bryter opp tre lyse slides pa rad
-  light.timeline,       // 15 lyst
-  light.team,           // 16 lyst
-  dark.video,           // 17 morkt
-  dark.closing,         // 18 rodt
+  light.timeline,                     // 15 lyst
+  // Begge portrettformene ligger i decket. Christina velger per presentasjon.
+  (p) => light.team(p, "sirkel"),     // 16 lyst
+  (p) => light.team(p, "avrundet"),   // 17 lyst
+  dark.video,                         // 18 morkt
+  dark.closing,                       // 19 rodt
 ];
 
 order.forEach((fn) => fn(pptx));

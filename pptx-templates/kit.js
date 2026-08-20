@@ -111,20 +111,28 @@ function rectRadius(korteste) {
 
 const photoPath = (name) => path.join(MEDIA, name);
 
+/** Filnavnet for den avrundede utgaven av et bilde. */
+function bildeRund(name) {
+  return name.replace(/\.(jpg|png)$/i, "-rund.png");
+}
+
 /** Filnavnet for et bilde, avrundet utgave når bryteren står på. */
 function bildeFil(name) {
-  if (!RUNDE) return name;
-  return name.replace(/\.(jpg|png)$/i, "-rund.png");
+  return RUNDE ? bildeRund(name) : name;
 }
 
 // ── Byggeklosser ───────────────────────────────────────────────────────
 
-/** Liten kicker med versaler over en tittel. */
+/**
+ * Liten kicker med versaler over en tittel.
+ * Bokstavavstanden er valgt visuelt: 2,5 spriket, 1,8 leser fortsatt som en
+ * etikett uten å falle fra hverandre.
+ */
 function eyebrow(slide, text, { x = M.x, y = Y.eyebrow, w = 9, color } = {}) {
   slide.addText(String(text).toUpperCase(), {
     x, y, w, h: 0.32,
     fontFace: F.body, fontSize: T.label, bold: true,
-    color: color || C.red, charSpacing: 2.5, margin: 0, valign: "middle",
+    color: color || C.red, charSpacing: 1.8, margin: 0, valign: "middle",
   });
 }
 
@@ -214,5 +222,5 @@ function footNote(slide, text, { color = C.muted } = {}) {
 
 module.exports = {
   W, H, M, Y, C, F, T, LOGO, LOGO_RATIO, MEDIA, BRAND, RUNDE, rectRadius,
-  photoPath, bildeFil, eyebrow, title, logo, photo, scrim, fill, accented, footNote,
+  photoPath, bildeFil, bildeRund, eyebrow, title, logo, photo, scrim, fill, accented, footNote,
 };
