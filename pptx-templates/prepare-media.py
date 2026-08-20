@@ -33,23 +33,32 @@ JOBBER = [
     ("christina.jpg", "portrait-1.jpg", 600, 600, 0.28),
     ("anniken.jpg", "portrait-2.jpg", 600, 600, 0.28),
     ("ola.jpg", "portrait-3.jpg", 600, 600, 0.28),
+    # Bilderad, liggende 3:2
+    ("image62.png", "row-1.jpg", 800, 533, 0.5),
+    ("image16.png", "row-2.jpg", 800, 533, 0.5),
+    ("image13.png", "row-3.jpg", 800, 533, 0.5),
 ]
 
 
-def harmoniser_kort(im, mal_lysstyrke=68, metning=0.45):
+def harmoniser(im, mal_lysstyrke, metning=1.0, styrke=1.0):
     """
-    Legger de fem programkortene i samme toneleie.
+    Legger bilder som staar side om side i samme toneleie.
 
-    Kildebildene spriker kraftig: maalt snittlysstyrke gikk fra 46 til 82, og
-    ett av dem er helt uten farge mens et annet er sterkt blaatt. Et halv-
-    transparent slor i selve sliden jevner ikke ut det, fordi det legger
-    samme mengde svart paa et morkt og et lyst bilde. Her dempes metningen
-    forst, og deretter loftes eller senkes hvert bilde til samme snittnivaa.
+    Kildebildene spriker kraftig: paa programkortene gikk maalt snitt-
+    lysstyrke fra 46 til 82, og ett av dem var helt uten farge mens et annet
+    var sterkt blaatt. Et halvtransparent slor i selve sliden jevner ikke ut
+    det, fordi det legger samme mengde svart paa et morkt og et lyst bilde.
+
+    `styrke` styrer hvor langt mot maalet hvert bilde trekkes. Kortene tar
+    hele veien (de skal vaere en dempet, ensartet rad), mens hovedbildene tar
+    bare delvis: trekkes et kveldsbilde helt opp til snittet, blir det flatt.
     """
-    im = ImageEnhance.Color(im).enhance(metning)
+    if metning != 1.0:
+        im = ImageEnhance.Color(im).enhance(metning)
     naa = ImageStat.Stat(im.convert("L")).mean[0]
     if naa > 1:
-        im = ImageEnhance.Brightness(im).enhance(mal_lysstyrke / naa)
+        faktor = mal_lysstyrke / naa
+        im = ImageEnhance.Brightness(im).enhance(1 + (faktor - 1) * styrke)
     return im
 
 
@@ -108,7 +117,11 @@ def main():
         ut_sti = os.path.join(UT, malnavn)
         ferdig = beskjaer_og_skaler(im, b, h, vpos)
         if malnavn.startswith("card-"):
-            ferdig = harmoniser_kort(ferdig)
+            # Dempet, ensartet rad: hele veien til maalet
+            ferdig = harmoniser(ferdig, mal_lysstyrke=68, metning=0.45, styrke=1.0)
+        elif malnavn.startswith("row-"):
+            # Hovedbilder: behold fargen, jevn ut bare det groveste spriket
+            ferdig = harmoniser(ferdig, mal_lysstyrke=98, metning=0.92, styrke=0.6)
         ferdig.save(ut_sti, "JPEG", quality=82, optimize=True)
         kb = os.path.getsize(ut_sti) / 1024
         total += kb

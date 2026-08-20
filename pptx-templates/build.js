@@ -27,10 +27,11 @@ const order = [
   light.featureGrid,    // 9  lyst
   dark.statement,       // 10 morkt
   light.quote,          // 11 lyst
-  light.timeline,       // 12 lyst
-  light.team,           // 13 lyst
-  dark.video,           // 14 morkt
-  dark.closing,         // 15 rodt
+  dark.photoRow,        // 12 morkt — bryter opp tre lyse slides pa rad
+  light.timeline,       // 13 lyst
+  light.team,           // 14 lyst
+  dark.video,           // 15 morkt
+  dark.closing,         // 16 rodt
 ];
 
 order.forEach((fn) => fn(pptx));

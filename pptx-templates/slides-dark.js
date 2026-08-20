@@ -202,6 +202,68 @@ function heroStat(pptx) {
   return s;
 }
 
+/**
+ * 9 — Bilderad: overskrift og tre store liggende hovedbilder med bildetekst.
+ * Teksten ligger under bildene, ikke oppå dem, så den holder full kontrast
+ * og kan leses fra bakerste rad.
+ */
+function photoRow(pptx) {
+  const s = pptx.addSlide();
+  K.fill(s, C.black);
+
+  K.eyebrow(s, "Året i bilder");
+  K.title(s, "Tre øyeblikk fra [2025]");
+
+  const items = [
+    {
+      file: "row-1.jpg",
+      label: "Fullt hus",
+      detail: "Over 400 deltakere på Demo Day i Forskningsparken.",
+    },
+    {
+      file: "row-2.jpg",
+      label: "Nye koblinger",
+      detail: "Partnere og gründere møttes på tolv matchmaking-runder.",
+    },
+    {
+      file: "row-3.jpg",
+      label: "Ut i felt",
+      detail: "Befaring med partnerne i Energy-programmet.",
+    },
+  ];
+
+  const gap = 0.4;
+  const iw = (W - M.x * 2 - gap * 2) / 3; // 3.61
+  const ih = iw * 2 / 3; // liggende 3:2
+  const iy = Y.content; // gir bildeteksten under nok luft ned til logoen
+
+  items.forEach((it, i) => {
+    const x = M.x + i * (iw + gap);
+    K.photo(s, it.file, { x, y: iy, w: iw, h: ih });
+    s.addText(it.label, {
+      x, y: iy + ih + 0.2, w: iw, h: 0.46,
+      fontFace: F.head, fontSize: 20, bold: true, color: C.white,
+      margin: 0, valign: "middle",
+    });
+    s.addText(it.detail, {
+      x, y: iy + ih + 0.68, w: iw, h: 0.72,
+      fontFace: F.body, fontSize: T.small, color: C.muted,
+      lineSpacingMultiple: 1.3, margin: 0, valign: "top",
+    });
+  });
+  K.logo(s, "white");
+  s.addNotes(
+    "BILDERAD. Bildeteksten ligger under bildet, ikke oppå det, nettopp for å " +
+    "være lesbar fra bakerste rad. Overskriften i hvitt er 20 pt, forklaringen 18 pt. " +
+    "Bytt bilde: høyreklikk > Endre bilde, utsnittet beholdes. " +
+    "Vil du ha fire bilder i stedet for tre: marker et bilde med tekstene under, " +
+    "kopier settet, og sett bildebredden til 2,6 tommer på alle fire. " +
+    "Hold forklaringen til to linjer, ellers treffer den logoen. " +
+    "Kjør prepare-media.py på nye bilder, så legges de i samme lysstyrke som de andre."
+  );
+  return s;
+}
+
 /** 8 — Avslutning: rød flate, venstrestilt blokk. */
 function closing(pptx) {
   const s = pptx.addSlide();
@@ -226,4 +288,4 @@ function closing(pptx) {
   return s;
 }
 
-module.exports = { cover, sectionDivider, statement, fullBleedPhoto, video, programCards, heroStat, closing };
+module.exports = { cover, sectionDivider, statement, fullBleedPhoto, video, programCards, heroStat, photoRow, closing };

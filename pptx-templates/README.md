@@ -1,16 +1,16 @@
 # Startuplab — slidemaler for PowerPoint
 
 > Sist oppdatert: 20. august 2026 av Claude
-> Fil: `Startuplab-slidemaler.pptx` (15 maler, 16:9)
+> Fil: `Startuplab-slidemaler.pptx` (16 maler, 16:9)
 
-Femten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
+Seksten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
 du slipper å be om små justeringer: du åpner fila, bytter tekst og bilder, og
 flytter på ting selv.
 
 **Hver slide har en forklaring i notatfeltet** (Vis > Notater, eller feltet under
 sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 
-## De 15 malene
+## De 16 malene
 
 | # | Mal | Bakgrunn | Til hva |
 |---|-----|----------|---------|
@@ -24,14 +24,20 @@ sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 | 8 | Programkort | Mørk | Fem sektorer/programmer/kategorier |
 | 9 | Punktgrid | Lys | Seks korte poeng |
 | 10 | Utsagn | Mørk | Én setning som skal lande |
-| 11 | Sitat | Lys | Kundesitat med portrett |
-| 12 | Prosess | Lys | Fire steg på rad |
-| 13 | Folk | Lys | Fire portretter |
-| 14 | Film | Sort | Video i full flate |
-| 15 | Avslutning | Rød | Takk og kontakt |
+| 11 | Sitat | Lys | Sitat fra partner |
+| 12 | **Bilderad** | Mørk | Tre store liggende bilder med bildetekst |
+| 13 | Prosess | Lys | Fire steg på rad |
+| 14 | Folk | Lys | Fire portretter |
+| 15 | Film | Sort | Video i full flate |
+| 16 | Avslutning | Rød | Takk og kontakt |
 
 Rekkefølgen veksler med vilje mellom mørkt og lyst, så øyet får pause mellom
 de tunge slidene. Du kan bruke malene i hvilken rekkefølge du vil.
+
+**Bilderaden (12)** har bildeteksten under bildet, ikke oppå, så den beholder
+full kontrast og kan leses fra bakerste rad. Overskrift 20 pt hvit,
+forklaring 18 pt grå, maks to linjer. Vil du ha fire bilder i stedet for tre:
+kopier ett bildesett og sett bildebredden til 2,6 tommer på alle fire.
 
 ## Slik gjør du de vanligste endringene
 
