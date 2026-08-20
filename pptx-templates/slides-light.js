@@ -241,6 +241,67 @@ function photoGridStor(pptx, variant = "b") {
   return s;
 }
 
+/**
+ * Punktgrid med fire punkter, som «seks konkrete leveranser» men kortere.
+ *
+ * `oppsett` er "rad" (fire på én rad) eller "kvadrat" (2x2). Fire punkter
+ * fyller ikke tre kolonner pent, så det trengs et eget oppsett og ikke bare
+ * færre elementer i det gamle: rad gir smale kolonner og korte beskrivelser,
+ * kvadrat gir brede kolonner og plass til to fulle linjer per punkt.
+ */
+function featureGrid4(pptx, oppsett = "rad") {
+  const rad = oppsett === "rad";
+  const s = pptx.addSlide();
+  K.fill(s, C.white);
+
+  K.eyebrow(s, "Hva partnerskapet gir");
+  K.title(s, "Fire konkrete [leveranser]", { color: C.black });
+
+  const items = [
+    ["01", "Matchmaking", "Kuraterte møter med selskaper som treffer utfordringen din."],
+    ["02", "Pilotstøtte", "Vi rigger og følger opp piloten til evaluering."],
+    ["03", "Nettverk", "Tilgang til 4 000+ gründere og fagmiljøer."],
+    ["04", "Kompetanse", "Workshops og kurs for teamene deres."],
+  ];
+
+  const kolonner = rad ? 4 : 2;
+  const gapX = rad ? 0.55 : 0.75;
+  const cw = (W - M.x * 2 - gapX * (kolonner - 1)) / kolonner;
+  const y0 = rad ? 2.85 : 2.65;
+  const rh = 2.0;
+
+  items.forEach(([num, itemTitle, body], i) => {
+    const col = i % kolonner, row = Math.floor(i / kolonner);
+    const x = M.x + col * (cw + gapX);
+    const y = y0 + row * rh;
+    // Én rad gir ledig høyde, så tallet og tittelen settes større der.
+    s.addText(num, {
+      x, y, w: cw, h: 0.46,
+      fontFace: F.display, fontSize: rad ? 28 : 22, color: C.red, margin: 0, valign: "middle",
+    });
+    s.addText(itemTitle, {
+      x, y: y + 0.5, w: cw, h: 0.5,
+      fontFace: F.head, fontSize: rad ? 25 : T.cardTitle, bold: true, color: C.black,
+      margin: 0, valign: "middle",
+    });
+    s.addText(body, {
+      x, y: y + 1.04, w: cw, h: 1.2,
+      fontFace: F.body, fontSize: rad ? 19 : T.small, color: C.mutedOnLight,
+      lineSpacingMultiple: 1.3, margin: 0, valign: "top",
+    });
+  });
+  K.logo(s, "red");
+  s.addNotes(
+    `PUNKTGRID MED FIRE, oppsett ${rad ? "én rad" : "2x2"}. ` +
+    (rad
+      ? "Kolonnene er smale, så hold beskrivelsen til to eller tre korte linjer."
+      : "Brede kolonner gir plass til to fulle linjer per punkt. Bruk dette " +
+        "oppsettet når beskrivelsene er lengre enn én setning.") +
+    " Trenger du seks punkter, bruk malen «seks konkrete leveranser» i stedet."
+  );
+  return s;
+}
+
 /** 12 — Punktgrid: seks korte poeng med tall. */
 function featureGrid(pptx) {
   const s = pptx.addSlide();
@@ -523,4 +584,4 @@ function statsRow(pptx) {
   return s;
 }
 
-module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, team5, timeline, statsRow, photoGrid, photoGridStor };
+module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, team5, timeline, statsRow, photoGrid, photoGridStor, featureGrid4 };
