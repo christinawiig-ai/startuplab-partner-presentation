@@ -203,6 +203,68 @@ function heroStat(pptx) {
 }
 
 /**
+ * 9 — Kapittelskille: stort kapittelnummer med rosa omriss, tittel og en
+ * indeksrekke som viser hvor i presentasjonen salen er.
+ *
+ * Skiller seg fra de to andre dramatiske malene med vilje: seksjonsskillet
+ * er en rød plakat, utsagnet er ren typografi, og denne har et grafisk tall
+ * med kontur. Tallet er dempet og rosa slik at rødt fortsatt er den eneste
+ * aksentfargen på sliden.
+ */
+function chapter(pptx) {
+  const s = pptx.addSlide();
+  K.fill(s, C.black);
+
+  // Kapittelnummeret. Svak kropp pluss rosa kant: et hult tall alene blir
+  // bare en tynn strek på en så stor flate og forsvinner på projektor.
+  // Tallet blør ut av høyre kant med hensikt.
+  s.addText("02", {
+    x: 6.9, y: 0.15, w: 7.4, h: 6.4,
+    fontFace: F.display, fontSize: 400,
+    color: "24272A",
+    outline: { color: C.pink, size: 1.5 },
+    margin: 0, valign: "middle",
+  });
+
+  K.eyebrow(s, "Kapittel", { y: 2.7 });
+  s.addText("Velkommen", {
+    x: M.x, y: 3.1, w: 6.6, h: 1.2,
+    fontFace: F.display, fontSize: 60, color: C.white, margin: 0, valign: "top",
+  });
+
+  // Indeksrekken i én tekstboks. Ett tall per boks krever at man regner
+  // bredden selv, og er anslaget noen hundredeler for trangt, brekker
+  // tallet i to linjer.
+  const kapitler = ["01", "02", "03", "04", "05"];
+  const naa = 1; // 0-indeksert
+  const rekke = [];
+  kapitler.forEach((nr, i) => {
+    rekke.push({
+      text: nr,
+      options: { fontSize: 26, color: i === naa ? C.red : C.muted, breakLine: false },
+    });
+    if (i < kapitler.length - 1) {
+      rekke.push({ text: "   ", options: { fontSize: 26, breakLine: false } });
+    }
+  });
+  s.addText(rekke, {
+    x: M.x, y: 4.65, w: 7, h: 0.55,
+    fontFace: F.display, margin: 0, valign: "middle",
+  });
+
+  K.logo(s, "white");
+  s.addNotes(
+    "KAPITTELSKILLE. To ting å endre per kapittel: det store tallet til høyre, " +
+    "og hvilket tall i rekken som er rødt (marker det og sett rød FF3333, og sett " +
+    "det forrige tilbake til grå 9BA1A5). " +
+    "Kickeren står bare «Kapittel», så du slipper å endre den også. Vil du heller " +
+    "ha temaet for delen der, skriv det inn. " +
+    "Har du flere eller færre enn fem kapitler, legg til eller slett tall i rekken."
+  );
+  return s;
+}
+
+/**
  * 9 — Bilderad: overskrift og tre store liggende hovedbilder med bildetekst.
  * Teksten ligger under bildene, ikke oppå dem, så den holder full kontrast
  * og kan leses fra bakerste rad.
@@ -288,4 +350,4 @@ function closing(pptx) {
   return s;
 }
 
-module.exports = { cover, sectionDivider, statement, fullBleedPhoto, video, programCards, heroStat, photoRow, closing };
+module.exports = { cover, sectionDivider, statement, fullBleedPhoto, video, programCards, heroStat, chapter, photoRow, closing };

@@ -25,14 +25,15 @@ const order = [
   light.textPhotoSplit, // 7  lyst
   dark.programCards,    // 8  morkt
   light.featureGrid,    // 9  lyst
-  light.photoGrid,      // 10 lyst
-  dark.statement,       // 11 morkt
-  light.quote,          // 12 lyst
-  dark.photoRow,        // 13 morkt — bryter opp tre lyse slides pa rad
-  light.timeline,       // 14 lyst
-  light.team,           // 15 lyst
-  dark.video,           // 16 morkt
-  dark.closing,         // 17 rodt
+  dark.chapter,         // 10 morkt — kapittelskille midt i settet
+  light.photoGrid,      // 11 lyst
+  dark.statement,       // 12 morkt
+  light.quote,          // 13 lyst
+  dark.photoRow,        // 14 morkt — bryter opp tre lyse slides pa rad
+  light.timeline,       // 15 lyst
+  light.team,           // 16 lyst
+  dark.video,           // 17 morkt
+  dark.closing,         // 18 rodt
 ];
 
 order.forEach((fn) => fn(pptx));

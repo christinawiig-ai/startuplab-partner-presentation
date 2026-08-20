@@ -1,16 +1,16 @@
 # Startuplab — slidemaler for PowerPoint
 
 > Sist oppdatert: 20. august 2026 av Claude
-> Fil: `Startuplab-slidemaler.pptx` (17 maler, 16:9)
+> Fil: `Startuplab-slidemaler.pptx` (18 maler, 16:9)
 
-Sytten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
+Atten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
 du slipper å be om små justeringer: du åpner fila, bytter tekst og bilder, og
 flytter på ting selv.
 
 **Hver slide har en forklaring i notatfeltet** (Vis > Notater, eller feltet under
 sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 
-## De 17 malene
+## De 18 malene
 
 | # | Mal | Bakgrunn | Til hva |
 |---|-----|----------|---------|
@@ -23,28 +23,39 @@ sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 | 7 | Tekst og bilde | Lys | Forklaring med ett stort bilde ved siden |
 | 8 | Programkort | Mørk | Fem sektorer/programmer/kategorier |
 | 9 | Punktgrid | Lys | Seks korte poeng |
-| 10 | **Tekst og bilderutenett** | Lys | Fire bilder i 2x2, tekst samlet på siden |
-| 11 | Utsagn | Mørk | Én setning som skal lande |
-| 12 | Sitat | Lys | Sitat fra partner |
-| 13 | **Bilderad** | Mørk | Tre store liggende bilder med bildetekst |
-| 14 | Prosess | Lys | Fire steg på rad |
-| 15 | Folk | Lys | Fire portretter |
-| 16 | Film | Sort | Video i full flate |
-| 17 | Avslutning | Rød | Takk og kontakt |
+| 10 | **Kapittelskille** | Mørk | Nummerert kapittel med indeksrekke |
+| 11 | Tekst og bilderutenett | Lys | Fire bilder i 2x2, tekst samlet på siden |
+| 12 | Utsagn | Mørk | Én setning som skal lande |
+| 13 | Sitat | Lys | Sitat fra partner |
+| 14 | Bilderad | Mørk | Tre store liggende bilder med bildetekst |
+| 15 | Prosess | Lys | Fire steg på rad |
+| 16 | Folk | Lys | Fire portretter |
+| 17 | Film | Sort | Video i full flate |
+| 18 | Avslutning | Rød | Takk og kontakt |
 
 Rekkefølgen veksler med vilje mellom mørkt og lyst, så øyet får pause mellom
 de tunge slidene. Du kan bruke malene i hvilken rekkefølge du vil.
+
+### De tre måtene å markere et skift
+
+Settet har tre slides som markerer at noe nytt begynner, med vilje ulike:
+
+- **Seksjonsskille (3)** er en helrød plakat. Bruk den til hovedbolkene.
+- **Kapittelskille (10)** har kapittelnummeret som et stort grafisk tall med
+  rosa kontur, og en indeksrekke som viser hvor i løpet salen er. Rolig nok
+  til å tåle at den gjentas fem ganger i samme deck.
+- **Utsagn (12)** er ren typografi, én setning som skal lande.
 
 ### De to bildemalene
 
 Begge er bygget for at bildeteksten skal kunne leses fra bakerste rad, men de
 løser det ulikt:
 
-- **Bilderad (13)** har bildetekst under hvert bilde: overskrift 20 pt hvit,
+- **Bilderad (14)** har bildetekst under hvert bilde: overskrift 20 pt hvit,
   forklaring 18 pt grå, maks to linjer. Bruk den når hvert bilde trenger sin
   egen forklaring. Vil du ha fire bilder i stedet for tre: kopier ett
   bildesett og sett bildebredden til 2,6 tommer på alle fire.
-- **Tekst og bilderutenett (10)** har fire bilder i 2x2 og all teksten samlet
+- **Tekst og bilderutenett (11)** har fire bilder i 2x2 og all teksten samlet
   på venstre side. Bruk den når bildene hører sammen og én forklaring dekker
   dem. Vil du snu den: marker alle fire bildene og dra dem over, og flytt
   tekstblokken motsatt vei.
@@ -61,7 +72,7 @@ Fargen heter `FF3333` under Flere farger > Egendefinert.
 bildet. Klikk den, høyreklikk > Formater figur > Gjennomsiktighet. Er ditt
 bilde lysere enn originalen, dra gjennomsiktigheten ned.
 
-**Legge inn film (slide 14):** Sett inn > Video > Denne enheten. Dra filmen så
+**Legge inn film (slide 17):** Sett inn > Video > Denne enheten. Dra filmen så
 den dekker flaten, høyreklikk > Send bakover, slik at tittelen blir liggende
 oppå. Slett den røde sirkelen og trekanten når filmen er på plass.
 
@@ -91,7 +102,7 @@ er det tryggere å sende PDF.
 ## Bygge malene på nytt
 
 Malene genereres fra kode, så et bytte av farge eller fontstørrelse kan gjøres
-ett sted og slå gjennom på alle 15.
+ett sted og slå gjennom på alle 18.
 
 ```bash
 cd pptx-templates
@@ -129,7 +140,7 @@ merkevarefarge eller justerer skriftstørrelser samlet.
   plassholdere. Bytt dem ut med bilder som passer ditt innhold.
 - Teksten er også plassholdertekst. Den viser hvor mye tekst hver mal tåler,
   som er et poeng i seg selv: skriver du mye mer, sprekker layouten.
-- Fjerde portrett på slide 13 er en tom grå sirkel med vilje, klar til å byttes.
+- Fjerde portrett på slide 16 er en tom grå sirkel med vilje, klar til å byttes.
   Navn og roller på de tre andre er hentet fra `brain/team-og-roller.md`.
   **Sjekk at rollene fortsatt stemmer før du presenterer.**
 - Sitatsliden har med vilje ingen navngitt person. Et sitat bør komme fra en
