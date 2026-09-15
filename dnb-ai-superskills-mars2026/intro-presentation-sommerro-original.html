@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI-superskills for ledere</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --accent: #D4623A;
+  --accent-dim: rgba(212, 98, 58, 0.12);
+  --accent-glow: rgba(212, 98, 58, 0.06);
+  --black: #1A1A1A;
+  --deep: #111110;
+  --dark: #1E1E1C;
+  --dark-card: #2A2926;
+  --dark-border: rgba(255,255,255,0.08);
+  --cream: #FAFAF8;
+  --warm-gray: #F2F0EB;
+  --white: #FFFFFF;
+  --muted: #B5B0AA;
+  --muted-light: rgba(255,255,255,0.65);
+  --text: #2C2C2C;
+  --text-light: #555;
+  --border: #E8E5DF;
+  --red: #C53030;
+  --green: #38A169;
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: var(--font-body);
+  background: var(--deep);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: auto;
+}
+
+/* ============================================================
+   SLIDE SYSTEM
+   ============================================================ */
+.deck { position: relative; width: 100vw; height: 100vh; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 5vw;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(40px) scale(0.98);
+  filter: blur(4px);
+  transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
+}
+.slide.prev {
+  transform: translateX(-40px) scale(0.98);
+  filter: blur(4px);
+}
+
+.slide-inner {
+  width: 100%;
+  max-width: 1100px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Background variants */
+.bg-deep { background: var(--deep); }
+.bg-dark { background: var(--dark); }
+.bg-cream { background: var(--cream); color: var(--black); }
+.bg-white { background: var(--white); color: var(--black); }
+.bg-accent { background: var(--accent); color: var(--white); }
+
+/* Noise overlay */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.02;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background: rgba(17,17,16,0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--dark-border);
+}
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.nav-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.nav-title {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+.nav-btn {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--dark-border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 0.75rem;
+}
+.nav-btn:hover { border-color: var(--white); color: var(--white); }
+.nav-counter { font-variant-numeric: tabular-nums; }
+.nav-right { display: flex; align-items: center; gap: 0.5rem; }
+.nav-date { font-size: 0.6875rem; color: var(--muted); }
+
+/* Progress bar */
+.progress-track {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+  z-index: 100;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.4s var(--ease);
+  width: 0;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+}
+.display-sm {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.2;
+}
+.body-lg {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  line-height: 1.65;
+  font-weight: 400;
+}
+.body-md {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
+  line-height: 1.6;
+}
+.body-sm {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.label {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Colors */
+.text-accent { color: var(--accent); }
+.text-muted { color: var(--muted); }
+.text-white { color: var(--white); }
+.text-black { color: var(--black); }
+
+/* ============================================================
+   KICKER
+   ============================================================ */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.kicker-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.bg-cream .kicker, .bg-white .kicker { color: var(--accent); }
+
+/* ============================================================
+   STAT CARDS
+   ============================================================ */
+.stat-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+.stat-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.stat-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.stat-card {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.bg-cream .stat-card, .bg-white .stat-card {
+  background: var(--white);
+  border-color: var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.stat-label {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.bg-cream .stat-number, .bg-white .stat-number { color: var(--black); }
+
+/* ============================================================
+   QUOTE BLOCK
+   ============================================================ */
+.quote-block {
+  position: relative;
+  padding-left: 1.75rem;
+  border-left: 3px solid var(--accent);
+}
+.quote-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+.quote-attr {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.bg-cream .quote-text { color: var(--text); }
+
+/* ============================================================
+   HEADLINE CARDS
+   ============================================================ */
+.headlines-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.headline-card {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.2s;
+}
+.headline-card:hover { border-color: rgba(255,255,255,0.15); }
+.headline-source {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.source-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+}
+.source-bloomberg { background: #472EA4; }
+.source-cnbc { background: #005594; }
+.source-cnn { background: #CC0000; }
+.source-e24 { background: #D4623A; }
+.source-ft { background: #FCD0B1; }
+.headline-text {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
+  line-height: 1.35;
+}
+.headline-date {
+  font-size: 0.6875rem;
+  color: var(--muted);
+  margin-top: auto;
+}
+
+/* Headline images */
+.headline-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   TICKER STRIP
+   ============================================================ */
+.ticker-strip {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ticker-name { color: var(--white); font-weight: 600; }
+.ticker-drop { color: var(--red); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   CHART — ANIMATED DIVERGING CURVES
+   ============================================================ */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  margin: 2rem 0 1rem;
+}
+.chart-svg {
+  width: 100%;
+  height: 100%;
+}
+.chart-svg .axis { stroke: rgba(255,255,255,0.1); stroke-width: 1; }
+.chart-svg .curve-ai {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+}
+.chart-svg .curve-adoption {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+}
+.chart-svg .area-ai {
+  fill: url(#grad-accent);
+  opacity: 0;
+}
+.chart-svg .area-adoption {
+  fill: url(#grad-muted);
+  opacity: 0;
+}
+.chart-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  fill: currentColor;
+}
+.chart-label-accent { fill: var(--accent); }
+.chart-label-muted { fill: var(--muted); }
+.gap-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  fill: var(--accent);
+  opacity: 0;
+}
+.gap-arrow {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0;
+  stroke-dasharray: 4 4;
+}
+
+/* Animate when slide is active */
+.slide.active .curve-ai {
+  animation: drawCurve 1.5s 0.5s var(--ease) forwards;
+}
+.slide.active .curve-adoption {
+  animation: drawCurve 1.5s 0.8s var(--ease) forwards;
+}
+.slide.active .area-ai {
+  animation: fadeIn 0.8s 1.5s var(--ease) forwards;
+}
+.slide.active .area-adoption {
+  animation: fadeIn 0.8s 1.8s var(--ease) forwards;
+}
+.slide.active .gap-label {
+  animation: fadeIn 0.6s 2s var(--ease) forwards;
+}
+.slide.active .gap-arrow {
+  animation: fadeIn 0.6s 2s var(--ease) forwards;
+}
+
+@keyframes drawCurve {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ============================================================
+   SPLIT LAYOUT
+   ============================================================ */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.split-wide {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* ============================================================
+   POINT LIST
+   ============================================================ */
+.point-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.point-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.55;
+}
+.point-list .point-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  margin-top: 0.1rem;
+}
+.bg-cream .point-list li { color: var(--text); }
+
+/* ============================================================
+   VIDEO
+   ============================================================ */
+.video-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+.video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Video controls — outside deck to avoid transform stacking context */
+.video-controls {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.video-controls.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.video-ctrl-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.video-ctrl-btn:hover { background: rgba(0,0,0,0.8); border-color: rgba(255,255,255,0.4); }
+.video-ctrl-btn svg { width: 20px; height: 20px; }
+
+/* ============================================================
+   STAGGERED ENTRY ANIMATIONS
+   ============================================================ */
+.stagger { opacity: 0; transform: translateY(16px); }
+.slide.active .stagger {
+  animation: staggerIn 0.5s var(--ease) forwards;
+}
+.slide.active .stagger:nth-child(1) { animation-delay: 0.15s; }
+.slide.active .stagger:nth-child(2) { animation-delay: 0.3s; }
+.slide.active .stagger:nth-child(3) { animation-delay: 0.45s; }
+.slide.active .stagger:nth-child(4) { animation-delay: 0.6s; }
+.slide.active .stagger:nth-child(5) { animation-delay: 0.75s; }
+.slide.active .stagger:nth-child(6) { animation-delay: 0.9s; }
+
+@keyframes staggerIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Shimmer text */
+.shimmer {
+  background: linear-gradient(90deg, var(--accent) 0%, #E8916E 40%, var(--accent) 80%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.slide.active .shimmer {
+  animation: shimmerMove 3s 1s ease-in-out infinite;
+}
+@keyframes shimmerMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ============================================================
+   SPEAKER NOTES
+   ============================================================ */
+.speaker-notes {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  max-height: 40vh;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(20px);
+  padding: 1.5rem 2rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+  z-index: 300;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.speaker-notes.visible { display: block; }
+.speaker-notes h4 {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.speaker-notes ul { padding-left: 1.25rem; }
+.speaker-notes li { margin-bottom: 0.4rem; }
+.speaker-notes .note-source {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* ============================================================
+   PLACEHOLDER
+   ============================================================ */
+.placeholder {
+  border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+  min-height: 180px;
+}
+.bg-cream .placeholder {
+  border-color: var(--border);
+  color: var(--text-light);
+}
+
+/* ============================================================
+   IMAGE PLACEHOLDER (styled box)
+   ============================================================ */
+.img-placeholder {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 200px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+.img-placeholder .ph-icon { font-size: 2rem; opacity: 0.3; }
+.bg-cream .img-placeholder {
+  background: var(--warm-gray);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   JOB TRANSFORMATION FLOW
+   ============================================================ */
+.job-flow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr auto 1fr 1.2fr;
+  gap: 0.4rem 0.5rem;
+  align-items: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.jf-old, .jf-new {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.jf-old {
+  text-align: right;
+  color: var(--text-light);
+}
+.jf-new {
+  text-align: left;
+  color: var(--text);
+  font-weight: 600;
+}
+.jf-center {
+  color: var(--border);
+  font-size: 0.75rem;
+  text-align: center;
+  opacity: 0.5;
+}
+.jf-bar-left, .jf-bar-right {
+  height: 8px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.jf-fill-left {
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 100%);
+  border-radius: 4px;
+  float: right;
+  opacity: 0;
+}
+.jf-fill-right {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green) 0%, rgba(56,161,105,0.3) 100%);
+  border-radius: 4px;
+  opacity: 0;
+}
+.slide.active .jf-fill-left,
+.slide.active .jf-fill-right {
+  animation: barGrow 0.8s var(--ease) forwards;
+}
+.slide.active .job-flow > :nth-child(5n+1) .jf-fill-left,
+.slide.active .job-flow > :nth-child(5n+2) .jf-fill-left { animation-delay: 0.3s; }
+.slide.active .job-flow > :nth-child(5n+4) .jf-fill-right,
+.slide.active .job-flow > :nth-child(5n+5) .jf-fill-right { animation-delay: 0.3s; }
+/* Stagger each row */
+.slide.active .jf-fill-left { animation-delay: 0.3s; }
+.slide.active .jf-fill-right { animation-delay: 0.5s; }
+.job-flow > :nth-child(n+6) .jf-fill-left { animation-delay: 0.5s !important; }
+.job-flow > :nth-child(n+6) .jf-fill-right { animation-delay: 0.7s !important; }
+.job-flow > :nth-child(n+11) .jf-fill-left { animation-delay: 0.7s !important; }
+.job-flow > :nth-child(n+11) .jf-fill-right { animation-delay: 0.9s !important; }
+.job-flow > :nth-child(n+16) .jf-fill-left { animation-delay: 0.9s !important; }
+.job-flow > :nth-child(n+16) .jf-fill-right { animation-delay: 1.1s !important; }
+.job-flow > :nth-child(n+21) .jf-fill-left { animation-delay: 1.1s !important; }
+.job-flow > :nth-child(n+21) .jf-fill-right { animation-delay: 1.3s !important; }
+
+@keyframes barGrow {
+  to { opacity: 1; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .slide { padding: 3.5rem 1.5rem; }
+  .split, .split-wide { grid-template-columns: 1fr; gap: 1.5rem; }
+  .stat-grid-3, .stat-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .headlines-grid { grid-template-columns: 1fr; }
+  .chart-container { height: 200px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="nav-dot"></div>
+    <span class="nav-title">AI-superskills for ledere &mdash; Sommerro</span>
+  </div>
+  <div class="nav-center">
+    <button class="nav-btn" onclick="prev()">&larr;</button>
+    <span class="nav-counter"><span id="cur">1</span> / <span id="tot">13</span></span>
+    <button class="nav-btn" onclick="next()">&rarr;</button>
+  </div>
+  <div class="nav-right">
+    <span class="nav-date">6. mars 2026</span>
+  </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+
+<!-- ============================================================
+     DECK
+     ============================================================ -->
+<div class="deck">
+
+<!-- ==================== SLIDE 1 — VIDEO ==================== -->
+<div class="slide bg-deep noise">
+  <div class="video-wrap">
+    <video id="intro-video" src="genai-intro.mp4" muted playsinline preload="auto"></video>
+  </div>
+  <div class="slide-inner" style="position:relative; z-index:2; pointer-events:none;">
+    <div style="position:absolute; bottom:-2rem; left:0;">
+      <p class="body-sm text-muted" style="opacity:0.6;">Trykk M for lyd &bull; Pil for neste</p>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 1: Video</h4>
+    <ul>
+      <li><strong>Åpning:</strong> Ikke si noe. La videoen starte. Cathie Wood (ARK Invest) om AI-transformasjon, ca. 1 minutt.</li>
+      <li><strong>Etter videoen:</strong> "Det var ett år siden. Se hvor vi er nå."</li>
+      <li><strong>Overgang:</strong> "Og det har bare akselerert siden. La meg vise dere hva som har skjedd de siste 12 månedene."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2 — 12 MÅNEDER SOM ENDRET ALT ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Kontekst</div>
+    <h1 class="display-lg stagger" style="margin-bottom:2.5rem;">12 måneder som <br><span class="shimmer">endret alt</span></h1>
+
+    <!-- Timeline -->
+    <div class="stagger" style="position:relative; padding:1.5rem 0 0.5rem;">
+      <div style="position:absolute; top:calc(1.5rem + 5px); left:0; right:0; height:2px; background:rgba(255,255,255,0.08);"></div>
+
+      <div style="display:flex; justify-content:space-between; position:relative;">
+        <div style="text-align:center; flex:1;">
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin:0 auto 0.75rem;position:relative;z-index:1;"></div>
+          <div class="body-sm" style="font-weight:600;">Claude Code</div>
+          <div class="body-sm text-muted" style="font-size:0.7rem;">Mai 2025</div>
+        </div>
+        <div style="text-align:center; flex:1;">
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin:0 auto 0.75rem;position:relative;z-index:1;"></div>
+          <div class="body-sm" style="font-weight:600;">GPT-4o</div>
+          <div class="body-sm text-muted" style="font-size:0.7rem;">Agents</div>
+        </div>
+        <div style="text-align:center; flex:1;">
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin:0 auto 0.75rem;position:relative;z-index:1;"></div>
+          <div class="body-sm" style="font-weight:600;">Open source</div>
+          <div class="body-sm text-muted" style="font-size:0.7rem;">Eksplosjon</div>
+        </div>
+        <div style="text-align:center; flex:1;">
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin:0 auto 0.75rem;position:relative;z-index:1;"></div>
+          <div class="body-sm" style="font-weight:600;">Autonome agenter</div>
+          <div class="body-sm text-muted" style="font-size:0.7rem;">2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid stat-grid-3 stagger" style="margin-top:2rem;">
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:clamp(1.5rem,3vw,2.5rem);">Chat &rarr; Agenter</div>
+        <div class="stat-label">Fra samtale til autonome systemer som handler på dine vegne</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" data-count-to="2" data-count-prefix="$" data-count-suffix="B">$0B</div>
+        <div class="stat-label">Cursor ARR &mdash; fra $1M til $2B på måneder. Raskeste SaaS-vekst noensinne.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent">Koderen er død</div>
+        <div class="stat-label">CEO Dario Amodei: &laquo;AI skriver 90% av koden vår. Snart 100%.&raquo;</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 2: 12 måneder som endret alt</h4>
+    <ul>
+      <li><strong>Narrativ:</strong> For ett år siden var AI en chatbot du stilte spørsmål til. I dag er det autonome agenter som handler på dine vegne &mdash; skriver kode, analyserer data, bygger nettsider, gjør research.</li>
+      <li><strong>Cursor:</strong> Bloomberg 2. mars 2026 &mdash; raskeste SaaS-selskap til $2B ARR noensinne. Gikk fra $1M til $1B til $2B på måneder.</li>
+      <li><strong>Dario Amodei</strong> (Anthropic CEO, feb 2026): "AI skriver 90% av koden vår. Snart 100%." Anthropic lager Claude &mdash; verktøyet dere skal bruke i dag.</li>
+      <li><strong>Open source:</strong> DeepSeek, Llama 3, Mistral &mdash; AI er ikke lenger forbeholdt Big Tech.</li>
+      <li><strong>Overgang:</strong> "Og den som har sagt dette tydeligst i Norge, er kanskje den siste dere forventer..."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3 — ETT ÅR VS ÉN TIME ==================== -->
+<div class="slide bg-cream">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Hastigheten</div>
+    <h1 class="display-md stagger" style="margin-bottom:2rem;">Ett år hos Google.<br>Én time med AI.</h1>
+
+    <div class="stagger">
+      <div class="quote-block">
+        <div class="quote-text">&laquo;We've been trying to build distributed agent orchestrators at Google since last year. I gave Claude Code a description of the problem. It generated what we built last year in an hour.&raquo;</div>
+        <div class="quote-attr">John Adogin, Principal Engineer, Google</div>
+      </div>
+    </div>
+
+    <div class="stagger" style="margin-top:3rem; padding:1.25rem 1.5rem; background:var(--warm-gray); border:1px solid var(--border); border-radius:12px;">
+      <p class="display-sm" style="color:var(--accent);">&laquo;AI cuts through bureaucracy. It will happily generate a version one.&raquo;</p>
+      <p class="body-sm" style="color:var(--text-light); margin-top:0.5rem;">Paul Graham</p>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 3: Ett år vs. én time</h4>
+    <ul>
+      <li><strong>Åpning:</strong> "La meg gi dere ett konkret eksempel på hva dette betyr i praksis."</li>
+      <li><strong>Google-sitatet:</strong> Les det sakte. John Adogin, Principal Engineer hos Google. Ikke en junior-utvikler &mdash; en senior ingeniør i verdens mest avanserte tech-selskap. De brukte et helt år. Claude Code brukte en time.</li>
+      <li><strong>Nyansering (si muntlig):</strong> "Dette er ikke et argument mot planlegging. Det er et signal om at hastigheten på hva som er mulig har endret seg fundamentalt. Det du trodde tok måneder, kan ta timer."</li>
+      <li><strong>NHO-kontekst:</strong> NHO og elleve av Norges største selskaper signerte forrige uke en intensjonserklæring om KI-satsing. Ambisjonene er helt riktige &mdash; vi trenger langsiktig forskning. Men: mens forskning konkretiseres, kan vi allerede teste. Open source-modeller som DeepSeek kjører lokalt på egen infrastruktur. I dag. Med full kontroll.</li>
+      <li><strong>Provokasjon:</strong> Er vi i ferd med å planlegge en forskningsekspedisjon til Nordpolen mens andre flyr charter dit hver dag?</li>
+      <li><strong>Paul Graham:</strong> Les sitatet. Kortversjonen: AI venter ikke på godkjenning. Fullsitat for kontekst: "If a big organization is paralyzed by indecision, AI doesn't care. It will happily generate a version one."</li>
+      <li><strong>Overgang:</strong> "Og den som sier dette tydeligst i Norge, er sjefen for verdens største fond."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4 — TANGEN-SITAT ==================== -->
+<div class="slide bg-cream">
+  <div class="slide-inner">
+    <div class="split">
+      <div>
+        <div class="kicker stagger"><span class="kicker-dot"></span> Oljefondet</div>
+        <div class="stagger">
+          <div class="quote-block">
+            <div class="quote-text">&laquo;Jeg mener man burde snakket seks timer om AI, og tolv minutter om rammevilkår.&raquo;</div>
+            <div class="quote-attr">Nicolai Tangen, E24 &mdash; 16. februar 2026</div>
+          </div>
+        </div>
+        <div class="stagger" style="margin-top:2rem;">
+          <div class="quote-block">
+            <div class="quote-text" style="font-size:clamp(1.1rem,2vw,1.4rem);">&laquo;Hvis du vil øke konkurransekraften din, så kan du ikke bare klage til myndighetene. Du må gjøre noe selv. Du må putte AI i alt bedriften gjør.&raquo;</div>
+          </div>
+        </div>
+      </div>
+      <div class="stagger">
+        <img src="content/Tangen e24.jpg" alt="Nicolai Tangen" style="width:100%; border-radius:12px;">
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 4: Tangen-sitat</h4>
+    <ul>
+      <li><strong>Kontekst:</strong> Nicolai Tangen, sjef for verdens største statlige investeringsfond ($1,7 billioner), ga i februar en knallhard beskjed til norsk næringsliv.</li>
+      <li><strong>Første sitat:</strong> Les opp. La det synke inn. "Seks timer om AI, tolv minutter om rammevilkår." Han snakker om Arendalsuka og norske konferanser generelt &mdash; prioriteringene er feil.</li>
+      <li><strong>Andre sitat:</strong> "Du må gjøre noe selv. Du må putte AI i alt bedriften gjør." Direkte melding: slutt å vente på regulering og politikk. Handle.</li>
+      <li><strong>Bakgrunn:</strong> Tangen møtte Sam Altman (OpenAI-sjefen) og ble overbevist. Satte 20% produktivitetsmål for hele Oljefondet. Ikke et mål om å kutte folk &mdash; et mål om å gjøre mer med AI.</li>
+      <li><strong>Overgang:</strong> "Og det er ikke bare ord. La meg vise hva de faktisk gjør."</li>
+    </ul>
+    <p class="note-source">Kilde: E24, "AI i Oljefondet", 16. feb 2026</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4 — OLJEFONDET I PRAKSIS ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Hva NBIM faktisk gjør</div>
+    <h1 class="display-md stagger" style="margin-bottom:2rem;">Oljefondet: Fra ord til handling</h1>
+
+    <div class="stat-grid stat-grid-3 stagger" style="margin-bottom:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-number text-accent" data-count-to="20" data-count-suffix="%">0%</div>
+        <div class="stat-label">Produktivitetsmål satt etter at Tangen møtte Sam Altman</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" data-count-to="8">0</div>
+        <div class="stat-label">AI-agenter tar investeringsbeslutninger på sekunder (før: timer)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" data-count-to="56" data-count-suffix="%">0%</div>
+        <div class="stat-label">av ansatte koder (vs. Morgan Stanley 20%)</div>
+      </div>
+    </div>
+
+    <div class="stat-grid stat-grid-3 stagger">
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:clamp(1.5rem,2.5vw,2rem);" data-count-to="3000" data-count-suffix="" data-count-format="short">0</div>
+        <div class="stat-label">selskapsmøter/år &mdash; sparer 2-3 timer per møte med AI-briefing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:clamp(1.2rem,2vw,1.6rem);">Jurister koder</div>
+        <div class="stat-label">Jurister og kommunikasjonsfolk vibe-koder interne verktøy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:clamp(1.2rem,2vw,1.6rem);">Milliarder spart</div>
+        <div class="stat-label">&laquo;Sparer mange milliarder&raquo; på trading med AI-systemer</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 5: Oljefondet i praksis</h4>
+    <ul>
+      <li><strong>Åpning:</strong> "Dette er ikke teori. Oljefondet &mdash; verdens største fond &mdash; gjør dette allerede."</li>
+      <li><strong>20%-målet:</strong> Satt etter at Tangen møtte Sam Altman. Konkret produktivitetsmål for hele organisasjonen.</li>
+      <li><strong>8 AI-agenter:</strong> Tar investeringsbeslutninger på sekunder som tidligere tok timer med manuelt analysearbeid. Ikke chatbots &mdash; agenter som handler autonomt.</li>
+      <li><strong>56% koder:</strong> Over halvparten av de ansatte koder nå. Til sammenligning: Morgan Stanley ligger på 20%. Tangen oppfordrer aktivt alle til å lære.</li>
+      <li><strong>3000 selskapsmøter/år:</strong> AI forbereder briefing-dokumenter automatisk. Sparer 2-3 timer per møte.</li>
+      <li><strong>Jurister koder:</strong> Jurister og kommunikasjonsfolk vibe-koder interne verktøy. Ikke bare tech-avdelingen.</li>
+      <li><strong>Nøkkelsitat:</strong> "Alle selskaper bør ha en gal person på toppen som aldri slutter å mase om AI." &mdash; Si dette høyt.</li>
+      <li><strong>Tangen-advarsel (si muntlig):</strong> "Teknologien er ofte mer avansert enn det mennesker og selskaper klarer å ta i bruk. Avstanden blir større og større." Han kaller det "technology overhang" &mdash; gapet mellom hva AI kan og hva organisasjoner faktisk gjør. Gapet akselererer.</li>
+      <li><strong>Overgang:</strong> "La oss sette noen tall på dette gapet."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6 — GAPET SOM VOKSER ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Kompetansegapet</div>
+    <h1 class="display-md stagger" style="margin-bottom:0.5rem;">Gapet som vokser</h1>
+
+    <!-- Animated chart -->
+    <div class="chart-container stagger">
+      <svg class="chart-svg" viewBox="0 0 700 250" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="grad-accent" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="grad-muted" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--muted)" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="var(--muted)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Axes -->
+        <line class="axis" x1="50" y1="220" x2="680" y2="220"/>
+        <!-- Year labels -->
+        <text class="chart-label" fill="var(--muted)" x="50" y="240" font-size="10">2023</text>
+        <text class="chart-label" fill="var(--muted)" x="260" y="240" font-size="10">2024</text>
+        <text class="chart-label" fill="var(--muted)" x="470" y="240" font-size="10">2025</text>
+        <text class="chart-label" fill="var(--muted)" x="650" y="240" font-size="10">2026</text>
+
+        <!-- AI capability curve (exponential up) -->
+        <path class="area-ai" d="M50,180 C150,175 250,150 350,110 C450,60 550,30 680,15 L680,220 L50,220 Z"/>
+        <path class="curve-ai" d="M50,180 C150,175 250,150 350,110 C450,60 550,30 680,15"/>
+
+        <!-- Adoption curve (gentle rise) -->
+        <path class="area-adoption" d="M50,195 C150,192 250,188 350,182 C450,175 550,168 680,160 L680,220 L50,220 Z"/>
+        <path class="curve-adoption" d="M50,195 C150,192 250,188 350,182 C450,175 550,168 680,160"/>
+
+        <!-- Labels -->
+        <text class="chart-label chart-label-accent" x="600" y="12" font-size="11">AI-kapabilitet</text>
+        <text class="chart-label chart-label-muted" x="600" y="156" font-size="11">Adopsjon</text>
+
+        <!-- Gap indicator -->
+        <line class="gap-arrow" x1="660" y1="25" x2="660" y2="155"/>
+        <text class="gap-label" x="570" y="95">Gapet</text>
+      </svg>
+    </div>
+
+    <div class="stat-grid stat-grid-4 stagger">
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:1.5rem;" data-count-to="90" data-count-suffix="%">0%</div>
+        <div class="stat-label">av bedrifter mangler kritisk AI-kompetanse innen 2026 <sup style="color:var(--accent); font-size:0.7rem;">1</sup></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:1.5rem;">7x</div>
+        <div class="stat-label">Power users bruker 7x mer av AIs avanserte kapabiliteter enn vanlige brukere <sup style="color:var(--accent); font-size:0.7rem;">2</sup></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:1.5rem;">Compounding</div>
+        <div class="stat-label">Early adopters får eksponentielle fordeler. Gapet blir vanskeligere å tette over tid.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number text-accent" style="font-size:1.3rem;">Strukturert testing</div>
+        <div class="stat-label">Ikke jag hvert verktøy. Systematisk eksperimentering med nye kapabiliteter.</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 7: Gapet som vokser</h4>
+    <ul>
+      <li><strong>Grafen:</strong> Se hvordan kurvene spriker. AI-kapabilitet akselererer eksponentielt oppover. Gjennomsnittlig adopsjon kryper. Det røde gapet er risikoen.</li>
+      <li><strong>90% (IDC):</strong> 90% av bedrifter vil mangle kritisk AI-kompetanse innen slutten av 2026. $5,5 billioner i inntekter er i fare globalt.</li>
+      <li><strong>7x (OpenAI, Davos jan 2026):</strong> Power users bruker 7x mer av AIs avanserte tenke-kapabiliteter enn vanlige brukere. De fleste bruker bare en brøkdel av tilgjengelig kraft. ChatGPTs kapasitet dobles omtrent hver 7. måned.</li>
+      <li><strong>Compounding:</strong> Early adopters får eksponentielle fordeler. OpenAI advarer: hvis overhangen fortsetter å vokse, vil et lite antall selskaper og land dra fra &mdash; vanskelig å reversere.</li>
+      <li><strong>Strukturert testing:</strong> Ikke jag hvert nytt verktøy. Bygg kultur for regelmessig, systematisk eksperimentering med nye kapabiliteter. Det er organisatorisk absorpsjon &mdash; kultur, prosesser, kompetanse &mdash; som avgjør, ikke teknologien.</li>
+      <li><strong>Nøkkelpoeng:</strong> "Gapet er ikke mellom de som bruker AI og de som ikke gjør det. Det er mellom de som bruker det godt, og alle andre."</li>
+      <li><strong>Overgang:</strong> "Og markedet har allerede begynt å prise dette inn."</li>
+    </ul>
+    <p class="note-source">Kilder: IDC/Workera, OpenAI "Ending the Capability Overhang" (Davos, jan 2026), Deloitte State of AI 2026</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11 — TO PERSPEKTIVER ==================== -->
+<div class="slide bg-cream">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> To perspektiver</div>
+    <h1 class="display-md stagger" style="margin-bottom:2rem;">Hva skjer med jobbene?</h1>
+
+    <!-- Job transformation flow — butterfly chart -->
+    <div class="stagger" style="margin-bottom:1.5rem;">
+      <div class="job-flow">
+        <!-- Row 1 -->
+        <div class="jf-old">Regnskap</div>
+        <div class="jf-bar-left"><div class="jf-fill-left" style="width:75%;"></div></div>
+        <div class="jf-center">&rarr;</div>
+        <div class="jf-bar-right"><div class="jf-fill-right" style="width:90%;"></div></div>
+        <div class="jf-new">CFO + 3 AI-agenter</div>
+        <!-- Row 2 -->
+        <div class="jf-old">Junior-utvikler</div>
+        <div class="jf-bar-left"><div class="jf-fill-left" style="width:85%;"></div></div>
+        <div class="jf-center">&rarr;</div>
+        <div class="jf-bar-right"><div class="jf-fill-right" style="width:70%;"></div></div>
+        <div class="jf-new">AI-orkestrerer</div>
+        <!-- Row 3 -->
+        <div class="jf-old">10-personers markedsteam</div>
+        <div class="jf-bar-left"><div class="jf-fill-left" style="width:95%;"></div></div>
+        <div class="jf-center">&rarr;</div>
+        <div class="jf-bar-right"><div class="jf-fill-right" style="width:50%;"></div></div>
+        <div class="jf-new">2 strateger + Claude</div>
+        <!-- Row 4 -->
+        <div class="jf-old">Manuell analyse</div>
+        <div class="jf-bar-left"><div class="jf-fill-left" style="width:60%;"></div></div>
+        <div class="jf-center">&rarr;</div>
+        <div class="jf-bar-right"><div class="jf-fill-right" style="width:85%;"></div></div>
+        <div class="jf-new">Domenekspert + AI-flyt</div>
+        <!-- Row 5 -->
+        <div class="jf-old">Kundeservice-avdeling</div>
+        <div class="jf-bar-left"><div class="jf-fill-left" style="width:80%;"></div></div>
+        <div class="jf-center">&rarr;</div>
+        <div class="jf-bar-right"><div class="jf-fill-right" style="width:65%;"></div></div>
+        <div class="jf-new">1 CX-leder + AI-lag</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; max-width:700px; margin:0.75rem auto 0; padding:0 0.5rem;">
+        <div style="font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Eksponert for disrupsjon</div>
+        <div style="font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--green);">Ny rolle med AI</div>
+      </div>
+    </div>
+
+    <div class="split stagger">
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
+        <ul class="point-list" style="gap:0.75rem;">
+          <li style="font-size:0.95rem;">
+            <span class="point-icon">&bull;</span>
+            <div><strong>IMF:</strong> 40% av alle jobber globalt eksponert for AI-disrupsjon</div>
+          </li>
+          <li style="font-size:0.95rem;">
+            <span class="point-icon">&bull;</span>
+            <div><strong>McKinsey:</strong> 12M yrkesskifter i USA innen 2030 &mdash; de fleste white-collar</div>
+          </li>
+        </ul>
+      </div>
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
+        <ul class="point-list" style="gap:0.75rem;">
+          <li style="font-size:0.95rem;">
+            <span class="point-icon" style="background:rgba(56,161,105,0.12); color:var(--green);">&bull;</span>
+            <div><strong>WEF:</strong> AI skaper flere jobber enn den fjerner &mdash; <em>hvis</em> folk får opplæring</div>
+          </li>
+          <li style="font-size:0.95rem;">
+            <span class="point-icon" style="background:rgba(56,161,105,0.12); color:var(--green);">&bull;</span>
+            <div><strong>PwC:</strong> Jobbtallene stiger også i automatiserbare roller</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 11: Hva skjer med jobbene?</h4>
+    <ul>
+      <li>Bloomberg: "White-Collar Workers Are Losing Jobs to AI" - vedvarende oppsigelser i tech, finans, jus</li>
+      <li>IMF (Jan 2025): 40% av alle jobber globalt er eksponert for AI</li>
+      <li>McKinsey Global Institute: 12 millioner yrkesskifter i USA innen 2030</li>
+      <li>Klarna: Kuttet 700, AI gjør jobben til 700 til (CEO Sebastian Siemiatkowski)</li>
+      <li>WEF (Jan 2026): 1.1 billion jobs transformed, net positive IF companies invest in reskilling</li>
+      <li>PwC AI Jobs Barometer: Job numbers rising even in highly automatable roles</li>
+      <li>Tangen/NBIM: "En feil mange selskaper gjør er å si opp folk. Da stopper du utviklingen."</li>
+      <li>Poenget: Begge perspektivene er sanne. Utfallet avhenger av hva LEDERE gjør.</li>
+    </ul>
+    <p class="note-source">Kilder: Bloomberg, IMF, McKinsey, Klarna, WEF, PwC, E24/NBIM</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8 — SELSKAPER UTEN ANSATTE ==================== -->
+<div class="slide bg-cream">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Null ansatte</div>
+    <h1 class="display-md stagger" style="margin-bottom:2rem;">The Era of the Zero Human Company</h1>
+
+    <div class="split">
+      <div>
+        <ul class="point-list stagger">
+          <li>
+            <span class="point-icon">&bull;</span>
+            <div><strong>FelixCraft:</strong> AI-agent som CEO. $78K i inntekt på 30 dager &mdash; fire inntektsstrømmer, null ansatte.</div>
+          </li>
+          <li>
+            <span class="point-icon">&bull;</span>
+            <div><strong>Polsia:</strong> Bygger og driver selskaper autonomt for $49/mnd. Fra idé til inntekt &mdash; AI håndterer alt.</div>
+          </li>
+        </ul>
+      </div>
+      <div class="stagger">
+        <img src="content/HLH-Edmonton-Accounting-Empty-Office-Space.png" alt="Tomt kontorlandskap" style="width:100%; border-radius:12px; object-fit:cover;">
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 9: Zero Human Company</h4>
+    <ul>
+      <li><strong>Kontekst:</strong> Vi har fulgt "tiny teams" lenge &mdash; selskaper som Midjourney og Cursor som genererer millioner per ansatt. Men de siste 90 dagene har noe endret seg. Med Claude Code og de nyeste modellene eksperimenterer gründere med <em>helt autonome</em> selskaper.</li>
+      <li><strong>FelixCraft:</strong> Nat Eliason lanserte FelixCraft for 30 dager siden. Felix er en AI-agent, ikke et menneske. På én måned: $78K i inntekt fra fire strømmer, inkludert en $29-guide om AI-ansettelse og ClawMart (app store for AI-assistenter). Tidlig inntekt kommer fra folk fascinert av selve kategorien.</li>
+      <li><strong>Polsia (polsia.com):</strong> Ben Serra bygget en plattform som bygger og driver selskaper autonomt for $49/mnd. Du bringer idéen eller lar AI generere én. Plattformen håndterer markedsanalyse, bygger hjemmeside, finner kunder, og kjører daglige sykluser med engineering, markedsføring og drift. 20% rev share &mdash; tenk inkubator, ikke SaaS.</li>
+      <li><strong>Tallene:</strong> Polsia gikk fra lave tusentall til $1,5M run rate siden tidlig februar. FelixCraft: $40K bare siste syv dager. Ikke enhjørninger ennå, men hastigheten er udiskutabel.</li>
+      <li><strong>Spørsmålet til salen:</strong> Hvilke deler av deres virksomhet kunne kjørt autonomt i dag? Ikke en gang &mdash; i dag. Infrastrukturen er her. Modellene er kapable. Eksperimentene er live.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7 — SAASPOCALYPSE ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Markedsdisrupsjon</div>
+    <h1 class="display-md stagger" style="margin-bottom:0.75rem;">SaaSpocalypse</h1>
+    <p class="body-md text-muted stagger" style="margin-bottom:1.25rem;">$2 tusen milliarder slettet fra software-aksjer på 3 uker. Februar 2026.</p>
+
+    <div class="headlines-grid stagger" style="gap:0.75rem;">
+      <div class="headline-card">
+        <div class="headline-source"><span class="source-dot source-bloomberg"></span> Bloomberg</div>
+        <img src="images/bloomberg-headline.jpg" alt="Bloomberg headline" style="border-radius:8px;">
+        <div class="headline-date">Februar 2026</div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-source"><span class="source-dot source-cnbc"></span> CNBC</div>
+        <img src="images/cnbc-headline.jpg" alt="CNBC headline" style="border-radius:8px;">
+        <div class="headline-date">Februar 2026</div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-source"><span class="source-dot source-cnn"></span> CNN</div>
+        <img src="images/cnn-headline.png" alt="CNN headline" style="border-radius:8px;">
+        <div class="headline-date">Februar 2026</div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-source"><span class="source-dot source-ft"></span> Financial Times</div>
+        <img src="images/ft-graf.avif" alt="FT software stock graph" style="border-radius:8px;">
+        <div class="headline-date">Februar 2026</div>
+      </div>
+    </div>
+
+    <div class="ticker-strip stagger">
+      <div class="ticker-item"><span class="ticker-name">Atlassian</span> <span class="ticker-drop">-35%</span></div>
+      <div class="ticker-item"><span class="ticker-name">Salesforce</span> <span class="ticker-drop">-28%</span></div>
+      <div class="ticker-item"><span class="ticker-name">Zoom</span> <span class="ticker-drop">-11.5%</span></div>
+      <div class="ticker-item"><span class="ticker-name">IGV (ETF)</span> <span class="ticker-drop">-22% YTD</span></div>
+      <div class="ticker-item"><span class="ticker-name">Multipler</span> <span class="ticker-drop">39x &rarr; 21x</span></div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 8: SaaSpocalypse</h4>
+    <ul>
+      <li><strong>Åpning:</strong> "$2 tusen milliarder slettet fra software-aksjer på tre uker. Februar 2026. Dette er ikke en korreksjon &mdash; det er markedet som repriser hele software-industrien."</li>
+      <li><strong>Katalysatoren:</strong> Anthropic lanserte Claude Cowork &mdash; AI-agenter som gjør jobben som Salesforce, Atlassian og andre tar seg betalt for. Markedet reagerte umiddelbart.</li>
+      <li><strong>Nøkkelinnsikt:</strong> "Hvis 10 AI-agenter gjør jobben til 100 selgere, trenger du 10 Salesforce-lisenser. Ikke 100." Det er hele forretningsmodellen som kollapser.</li>
+      <li><strong>Tallene:</strong> IGV (software-ETF) ned 22% YTD. Multipler kollapset fra 39x til 21x. Atlassian -35%, Salesforce -28%, Zoom -11,5%.</li>
+      <li><strong>Sikkerhet også rammet:</strong> AI patcher sårbarheter på kildekode-nivå &mdash; truer hele cybersecurity-bransjen.</li>
+      <li><strong>Overgang:</strong> "Og det stopper ikke med software-selskaper. Noen bygger nå hele selskaper uten mennesker i det hele tatt."</li>
+    </ul>
+    <p class="note-source">Kilder: Bloomberg, CNBC, CNN, FinancialContent</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9 — HVA DETTE BETYR FOR DEG ==================== -->
+<div class="slide bg-deep noise" style="align-items:flex-start; overflow-y:auto;">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> For ledere og styremedlemmer</div>
+    <h1 class="display-md stagger" style="margin-bottom:1.25rem;">Hva dette betyr for deg</h1>
+
+    <div class="stat-grid stat-grid-3 stagger">
+      <div class="stat-card" style="border-left:3px solid var(--accent); padding:1rem 1.25rem;">
+        <div class="body-md" style="font-weight:600; margin-bottom:0.5rem;">Lede i usikkerhet</div>
+        <p class="body-sm" style="color:var(--muted-light);">AI endrer spillereglene raskere enn du kan lage en strategi. Ledere som forstår verktøyene navigerer raskere.</p>
+      </div>
+      <div class="stat-card" style="border-left:3px solid var(--accent); padding:1rem 1.25rem;">
+        <div class="body-md" style="font-weight:600; margin-bottom:0.5rem;">Bygge kultur for læring</div>
+        <p class="body-sm" style="color:var(--muted-light);">Din viktigste jobb som leder er å skape en kultur der folk tør å eksperimentere.</p>
+      </div>
+      <div class="stat-card" style="border-left:3px solid var(--accent); padding:1rem 1.25rem;">
+        <div class="body-md" style="font-weight:600; margin-bottom:0.5rem;">Kompetansegapet i styret</div>
+        <p class="body-sm" style="color:var(--muted-light);">66% av styremedlemmer rapporterer &laquo;begrenset til ingen kunnskap&raquo; om AI. Hvordan fører du tilsyn med noe du ikke forstår?</p>
+      </div>
+    </div>
+
+    <div class="stagger" style="margin-top:1.25rem; padding:1rem 1.25rem; background:var(--dark-card); border:1px solid var(--dark-border); border-radius:12px;">
+      <p class="display-sm" style="color:var(--accent);">Du trenger ikke være teknolog.</p>
+      <p class="display-sm" style="color:var(--muted-light); margin-top:0.25rem;">Men du må forstå nok til å stille de riktige spørsmålene.</p>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 10: Hva dette betyr for deg</h4>
+    <ul>
+      <li><strong>Åpning:</strong> "OK, nok makrobilde. La oss snakke om hva dette betyr for dere konkret &mdash; som ledere og styremedlemmer."</li>
+      <li><strong>Lede i usikkerhet:</strong> Tradisjonelle 3-5 års strategiplaner er utdaterte før blekket tørker. AI endrer landskapet kvartalsvis. Ledere som forstår verktøyene kan tilpasse kursen kontinuerlig &mdash; de som ikke gjør det, flyr blindt.</li>
+      <li><strong>Bygge kultur for læring:</strong> Tangen igjen: "En feil er å si opp folk. Da stopper du utviklingen." De beste lederne investerer i folkene sine. Ikke outsource AI til tech-avdelingen &mdash; gjør det til alles kompetanse.</li>
+      <li><strong>Kompetansegapet i styret:</strong> 66% av styremedlemmer rapporterer "begrenset til ingen kunnskap" om AI. Hvordan fører du tilsyn med noe du ikke forstår? Det er derfor dere er her i dag.</li>
+      <li><strong>Bunnlinjen:</strong> Les bunnboksen. "Du trenger ikke være teknolog. Men du må forstå nok til å stille de riktige spørsmålene."</li>
+      <li><strong>Overgang:</strong> "Og ja, elefanten i rommet &mdash; hva med jobbene?"</li>
+    </ul>
+    <p class="note-source">Kilder: Harvard Law School Forum (Feb 2026, Jan 2026), McKinsey, SEC Exam Priorities 2026</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10 — PERSONLIG ERFARING ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Personlig</div>
+    <h1 class="display-md stagger" style="margin-bottom:0.75rem;">Hva jeg har bygget med Claude Code</h1>
+    <p class="body-md stagger" style="color:var(--muted); margin-bottom:2rem;">Null programmeringsbakgrunn. Ren domenekunnskap + dialog med AI.</p>
+
+    <div class="stat-grid stat-grid-4 stagger">
+      <!-- Boks 1: Investeringsanalyse -->
+      <div class="stat-card" style="padding:0; overflow:hidden;">
+        <div style="min-height:140px; background:linear-gradient(135deg, #1a2332 0%, #2a3a4a 100%); border-radius:12px 12px 0 0; padding:1.25rem; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem;">
+          <!-- Chart icon + labels -->
+          <svg viewBox="0 0 200 80" style="width:80%; opacity:0.6;" preserveAspectRatio="xMidYMid meet">
+            <polyline points="10,60 40,55 70,45 100,50 130,30 160,35 190,15" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+            <polyline points="10,65 40,62 70,58 100,60 130,52 160,48 190,40" fill="none" stroke="#5a7a9a" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 3"/>
+          </svg>
+          <div style="display:flex; gap:0.5rem;">
+            <div style="background:rgba(212,98,58,0.2); border-radius:4px; padding:0.2rem 0.5rem; font-size:0.65rem; color:var(--accent); font-weight:600;">+12,4%</div>
+            <div style="background:rgba(255,255,255,0.08); border-radius:4px; padding:0.2rem 0.5rem; font-size:0.65rem; color:var(--muted);">YTD</div>
+          </div>
+        </div>
+        <div style="padding:1rem;">
+          <div class="body-sm" style="font-weight:600; color:var(--white);">Investeringsanalyse</div>
+          <div class="body-sm text-muted" style="font-size:0.8rem;">Porteføljeanalyse med skatteoptimalisering</div>
+        </div>
+      </div>
+      <!-- Boks 2: Tone of Voice -->
+      <div class="stat-card" style="padding:0; overflow:hidden;">
+        <div style="min-height:140px; background:linear-gradient(135deg, #2a2520 0%, #3a3530 100%); border-radius:12px 12px 0 0; padding:1.25rem; display:flex; flex-direction:column; justify-content:center; gap:0.5rem;">
+          <!-- Voice profile bars -->
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <div style="font-size:0.6rem; color:var(--muted); width:50px; text-align:right;">Stolt</div>
+            <div style="flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px;"><div style="width:85%; height:100%; background:var(--accent); border-radius:3px;"></div></div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <div style="font-size:0.6rem; color:var(--muted); width:50px; text-align:right;">Generøs</div>
+            <div style="flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px;"><div style="width:78%; height:100%; background:var(--accent); border-radius:3px; opacity:0.8;"></div></div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <div style="font-size:0.6rem; color:var(--muted); width:50px; text-align:right;">Energisk</div>
+            <div style="flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px;"><div style="width:92%; height:100%; background:var(--accent); border-radius:3px; opacity:0.9;"></div></div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <div style="font-size:0.6rem; color:var(--muted); width:50px; text-align:right;">Formell</div>
+            <div style="flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px;"><div style="width:25%; height:100%; background:#5a7a9a; border-radius:3px; opacity:0.5;"></div></div>
+          </div>
+        </div>
+        <div style="padding:1rem;">
+          <div class="body-sm" style="font-weight:600; color:var(--white);">Tone of Voice-modell</div>
+          <div class="body-sm text-muted" style="font-size:0.8rem;">Organisatorisk stemmeprofil for alt innhold</div>
+        </div>
+      </div>
+      <!-- Boks 3: Roblox -->
+      <div class="stat-card" style="padding:0; overflow:hidden;">
+        <div style="min-height:140px; background:linear-gradient(135deg, #1a2a1a 0%, #2a3a2a 100%); border-radius:12px 12px 0 0; padding:1.25rem; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem;">
+          <!-- Game controller + blocks -->
+          <div style="font-size:2.5rem; line-height:1;">&#127918;</div>
+          <div style="display:flex; gap:0.25rem;">
+            <div style="width:16px; height:16px; background:#4ade80; border-radius:3px; opacity:0.7;"></div>
+            <div style="width:16px; height:16px; background:#22c55e; border-radius:3px;"></div>
+            <div style="width:16px; height:16px; background:#86efac; border-radius:3px; opacity:0.5;"></div>
+            <div style="width:16px; height:16px; background:#4ade80; border-radius:3px; opacity:0.8;"></div>
+          </div>
+          <div style="font-size:0.6rem; color:rgba(255,255,255,0.4); letter-spacing:0.1em; text-transform:uppercase;">Roblox Studio</div>
+        </div>
+        <div style="padding:1rem;">
+          <div class="body-sm" style="font-weight:600; color:var(--white);">Roblox-spill med sønnen (8)</div>
+          <div class="body-sm text-muted" style="font-size:0.8rem;">Bygget et komplett spill sammen på en kveld</div>
+        </div>
+      </div>
+      <!-- Boks 4: Clawbot -->
+      <div class="stat-card" style="padding:0; overflow:hidden;">
+        <div style="min-height:140px; background:linear-gradient(135deg, #1a2025 0%, #252d35 100%); border-radius:12px 12px 0 0; padding:1.25rem; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; position:relative;">
+          <!-- WhatsApp bubble illustration -->
+          <div style="background:#25D366; border-radius:12px 12px 12px 2px; padding:0.5rem 0.75rem; max-width:140px;">
+            <div style="font-size:0.6rem; color:white; font-weight:500;">Hei Clawbot, sjekk kalenderen min for i morgen</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1); border-radius:12px 12px 2px 12px; padding:0.5rem 0.75rem; max-width:140px; align-self:flex-end;">
+            <div style="font-size:0.6rem; color:var(--muted-light);">Du har 3 møter. Skal jeg oppsummere?</div>
+          </div>
+          <svg viewBox="0 0 24 24" style="width:16px; height:16px; position:absolute; top:0.75rem; right:0.75rem; opacity:0.3;" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+        </div>
+        <div style="padding:1rem;">
+          <div class="body-sm" style="font-weight:600; color:var(--white);">Clawbot &mdash; AI-assistent</div>
+          <div class="body-sm text-muted" style="font-size:0.8rem;">Personlig AI-agent styrt via WhatsApp. Kalender, research, oppgaver.</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-md stagger" style="color:var(--muted); margin-top:1.5rem; text-align:center;">
+      Metoden: kontekst, dialog, parallelle agenter. <span style="color:var(--accent);">Simon viser dere hvordan.</span>
+    </p>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 10: Hva jeg har bygget</h4>
+    <ul>
+      <li>Hold dette kort - 1-2 min maks, vis bildene og fortell muntlig</li>
+      <li>Investeringsanalyse: Full porteføljestrategi med skatteoptimalisering</li>
+      <li>Tone of Voice: Analyserte all Startuplab-kommunikasjon, laget stemmeprofil</li>
+      <li>Roblox: Bygget et komplett spill sammen med sønnen min (8 år) på en kveld. Han designet, jeg orkestrerte AI.</li>
+      <li>Clawbot: Min personlige AI-assistent som kjører via WhatsApp. Håndterer kalender, gjør research, utfører oppgaver. Alltid tilgjengelig.</li>
+      <li>Poenget: Hvis JEG kan gjøre dette uten programmeringsbakgrunn, kan DERE også</li>
+      <li>Teaser: "Det dere skal lære i dag er nøyaktig den metoden jeg brukte"</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 13 — DAGENS PROGRAM ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner">
+    <div class="kicker stagger"><span class="kicker-dot"></span> Dagens program</div>
+    <h1 class="display-md stagger" style="margin-bottom:2rem;">Hva skjer nå</h1>
+
+    <div class="split">
+      <div class="stagger" style="max-width:600px;">
+      <!-- Program timeline -->
+      <div style="display:flex; flex-direction:column; gap:0;">
+        <div style="display:flex; gap:1.25rem; padding:1rem 0; border-bottom:1px solid var(--dark-border);">
+          <div style="font-family:var(--font-display); font-size:1.1rem; color:var(--accent); min-width:70px;">09:30</div>
+          <div>
+            <div class="body-md" style="font-weight:600;">Simons historie + context engineering</div>
+            <div class="body-sm text-muted">Hvordan tenke, strukturere og kommunisere med AI.</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:1.25rem; padding:1rem 0; border-bottom:1px solid var(--dark-border);">
+          <div style="font-family:var(--font-display); font-size:1.1rem; color:var(--accent); min-width:70px;">11:30</div>
+          <div>
+            <div class="body-md" style="font-weight:600;">Lunch</div>
+            <div class="body-sm text-muted">Ekspedisjonshallen, Sommerro</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:1.25rem; padding:1rem 0; border-bottom:1px solid var(--dark-border);">
+          <div style="font-family:var(--font-display); font-size:1.1rem; color:var(--accent); min-width:70px;">12:30</div>
+          <div>
+            <div class="body-md" style="font-weight:600;">Videre bygging</div>
+            <div class="body-sm text-muted">Avanserte teknikker. Egne prosjekter.</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:1.25rem; padding:1rem 0;">
+          <div style="font-family:var(--font-display); font-size:1.1rem; color:var(--accent); min-width:70px;">15:55</div>
+          <div>
+            <div class="body-md" style="font-weight:600;">Avslutning og feedback</div>
+            <div class="body-sm text-muted">Vi runder av sammen.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="stagger">
+        <img src="images/ekspedisjonshallen.jpg" alt="Ekspedisjonshallen, Sommerro" style="width:100%; height:100%; min-height:300px; object-fit:cover; border-radius:12px;">
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 13: Dagens program</h4>
+    <ul>
+      <li><strong>Tone:</strong> Rolig og konkret. Vi har vært gjennom mye kontekst &mdash; nå gir vi forutsigbarhet.</li>
+      <li><strong>Program:</strong> Gå gjennom tidspunktene kort. Ikke dvel. Poenget er at de vet hva som kommer.</li>
+      <li><strong>Lunch:</strong> Ekspedisjonshallen på Sommerro. Kl. 11:30.</li>
+      <li><strong>Feedback:</strong> "På slutten av dagen ber jeg om ærlig tilbakemelding. Det er viktig for meg å vite hva som funket og hva som kan bli bedre."</li>
+      <li><strong>Overgang:</strong> "Men først &mdash; la oss komme i gang."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 13 — SIMON INTRO ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner">
+    <div class="split">
+      <div style="display:flex; align-items:center;">
+        <h1 class="display-md stagger">Simon Suoyris Strumse</h1>
+      </div>
+      <div class="stagger">
+        <img src="images/simon.jpg" alt="Simon Suoyris Strumse" style="width:100%; border-radius:12px; object-fit:cover; max-height:500px;">
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 13: Simon intro</h4>
+    <ul>
+      <li><strong>Intro:</strong> "Nå vil jeg introdusere personen som skal guide dere gjennom resten av dagen."</li>
+      <li><strong>Om Simon:</strong> Simon Suoyris Strumse, grunnlegger av VibeLabs. Ekspert på Claude Code. Har holdt workshops for alt fra startup-gründere til konsernledelse.</li>
+      <li><strong>Overlevering:</strong> "Takk for oppmerksomheten. Simon, scenen er din."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 14 — APPENDIX ==================== -->
+<div class="slide bg-deep noise">
+  <div class="slide-inner" style="text-align:center;">
+    <div class="kicker stagger" style="justify-content:center;"><span class="kicker-dot"></span> Appendix</div>
+    <h1 class="display-lg stagger">Kilder og ressurser</h1>
+    <div class="stagger" style="margin-top:2.5rem; text-align:left; max-width:700px; margin-left:auto; margin-right:auto;">
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.75rem;">
+        <li class="body-md" style="color:var(--muted);"><a href="https://e24.no/teknologi/i/nyhetssak/ai-i-oljefondet" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">E24 &mdash; &laquo;AI i Oljefondet&raquo;, 16. feb 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><a href="https://www.bloomberg.com/news/articles/2026-03-02/cursor-reaches-2-billion-arr" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">Bloomberg &mdash; Cursor $2B ARR, 2. mars 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><a href="https://corpgov.law.harvard.edu/" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">Harvard Law Forum on Corporate Governance, feb 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><sup style="color:var(--accent); margin-right:0.3rem;">1</sup><a href="https://www.idc.com/getdoc.jsp?containerId=prUS52044526" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">IDC/Workera &mdash; AI Skills Gap, 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><sup style="color:var(--accent); margin-right:0.3rem;">2</sup><a href="https://openai.com/index/how-countries-can-end-the-capability-overhang/" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">OpenAI &mdash; &laquo;Ending the Capability Overhang&raquo;, Davos jan 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><a href="https://www.pwc.com/gx/en/issues/artificial-intelligence/jobs-barometer.html" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">PwC AI Jobs Barometer, 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><a href="https://www2.deloitte.com/us/en/pages/consulting/articles/state-of-ai-in-the-enterprise.html" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">Deloitte State of AI, 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">WEF Future of Jobs Report, jan 2026</a></li>
+        <li class="body-md" style="color:var(--muted);"><a href="https://www.imf.org/en/Publications/Staff-Discussion-Notes/Issues/2026/01/14/AI-and-the-Future-of-Work" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">IMF SDN/2026/001 &mdash; AI and the Future of Work</a></li>
+        <li class="body-md" style="color:var(--muted);"><a href="https://www.mckinsey.com/mgi/our-research/generative-ai-and-the-future-of-work" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline; text-underline-offset:3px;">McKinsey Global Institute &mdash; AI workforce transitions</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 15: Appendix</h4>
+    <ul>
+      <li>Denne sliden er referanse &mdash; ikke ment å presenteres. Hopp over med mindre noen spør om kilder.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 15 — VIDEO ==================== -->
+<div class="slide bg-deep noise">
+  <div class="video-wrap" style="background:#000; position:relative;">
+    <video id="appendix-video" src="content/current_placeholder.mp4" muted playsinline preload="auto" style="width:100%;height:100%;object-fit:contain;"></video>
+    <button id="appendix-play-btn" aria-label="Spill av video" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:96px;height:96px;border-radius:50%;border:none;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity 0.3s, transform 0.3s;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+  </div>
+  <div class="notes" hidden>
+    <h4>Notater &mdash; Slide 16: Video</h4>
+    <ul>
+      <li>Trykk M for lyd. Ikke autoplay &mdash; trykk play manuelt eller bruk mellomrom.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Video controls (outside deck to avoid transform stacking context) -->
+<div class="video-controls" id="video-controls">
+  <button class="video-ctrl-btn video-mute-btn" id="mute-btn" aria-label="Unmute video">
+    <svg class="icon-muted" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+    <svg class="icon-unmuted" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+  </button>
+</div>
+
+<!-- ============================================================
+     NAVIGATION JS
+     ============================================================ -->
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+let notesVisible = false;
+
+const videos = [
+  { index: 0, el: document.getElementById('intro-video'), autoplay: true },
+  { index: total - 1, el: document.getElementById('appendix-video'), autoplay: false }
+];
+const videoControls = document.getElementById('video-controls');
+const muteBtn = document.getElementById('mute-btn');
+const iconMuted = muteBtn.querySelector('.icon-muted');
+const iconUnmuted = muteBtn.querySelector('.icon-unmuted');
+const progressBar = document.getElementById('progress-bar');
+
+function activeVideo(n) { return videos.find(v => v.index === n); }
+const notesPanel = document.createElement('div');
+notesPanel.className = 'speaker-notes';
+document.body.appendChild(notesPanel);
+
+document.getElementById('tot').textContent = total;
+
+// Count-up animation
+const counted = new Set();
+function animateCountUp(el) {
+  const target = parseInt(el.dataset.countTo);
+  const suffix = el.dataset.countSuffix || '';
+  const prefix = el.dataset.countPrefix || '';
+  const format = el.dataset.countFormat;
+  const duration = 1200;
+  const start = performance.now();
+
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    let value = Math.round(target * eased);
+
+    if (format === 'short' && target >= 1000) {
+      el.textContent = prefix + Math.round(value / 1000) + 'K' + suffix;
+    } else {
+      el.textContent = prefix + value + suffix;
+    }
+
+    if (progress < 1) requestAnimationFrame(step);
+    else {
+      // Final value
+      if (format === 'short' && target >= 1000) {
+        el.textContent = prefix + (target / 1000) + 'K' + suffix;
+      } else {
+        el.textContent = prefix + target + suffix;
+      }
+    }
+  }
+  el.textContent = prefix + '0' + suffix;
+  requestAnimationFrame(step);
+}
+
+function triggerCountUps(slideIndex) {
+  if (counted.has(slideIndex)) return;
+  const slide = slides[slideIndex];
+  const counters = slide.querySelectorAll('[data-count-to]');
+  if (counters.length) {
+    counted.add(slideIndex);
+    counters.forEach((el, i) => {
+      setTimeout(() => animateCountUp(el), 300 + i * 200);
+    });
+  }
+}
+
+function updateNotes(n) {
+  const notesEl = slides[n].querySelector('.notes');
+  if (notesEl && notesVisible) {
+    notesPanel.innerHTML = notesEl.innerHTML;
+    notesPanel.classList.add('visible');
+  } else {
+    notesPanel.classList.remove('visible');
+  }
+}
+
+function show(n) {
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'prev');
+    if (i === n) s.classList.add('active');
+    else if (i < n) s.classList.add('prev');
+  });
+  current = n;
+  document.getElementById('cur').textContent = n + 1;
+
+  // Progress bar
+  progressBar.style.width = ((n + 1) / total * 100) + '%';
+
+  // Video control
+  videos.forEach(v => { if (v.el) v.el.pause(); });
+  const av = activeVideo(n);
+  if (av && av.el) {
+    if (av.autoplay) av.el.play().catch(() => {});
+    videoControls.classList.add('visible');
+  } else {
+    videoControls.classList.remove('visible');
+  }
+
+  // Count-ups
+  triggerCountUps(n);
+
+  // Notes
+  updateNotes(n);
+}
+
+function next() { if (current < total - 1) show(current + 1); }
+function prev() { if (current > 0) show(current - 1); }
+
+// Mute toggle
+muteBtn.addEventListener('click', () => {
+  const av = activeVideo(current);
+  if (!av || !av.el) return;
+  av.el.muted = !av.el.muted;
+  // If unmuting a non-autoplay video, also start playback
+  if (!av.el.muted && av.el.paused) av.el.play().catch(() => {});
+  iconMuted.style.display = av.el.muted ? 'block' : 'none';
+  iconUnmuted.style.display = av.el.muted ? 'none' : 'block';
+  muteBtn.classList.toggle('video-mute-btn', av.el.muted);
+});
+
+// Appendix video play button
+const appendixPlayBtn = document.getElementById('appendix-play-btn');
+const appendixVideo = document.getElementById('appendix-video');
+if (appendixPlayBtn && appendixVideo) {
+  appendixPlayBtn.addEventListener('click', () => {
+    appendixVideo.play().catch(() => {});
+    appendixPlayBtn.style.opacity = '0';
+    appendixPlayBtn.style.pointerEvents = 'none';
+  });
+  appendixVideo.addEventListener('pause', () => {
+    appendixPlayBtn.style.opacity = '1';
+    appendixPlayBtn.style.pointerEvents = 'auto';
+  });
+  appendixVideo.addEventListener('ended', () => {
+    appendixPlayBtn.style.opacity = '1';
+    appendixPlayBtn.style.pointerEvents = 'auto';
+  });
+  appendixVideo.addEventListener('play', () => {
+    appendixPlayBtn.style.opacity = '0';
+    appendixPlayBtn.style.pointerEvents = 'none';
+  });
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  if (e.key === 'Home') { e.preventDefault(); show(0); }
+  if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  if (e.key === 'm' || e.key === 'M') {
+    if (activeVideo(current)) muteBtn.click();
+  }
+  if (e.key === 'p' || e.key === 'P') {
+    const av = activeVideo(current);
+    if (av && av.el) { av.el.paused ? av.el.play().catch(() => {}) : av.el.pause(); }
+  }
+  if (e.key === 'n' || e.key === 'N') {
+    notesVisible = !notesVisible;
+    updateNotes(current);
+  }
+});
+
+// Touch swipe
+let touchX = 0;
+document.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(diff) > 50) { diff < 0 ? next() : prev(); }
+});
+
+// Init
+show(0);
+</script>
+
+</body>
+</html>
