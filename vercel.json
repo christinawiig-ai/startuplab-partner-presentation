@@ -14,8 +14,13 @@
       "permanent": false
     },
     {
-      "source": "/ruter-feb2026/:path*",
-      "destination": "/ruter-salgsdeck-feb2026/:path*",
+      "source": "/ruter-feb2026/",
+      "destination": "/ruter-salgsdeck-feb2026/",
+      "permanent": false
+    },
+    {
+      "source": "/ruter-feb2026/:path+",
+      "destination": "/ruter-salgsdeck-feb2026/:path+",
       "permanent": false
     }
   ],
