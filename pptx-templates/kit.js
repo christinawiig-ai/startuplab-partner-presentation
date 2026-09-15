@@ -211,6 +211,99 @@ function accented(text, { color, accent, ...rest }) {
   return runs;
 }
 
+/**
+ * Løftet bunnlinje: én setning som deler grunnlinje med logoen.
+ *
+ * Til en avsluttende påstand som skal leses, men ikke konkurrere med
+ * innholdet over. Ligger under contentBottom med vilje: det er den eneste
+ * plassen på sliden hvor det er rom til en hel setning når innholdsflaten
+ * alt er full. Starter etter logoen og slutter i høyre marg, høyrestilt,
+ * slik at den ikke ser ut som en løs setning midt i luften.
+ */
+function bottomLine(slide, text, { color = C.mutedOnLight, y = Y.logo - 0.03 } = {}) {
+  // Logoen er 0,92 tommer bred ved standardhøyde. 1,55 gir luft nok til at
+  // en lang setning ikke ser ut som en del av merket.
+  const x = M.x + 1.55;
+  slide.addText(text, {
+    x, y, w: W - x - M.x, h: 0.44,
+    fontFace: F.body, fontSize: T.small, color,
+    align: "right", margin: 0, valign: "middle",
+  });
+}
+
+/**
+ * Tynn rad med emneord, skilt av røde punkter.
+ *
+ * Til kompetanse som gjelder en gruppe og ikke enkeltpersonene i den. Uten
+ * denne raden må hvert kort gjenta de samme fagområdene, og kortene blir
+ * for tekstunge til å leses fra bakerste rad.
+ *
+ * Punktene har som standard samme farge som ordene. Røde punkter ble prøvd
+ * først, men på en lys slide er logoen alt rød, og på den mørke hero-sliden
+ * er ett ord i tittelen rødt: da ble punktene den tredje røde tingen, og de
+ * leste som støv i stedet for som skilletegn. Send inn `dot: C.red` bare på
+ * en slide som ikke har noe annet rødt.
+ *
+ * Sperringen er 0,6 og ikke 1,8 som i kickeren over titlene. Kickeren er tre
+ * ord og tåler å spres. Denne raden er seks til åtte ord med skilletegn
+ * mellom, og med samme sperring lå bokstavene så løst at raden leste som
+ * enkeltord strødd utover i stedet for som én linje.
+ */
+function topicRow(slide, topics, { y, x = M.x, w = W - M.x * 2, color = C.mutedOnLight, dot, align = "left" } = {}) {
+  const runs = [];
+  topics.forEach((t, i) => {
+    if (i > 0) runs.push({ text: "  ·  ", options: { color: dot || color, bold: true } });
+    runs.push({ text: String(t).toUpperCase(), options: { color } });
+  });
+  slide.addText(runs, {
+    x, y, w, h: 0.3,
+    fontFace: F.body, fontSize: T.label, bold: true, charSpacing: 0.6,
+    align, margin: 0, valign: "middle",
+  });
+}
+
+/**
+ * Plassholder for et portrett som ikke er valgt ennå. `form` er "avrundet"
+ * eller "sirkel", samme to formene som team-malene bruker.
+ *
+ * Egen funksjon fordi den brukes av flere folk-maler, og fordi teksten inne
+ * i formen må skaleres ned når formen er liten.
+ */
+function portraitPlaceholder(slide, pptx, { x, y, d, form = "avrundet" }) {
+  const rund = form === "avrundet";
+  slide.addShape(rund ? pptx.ShapeType.roundRect : pptx.ShapeType.ellipse, {
+    x, y, w: d, h: d,
+    ...(rund ? { rectRadius: rectRadius(d) } : {}),
+    fill: { color: C.lightGray }, line: { color: "D8DCDF", width: 1 },
+  });
+  // Under ca. 1,3 tommer er det ikke plass til to linjer inne i formen.
+  const smal = d < 1.3;
+  slide.addText(smal ? "Portrett" : "Sett inn\nportrett", {
+    x, y: y + d / 2 - (smal ? 0.2 : 0.45), w: d, h: smal ? 0.4 : 0.9,
+    fontFace: F.body, fontSize: smal ? 12 : T.caption, color: C.mutedOnLight,
+    align: "center", lineSpacingMultiple: 1.2, margin: 0, valign: "middle",
+  });
+}
+
+/**
+ * Plassholder for et bilde som ikke er valgt ennå, i fritt format.
+ * Egen funksjon og ikke portraitPlaceholder: den er kvadratisk og sentrerer
+ * teksten etter én diameter, mens denne skal tåle liggende bildeflater.
+ */
+function mediaPlaceholder(slide, pptx, { x, y, w, h, tekst = "Sett inn bilde", form = "avrundet" }) {
+  const rund = form === "avrundet";
+  slide.addShape(rund ? pptx.ShapeType.roundRect : pptx.ShapeType.rect, {
+    x, y, w, h,
+    ...(rund ? { rectRadius: rectRadius(Math.min(w, h)) } : {}),
+    fill: { color: C.lightGray }, line: { color: "D8DCDF", width: 1 },
+  });
+  slide.addText(tekst, {
+    x, y: y + h / 2 - 0.2, w, h: 0.4,
+    fontFace: F.body, fontSize: T.caption, color: C.mutedOnLight,
+    align: "center", margin: 0, valign: "middle",
+  });
+}
+
 /** Liten notis nede til høyre, f.eks. sted og dato. */
 function footNote(slide, text, { color = C.muted } = {}) {
   slide.addText(text, {
@@ -223,4 +316,5 @@ function footNote(slide, text, { color = C.muted } = {}) {
 module.exports = {
   W, H, M, Y, C, F, T, LOGO, LOGO_RATIO, MEDIA, BRAND, RUNDE, rectRadius,
   photoPath, bildeFil, bildeRund, eyebrow, title, logo, photo, scrim, fill, accented, footNote,
+  bottomLine, topicRow, portraitPlaceholder, mediaPlaceholder,
 };

@@ -2,16 +2,27 @@
 
 > Sist oppdatert: 20. august 2026 av Claude
 > Filer: `Startuplab-slidemaler.pptx` (skarpe hjørner) og
-> `Startuplab-slidemaler-avrundet.pptx` (avrundede hjørner). 19 maler, 16:9.
+> `Startuplab-slidemaler-avrundet.pptx` (avrundede hjørner). 21 maler, 16:9.
 
-Nitten ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
+Tjueen ferdige slidemaler du kan redigere direkte i PowerPoint. Tanken er at
 du slipper å be om små justeringer: du åpner fila, bytter tekst og bilder, og
 flytter på ting selv.
 
 **Hver slide har en forklaring i notatfeltet** (Vis > Notater, eller feltet under
 sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 
-## De 19 malene
+## ⚠️ Har du PowerPoint åpen?
+
+`node build.js` **overskriver** `Startuplab-slidemaler.pptx`. Sitter du og
+fyller inn innhold i den fila, si det til Claude før du ber om nye maler, så
+bygges de til en egen fil i stedet. Mønsteret for det er `build-eir.js`:
+samme kode, egen utfil, hovedfila urørt.
+
+De to nyeste malene (18 og 19) ligger derfor i `Startuplab-eir.pptx` og kommer
+først inn i hovedfila neste gang noen kjører `node build.js`. Hovedfila hadde
+19 maler per 20. august, med film og avslutning som nummer 18 og 19.
+
+## De 21 malene
 
 | # | Mal | Bakgrunn | Til hva |
 |---|-----|----------|---------|
@@ -32,11 +43,44 @@ sliden). Der står det hva malen er ment for og hvordan du bytter innhold.
 | 15 | Prosess | Lys | Fire steg på rad |
 | 16 | Folk, sirkler | Lys | Fire portretter, runde |
 | 17 | Folk, avrundede | Lys | Fire portretter, avrundede firkanter |
-| 18 | Film | Sort | Video i full flate |
-| 19 | Avslutning | Rød | Takk og kontakt |
+| 18 | **Hero for et tilbud** | Mørk | Navnet på et nettverk eller program, stort |
+| 19 | **Folk med kompetanse** | Lys | Fire portretter med selskap, fagfeltene samlet øverst |
+| 20 | Film | Sort | Video i full flate |
+| 21 | Avslutning | Rød | Takk og kontakt |
 
 Rekkefølgen veksler med vilje mellom mørkt og lyst, så øyet får pause mellom
 de tunge slidene. Du kan bruke malene i hvilken rekkefølge du vil.
+
+### De tre folk-malene: hvilken når
+
+- **Folk, sirkler / avrundede (16 og 17)** er teamet ditt: navn og rolle,
+  ingenting mer. Bruk dem når salen skal vite hvem de møter.
+- **Folk med kompetanse (19)** er eksterne folk salen får tilgang til:
+  portrett, navn og hvor de kommer fra. Bygget for EiR-nettverket, men
+  fungerer for enhver gruppe rådgivere eller mentorer.
+
+**Kompetansen står ikke på kortene, men i én linje under tittelen.** Det er
+med vilje. Den ble prøvd som en tredje linje per person først, og da ble
+sliden fire spalter med seks tekstlinjer hver: bokstaver spredt utover hele
+flaten. Kompetansen er dessuten felles for gruppen, ikke et kjennetegn ved
+den enkelte. Med den samlet øverst blir kortene korte og portrettene store,
+og sliden har luft.
+
+Malen tar 3 til 6 personer, alt på én rad. Portrettet fyller kolonnen, så det
+krymper for hver person du legger til: 2,62 tommer på fire, 1,69 på seks.
+Trenger du et annet antall, er det ett tall i `build.js`:
+`light.peopleExpertise(p, 5, "avrundet")`. Alle tallene fra 3 til 6 er bygget
+og sett på, ikke bare antatt: portrettet har et tak regnet ut fra
+innholdsflaten, så teksten lander på samme sted uansett antall.
+
+Formen er avrundet firkant som standard, samme som mal 17. Vil du ha sirkler
+som mal 16: bytt `"avrundet"` til `"sirkel"`.
+
+**Seks personer ble prøvd og forkastet i decket** (for mye tekst utover
+flaten), men malen støtter det fortsatt. To rader støttes ikke: innholdsflaten
+er 3,9 tommer høy, teksten under portrettet tar sitt, og da kan portrettet
+ikke bli større enn én tomme. Et ansikt så lite leser som et punkttegn ved
+siden av teksten.
 
 ### De tre måtene å markere et skift
 
@@ -128,13 +172,23 @@ er det tryggere å sende PDF.
 ## Bygge malene på nytt
 
 Malene genereres fra kode, så et bytte av farge eller fontstørrelse kan gjøres
-ett sted og slå gjennom på alle 19.
+ett sted og slå gjennom på alle 21.
 
 ```bash
 cd pptx-templates
 npm install                # engangs
 python prepare-media.py    # engangs, eller når du bytter kildebilder
-node build.js              # skriver Startuplab-slidemaler.pptx
+node build.js              # OVERSKRIVER Startuplab-slidemaler.pptx
+```
+
+**Skal du bare legge til én mal, ikke kjør `build.js`.** Lag en egen byggefil
+etter mønsteret i `build-eir.js`: den henter samme malfunksjoner og skriver til
+sitt eget filnavn, så hovedfila blir liggende urørt selv om noen har den åpen
+og fyller inn innhold. Det finnes tre slike fra før: `build-eir.js`,
+`build-punktgrid4.js` og `build-stor-rutenett.js`.
+
+```bash
+node build-eir.js          # skriver Startuplab-eir.pptx (mal 18 og 19)
 ```
 
 Avrundet utgave (samme kode, bryter satt med miljøvariabel):
@@ -158,9 +212,11 @@ powershell -File export-pdf.ps1 -Pptx Startuplab-slidemaler.pptx
 | `kit.js` | Farger, fonter, størrelser, marger, byggeklosser |
 | `slides-dark.js` | De mørke og røde malene |
 | `slides-light.js` | De lyse malene |
-| `build.js` | Rekkefølgen slidene settes sammen i |
+| `build.js` | Rekkefølgen slidene settes sammen i. Overskriver hovedfila |
+| `build-eir.js` | Bygger én mal av gangen til egen fil. Mønster å kopiere |
 | `prepare-media.py` | Beskjærer og skalerer bilder, og klipper luft av logoene |
 | `render.ps1` | Renderer til PNG for visuell kontroll |
+| `lukk-fil.ps1` | Lukker EN åpen presentasjon så et bygg kan skrive over den. Nekter hvis den har ulagrede endringer |
 | `contact-sheet.py` | Setter alle slides i ett rutenett (`oversikt.png`) |
 | `export-pdf.ps1` | Eksporterer til PDF |
 
@@ -183,3 +239,21 @@ merkevarefarge eller justerer skriftstørrelser samlet.
 - Bytter du et av bildene på programkort-sliden, kjør `prepare-media.py`
   på det nye bildet. Den legger alle fem i samme lysstyrke og fargestyrke,
   som er det som gjør at raden ser ut som ett sett.
+- **Navn og selskaper på mal 19** er hentet fra EiR-basen i Notion
+  («🕴🏼 EiR / Executives in Residence», SL Intranet) 20. august 2026, ikke
+  gjettet. Basen hadde 37 personer den dagen. Utvalget på sliden er én per
+  fagområde, slik at raden viser bredden. **Sjekk at stillingene fortsatt
+  stemmer før du presenterer**, og bytt til dem som passer salen.
+- **Emneraden på mal 18 og 19** (Sales, Go-to-market, Fundraising, Brand,
+  Product, Leadership) er destillert fra `Expertise`-feltet på de fire
+  personene som står på sliden. Vil du heller ha basens egen inndeling, er
+  `Department`-feltet fem ord: Sales, Marketing, Funding, Scaling, Technology.
+- **Portrettene på mal 19 er tomme grå plassholdere med vilje.** De to andre
+  folk-malene har ekte ansikter, men denne skal vise eksterne folk, og et
+  plassholderbilde av en kollega under navnet til en EiR ville vært feil.
+- Slik setter du inn et portrett og beholder den avrundede formen: dra bildet
+  inn på sliden, marker det, Bildeformat > Beskjær > Beskjær til figur >
+  avrundet rektangel. Legg det over plassholderen og slett plassholderen.
+- De to nye malene ser like ut i skarp og avrundet utgave: hero-sliden har
+  ingen bilder, og portrettformen på mal 19 styres av malen selv, ikke av
+  `SL_RUNDE`.

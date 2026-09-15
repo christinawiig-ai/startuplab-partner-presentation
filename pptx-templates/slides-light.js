@@ -584,4 +584,341 @@ function statsRow(pptx) {
   return s;
 }
 
-module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, team5, timeline, statsRow, photoGrid, photoGridStor, featureGrid4 };
+/**
+ * Folk med kompetanse: portrett, navn og hvor de kommer fra. Hva de kan
+ * hjelpe med står ikke på kortene, men samlet i emneraden under tittelen.
+ * Bygget for EiR-nettverket, men fungerer for enhver gruppe eksterne folk
+ * salen skal få tilgang til.
+ *
+ * Forskjellen fra team-malene: der står rollen personen har hos oss, her
+ * står selskapet personen kommer fra. Ellers er formen den samme, med vilje.
+ *
+ * `antall` er 3 til 6, alt på én rad. Portrettet fyller kolonnen, så det blir
+ * mindre for hver person du legger til: 2,62 tommer på fire, 1,69 på seks.
+ *
+ * Hvorfor kompetansen ikke står per person: den ble prøvd som en tredje linje
+ * på hvert kort først, og resultatet var fire spalter med seks tekstlinjer
+ * hver, altså bokstaver strødd utover hele flaten. Kompetansen er dessuten
+ * felles for gruppen, ikke et kjennetegn ved den enkelte, så den hører til i
+ * én linje øverst. Da kan portrettene bli store og kortene korte.
+ *
+ * Alt er venstrestilt mot kolonnekanten, ikke sentrert som team-malene.
+ * Portrettet er en firkant som fyller kolonnen, så teksten under har en ekte
+ * kant å stå på, og fire harde venstrekanter gir raden en rytme sentrert
+ * tekst ikke gir.
+ *
+ * Tekstboksen er bredere enn kolonnen og stikker inn i mellomrommet til
+ * høyre: «Christian Sæterhaug» er 2,57 tommer i 20 pt og brakk i to på en
+ * kolonne som er 2,62 bred, siden tekstboksen har egen innvendig marg.
+ *
+ * Begge tekstlinjene har fast y. Da står selskapet på linje tvers over raden
+ * selv om ett navn skulle brekke i to.
+ */
+function peopleExpertise(pptx, antall = 4, form = "avrundet") {
+  // Fra fem personer og opp er kolonnen for smal til at navnet får plass på
+  // én linje, og da må navnet få to linjer å brekke i.
+  const tett = antall >= 5;
+  // Sjekken må stå før addSlide. Sto den lenger ned, ved dataene den
+  // egentlig handler om, ble en tom slide liggende igjen i decket når den
+  // kastet.
+  if (antall < 3 || antall > 6) {
+    throw new Error(`peopleExpertise: antall må være 3-6, fikk ${antall}`);
+  }
+  const s = pptx.addSlide();
+  K.fill(s, C.white);
+
+  K.eyebrow(s, "Executives in Residence");
+  // Ingen rødt ord i tittelen, og ingen røde punkter i emneraden: logoen
+  // nede til venstre er sidens ene røde element.
+  K.title(s, "The people you get access to", { color: C.black });
+
+  // Emneraden bærer kompetansen for hele gruppen. Ordene er destillert fra
+  // Expertise-feltet til de fire personene under, ikke funnet opp: salg,
+  // go-to-market, kapital, merkevare, produkt og ledelse dekker det de fire
+  // faktisk er tagget med i Notion.
+  K.topicRow(s, ["Sales", "Go-to-market", "Fundraising", "Brand", "Product", "Leadership"], { y: 2.08 });
+
+  // Navn og «previous job» er hentet fra EiR-basen i Notion 20.8.2026, ikke
+  // gjettet. Utvalget er én per fagområde, slik at raden viser bredden.
+  //
+  // Selskapslinjene er kortet ned til komma-form («ECM, DNB Carnegie» og ikke
+  // «Global Co-Head of ECM Execution @ DNB Carnegie»): den fulle tittelen fra
+  // Notion tar tre linjer og sprenger kortet.
+  const alle = [
+    { name: "Katherine Barrios", from: "CCO & CMO, Xeneta" },
+    { name: "Christian Sæterhaug", from: "VP New Markets, Gelato" },
+    { name: "Stefan Slemdal", from: "ECM, DNB Carnegie" },
+    { name: "Monica Beate Tvedt", from: "Group CTO, Forte" },
+    { name: "Anna-Karin Østlie", from: "Group CEO, Kantega" },
+    { name: "Mats Lyngstad", from: "Founder, inzpire.me" },
+  ];
+  // De fire første dekker markedsføring, salg, kapital og teknologi. Nummer
+  // fem og seks legger til skalering og merkevare.
+  const people = alle.slice(0, antall);
+
+  // `av` er avstanden fra bunnen av portrettet til toppen av hver tekstboks.
+  // En linje 18 pt med 1,15 linjeavstand er 0,29 tommer, og navnet i 20 pt er
+  // 0,32, så tallene under gir 0,04 luft mellom navn og selskap: de skal lese
+  // som én blokk, ikke som to påstander.
+  const oppsett = tett
+    ? { gap: 0.3, y: 2.5, navnH: 0.6, av: { navn: 0.16, firma: 0.8 }, tillegg: 0.3, navnPt: T.small }
+    : { gap: 0.38, y: 2.72, navnH: 0.36, av: { navn: 0.18, firma: 0.54 }, tillegg: 0.3, navnPt: 20 };
+  const firmaH = 0.6;
+
+  const cw = (W - M.x * 2 - oppsett.gap * (antall - 1)) / antall;
+  // Portrettet fyller kolonnen, men bare opp til det taket innholdsflaten
+  // tåler. Uten taket vokser portrettet når det er færre personer, fordi
+  // kolonnen blir bredere, og da havner nederste tekstlinje oppå bunnlinjen.
+  // Taket er regnet ut av de samme avstandene som teksten bruker, ikke satt
+  // fast, så det følger med hvis avstandene endres.
+  const dTak = Y.contentBottom - oppsett.y - oppsett.av.firma - firmaH;
+  const d = Math.min(cw, dTak);
+  const y = oppsett.y;
+  const tw = cw + oppsett.tillegg;
+
+  people.forEach((p, i) => {
+    const x = M.x + i * (cw + oppsett.gap);
+    K.portraitPlaceholder(s, pptx, { x, y, d, form });
+    s.addText(p.name, {
+      x, y: y + d + oppsett.av.navn, w: tw, h: oppsett.navnH,
+      fontFace: F.head, fontSize: oppsett.navnPt, bold: true, color: C.black,
+      lineSpacingMultiple: 1.1, margin: 0, valign: "top",
+    });
+    s.addText(p.from, {
+      x, y: y + d + oppsett.av.firma, w: tw, h: firmaH,
+      fontFace: F.body, fontSize: T.small, color: C.mutedOnLight,
+      lineSpacingMultiple: 1.15, margin: 0, valign: "top",
+    });
+  });
+
+  K.logo(s, "red");
+  K.bottomLine(s, "They are always open to discuss and help our network, both startups and partners.");
+  s.addNotes(
+    `FOLK MED KOMPETANSE, ${antall} på rad. ` +
+    "Portrettene er tomme plassholdere. Slik setter du inn dine egne og " +
+    "beholder den avrundede formen: dra bildet inn på sliden, marker det, " +
+    "Bildeformat > Beskjær > Beskjær til figur > avrundet rektangel. Legg det " +
+    "over plassholderen og slett plassholderen.\n\n" +
+    "Emneraden under tittelen er kompetansen, og den er felles for gruppen, " +
+    "ikke per person. Det er den som gjør at kortene bare trenger navn og " +
+    "selskap, og at portrettene får være store. Legger du kompetanse inn per " +
+    "person igjen, får du fire spalter med seks tekstlinjer, og sliden faller " +
+    "fra hverandre. Hold raden på seks ord eller færre.\n\n" +
+    (tett
+      ? "Kolonnene er smale her, så hold selskapet under ca. 30 tegn. Trenger " +
+        "du mer plass, bruk fire-på-rad: der er kolonnen nesten en tomme bredere " +
+        "og portrettet 2,62 mot 1,69."
+      : "Dette er den romsligste varianten. Portrettet er 2,62 tommer, og " +
+        "selskapet tåler to linjer. Trenger du fem eller seks personer, bytt " +
+        "antallet: portrettene krymper, men raden holder.") +
+    "\n\nNavn og selskap er hentet fra EiR-basen i Notion 20.8.2026, og utvalget " +
+    "er én person per fagområde slik at raden viser bredden. Bytt til dem som " +
+    "passer salen, og sjekk at stillingene fortsatt stemmer før du presenterer."
+  );
+  return s;
+}
+
+/**
+ * Tilbudskort: tre eller fire tilbud side om side, hvert med bilde, navn,
+ * ett løfte og en faktalinje.
+ *
+ * Forskjellen fra programkort-malen (mørk, fem sektorer): der er bildene
+ * etiketter under et bilde, her har hvert kort et løfte og en faktalinje, så
+ * salen kan se hva tilbudet er uten at noen forklarer det.
+ *
+ * Faktalinjen (`fakta`) er valgfri per kort. Uten den blir kortet to nivåer,
+ * og plassen som frigjøres går til bildet, ikke til mer tekst: bildet er det
+ * som skiller de fire tilbudene fra hverandre på avstand. Bildet er 3:2 med
+ * faktalinje og 4:3 uten.
+ *
+ * Navn og løfte har fast y. Da står løftene på linje tvers over raden selv om
+ * ett navn tar to linjer og resten én.
+ */
+function offerCards(pptx, tilbud) {
+  if (tilbud.length < 3 || tilbud.length > 4) {
+    throw new Error(`offerCards: tåler 3-4 kort, fikk ${tilbud.length}`);
+  }
+  const s = pptx.addSlide();
+  K.fill(s, C.white);
+
+  K.eyebrow(s, "Høstens program");
+  K.title(s, "Fire veier inn på AI", { color: C.black });
+
+  const harFakta = tilbud.some((t) => t.fakta);
+  const gap = 0.38;
+  const cw = (W - M.x * 2 - gap * (tilbud.length - 1)) / tilbud.length;
+  // Liggende bilde, ikke kvadratisk: kurs- og sprintbilder er folk i et rom,
+  // og kvadratisk beskjærer bort halve bordet.
+  const bh = cw / (harFakta ? 1.5 : 1.3333);
+  const y = harFakta ? 2.5 : 2.48;
+  // Navnet får to linjer når faktalinjen er borte. «Kurs i AI-assistert
+  // koding» er 26 tegn og tar to linjer i en spalte på 2,92 tommer.
+  const navnH = harFakta ? 0.38 : 0.72;
+
+  tilbud.forEach((t, i) => {
+    const x = M.x + i * (cw + gap);
+    K.mediaPlaceholder(s, pptx, { x, y, w: cw, h: bh });
+    s.addText(t.navn, {
+      x, y: y + bh + 0.18, w: cw + 0.3, h: navnH,
+      fontFace: F.head, fontSize: 23, bold: true, color: C.black,
+      lineSpacingMultiple: 1.1, margin: 0, valign: "top",
+    });
+    // 0,32 og ikke 0,2: navneboksen rommer to linjer, og på kortet som
+    // faktisk bruker begge («Kurs i AI-assistert koding») lå andre linje
+    // nesten inntil løftet. Kortene med ettlinjet navn får til gjengjeld en
+    // større luke, som er prisen for at løftene står på linje tvers over raden.
+    s.addText(t.lofte, {
+      x, y: y + bh + 0.32 + navnH, w: cw + 0.3, h: 0.66,
+      fontFace: F.body, fontSize: T.small, color: C.black,
+      lineSpacingMultiple: 1.15, margin: 0, valign: "top",
+    });
+    if (t.fakta) {
+      s.addText(t.fakta, {
+        x, y: y + bh + 1.08 + navnH, w: cw + 0.3, h: 0.32,
+        fontFace: F.body, fontSize: T.small, color: C.mutedOnLight, margin: 0, valign: "middle",
+      });
+    }
+  });
+
+  K.logo(s, "red");
+  K.bottomLine(s, "Alle fire ligger i partnerprogrammet. Spør oss hvilken som passer teamet deres.");
+  s.addNotes(
+    "TILBUDSKORT. Fire tilbud side om side: bilde, navn og ett løfte. Malen " +
+    "tåler tre eller fire.\n\n" +
+    "Bildene er tomme plassholdere. Dra inn dine egne, marker bildet, " +
+    "Bildeformat > Beskjær > Beskjær til figur > avrundet rektangel, og legg " +
+    "det over plassholderen.\n\n" +
+    "Hold løftet på maks to linjer, ca. 46 tegn. Lengre løfte tar en tredje " +
+    "linje, og da er raden fire tekstblokker der bildene skulle gjort jobben.\n\n" +
+    "Malen har også en valgfri faktalinje under løftet, til ett tall eller én " +
+    "referanse. Den er tom her med vilje: tid og antall deltakere hører i " +
+    "samtalen, ikke på sliden. Legger du den inn igjen, krymper bildene fra " +
+    "4:3 til 3:2 for å gi plass.\n\n" +
+    "Har du bare bilder til noen av kortene, la de andre stå som grå " +
+    "plassholdere heller enn å fylle dem med et bilde som ikke viser tilbudet. " +
+    "En tom plassholder leser som «kommer», et feil bilde leser som feil."
+  );
+  return s;
+}
+
+/**
+ * Trappen: nummererte kort på rad med piler mellom, og et fotobånd under.
+ * Til et tilbud som har trinn, der salen skal se hele stigen på ett blikk.
+ *
+ * Kortene har ekte rammer, og det er ikke pynt. Hvert kort har fire
+ * tekstnivåer (nummer, navn, omfang, hva som skjer), og fem kort med fire
+ * nivåer er tjue tekstblokker på én flate. Uten rammer leser det som
+ * bokstaver strødd utover, som er nøyaktig innvendingen mot folke-veggen
+ * tidligere i dag. Rammen grupperer, og da tåler flaten tettheten.
+ *
+ * Hvorfor båndet under er lavt: forelegget er en nettside, ikke 16:9. Der
+ * ligger tre bilder i 3:2 under kortene. På en slide er innholdsflaten 3,9
+ * tommer, kortene tar 2,6 av dem, og tre bilder i 3:2 ville trengt 2,4. Med
+ * 18 pt som gulv i kortene er det bildene som må gi seg, ikke teksten. 1,09
+ * tommer gir et bånd i 3,4:1, som er et bevisst format og ikke et klemt 3:2.
+ *
+ * Rødt tre steder (aksentordet, numrene, logoen) bryter «ett rødt element per
+ * slide». Det er med vilje: forelegget fra Christina har det slik, numrene er
+ * trappen sin rytme, og de leser som struktur og ikke som utrop.
+ */
+function ladderCards(pptx, { tittel, kicker, trinn, bunnlinje, bilder = 3 }) {
+  if (trinn.length < 3 || trinn.length > 5) {
+    throw new Error(`ladderCards: tåler 3-5 trinn, fikk ${trinn.length}`);
+  }
+  const s = pptx.addSlide();
+  // Kortene er hvite, så flaten under dem må være brutt hvit. På rent hvitt
+  // forsvinner kortene og bare hårstreken står igjen.
+  K.fill(s, C.offWhite);
+
+  K.eyebrow(s, kicker);
+  K.title(s, tittel, { color: C.black });
+
+  const gap = 0.42;
+  const cw = (W - M.x * 2 - gap * (trinn.length - 1)) / trinn.length;
+  const cy = 2.42;
+  const pad = 0.17;
+  const tw = cw - pad * 2;
+  // Høydene er målt på render, ikke regnet fra punktstørrelsen. En tekstboks
+  // i PowerPoint har egen innvendig marg, så 19 pt i to linjer trenger 0,62
+  // tommer og ikke 0,58, og med 0,56 la navnet seg oppå omfanget på fire av
+  // fem kort. Bunnen av kroppsteksten bestemmer korthøyden.
+  const rad = { nr: 0.16, navn: 0.58, omfang: 1.22, hva: 1.54 };
+  const hoyde = { nr: 0.4, navn: 0.62, omfang: 0.28, hva: 0.92 };
+  const ch = rad.hva + hoyde.hva + 0.18;
+
+  trinn.forEach((t, i) => {
+    const x = M.x + i * (cw + gap);
+    s.addShape(pptx.ShapeType.roundRect, {
+      x, y: cy, w: cw, h: ch, rectRadius: K.rectRadius(Math.min(cw, ch)),
+      fill: { color: C.white }, line: { color: "E3E6E8", width: 1 },
+    });
+    s.addText(String(i + 1).padStart(2, "0"), {
+      x: x + pad, y: cy + rad.nr, w: tw, h: hoyde.nr,
+      fontFace: F.display, fontSize: 26, color: C.red, margin: 0, valign: "middle",
+    });
+    s.addText(t.navn, {
+      x: x + pad, y: cy + rad.navn, w: tw, h: hoyde.navn,
+      fontFace: F.head, fontSize: 19, bold: true, color: C.black,
+      lineSpacingMultiple: 1.1, margin: 0, valign: "top",
+    });
+    s.addText(t.omfang, {
+      x: x + pad, y: cy + rad.omfang, w: tw, h: hoyde.omfang,
+      fontFace: F.body, fontSize: T.label, color: C.mutedOnLight, margin: 0, valign: "middle",
+    });
+    s.addText(t.hva, {
+      x: x + pad, y: cy + rad.hva, w: tw, h: hoyde.hva,
+      fontFace: F.body, fontSize: T.small, color: C.black,
+      lineSpacingMultiple: 1.15, margin: 0, valign: "top",
+    });
+
+    // Pilen står i mellomrommet, ikke inne i kortet, og er grå: den skal vise
+    // retning uten å konkurrere med de røde numrene.
+    if (i < trinn.length - 1) {
+      s.addText("→", {
+        x: x + cw, y: cy + ch / 2 - 0.2, w: gap, h: 0.4,
+        fontFace: F.body, fontSize: 20, color: C.mutedOnLight,
+        align: "center", margin: 0, valign: "middle",
+      });
+    }
+  });
+
+  // Fotobåndet fyller resten av innholdsflaten, ned til den harde bunnlinjen.
+  const by = cy + ch + 0.22;
+  const bgap = 0.3;
+  const bw = (W - M.x * 2 - bgap * (bilder - 1)) / bilder;
+  const bh = Y.contentBottom - by;
+  for (let i = 0; i < bilder; i++) {
+    K.mediaPlaceholder(s, pptx, {
+      x: M.x + i * (bw + bgap), y: by, w: bw, h: bh,
+      tekst: "Sett inn bilde",
+    });
+  }
+
+  K.logo(s, "red");
+  if (bunnlinje) K.bottomLine(s, bunnlinje);
+  s.addNotes(
+    `TRAPPEN, ${trinn.length} trinn. Nummererte kort med piler mellom, og et ` +
+    "fotobånd under. Bruk den når tilbudet har trinn og salen skal se hele " +
+    "stigen på ett blikk. Malen tåler tre til fem trinn.\n\n" +
+    "Bildene er tomme plassholdere. Dra inn dine egne, marker bildet, " +
+    "Bildeformat > Beskjær > Beskjær til figur > avrundet rektangel.\n\n" +
+    "Båndet er lavt med vilje. Forelegget er en nettside der bildene ligger i " +
+    "3:2 under kortene, men på 16:9 er det ikke plass til både kort og " +
+    "3:2-bilder uten å gå under 18 pt i kortene. Velg bilder der motivet ligger " +
+    "midt i høyden: et bånd i 3,4:1 beskjærer bort topp og bunn.\n\n" +
+    "Tekstgrenser, og de er trange fordi kolonnen bare er 1,65 tommer bred: " +
+    "ca. 13 tegn per linje. Navnet maks to linjer, omfanget én, og «hva som " +
+    "skjer» maks tre (ca. 36 tegn). Lengre tekst dytter kortet ned i " +
+    "fotobåndet.\n\n" +
+    "Pass på lange sammensatte ord. Ett ord på mer enn 13 tegn får ikke plass " +
+    "på en linje, og PowerPoint deler det midt i uten bindestrek: " +
+    "«Inspirasjonsforedrag» ble «Inspirasjonsf / oredrag». Sett bindestreken " +
+    "selv der ordet skal deles, med linjeskift etter: «Inspirasjons-» og så " +
+    "«foredrag» på neste linje.\n\n" +
+    "Trenger du ikke bilder, sett `bilder: 0`. Da står kortene alene, og du kan " +
+    "gjøre dem høyere."
+  );
+  return s;
+}
+
+module.exports = { agenda, textPhotoSplit, quote, featureGrid, team, team5, timeline, statsRow, photoGrid, photoGridStor, featureGrid4, peopleExpertise, offerCards, ladderCards };

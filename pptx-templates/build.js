@@ -1,8 +1,12 @@
 /**
- * build.js — setter sammen de 15 slidemalene til én .pptx.
+ * build.js — setter sammen slidemalene til én .pptx.
  *
  * Rekkefolgen under er en dramaturgi, ikke en tilfeldig liste: morkt og
  * lyst veksler, sa oyet far pause mellom de tunge slidene.
+ *
+ * ADVARSEL: dette skriptet OVERSKRIVER Startuplab-slidemaler.pptx. Har du
+ * fylt inn eget innhold i den fila, ta en kopi forst. Skal du bare legge til
+ * eller justere EN mal, bygg den til en egen fil i stedet: se build-eir.js.
  */
 
 const pptxgen = require("pptxgenjs");
@@ -34,8 +38,16 @@ const order = [
   // Begge portrettformene ligger i decket. Christina velger per presentasjon.
   (p) => light.team(p, "sirkel"),     // 16 lyst
   (p) => light.team(p, "avrundet"),   // 17 lyst
-  dark.video,                         // 18 morkt
-  dark.closing,                       // 19 rodt
+  // EiR-blokken: hero-sliden er mork med vilje og bryter opp de lyse slidene
+  // rundt seg, i tillegg til at den introduserer folke-veggen.
+  //
+  // Bare fire personer her. Seks-varianten ble bygget, vist og forkastet
+  // 20.8.2026: for mye tekst spredt utover flaten. Malen tar fortsatt 3-6,
+  // sa bytt tallet under hvis du trenger et annet antall.
+  dark.offeringHero,                                    // 18 morkt
+  (p) => light.peopleExpertise(p, 4, "avrundet"),       // 19 lyst
+  dark.video,                                           // 20 morkt
+  dark.closing,                                         // 21 rodt
 ];
 
 order.forEach((fn) => fn(pptx));

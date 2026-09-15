@@ -350,4 +350,63 @@ function closing(pptx) {
   return s;
 }
 
-module.exports = { cover, sectionDivider, statement, fullBleedPhoto, video, programCards, heroStat, chapter, photoRow, closing };
+/**
+ * 9 — Hero for et tilbud eller et nettverk: navnet stort, løftet i én linje
+ * under, og de felles fagområdene som en tynn rad nederst.
+ *
+ * Egen mal og ikke en variant av utsagn-sliden: utsagnet er en påstand som
+ * skal lande alene, mens denne skal introdusere noe salen skal huske navnet
+ * på. Derfor tre nivåer (navn, løfte, fagområder) i stedet for ett.
+ *
+ * Flat sort flate, ikke foto: et gruppebilde bak en tolinjers tittel i
+ * plakatstørrelse gir alltid et parti der teksten mister kontrast, og
+ * flat farge kan byttes rett i PowerPoint.
+ */
+function offeringHero(pptx) {
+  const s = pptx.addSlide();
+  K.fill(s, C.black);
+
+  // Hele blokken er ankret mot bunnen, som forsiden.
+  //
+  // Avstanden fra tittel til løfte er justert to ganger etter render, ikke
+  // regnet ut: 0,86 tommer var for løst, løftet hang under tittelen i stedet
+  // for å høre til den, og 0,33 var for trangt, «Residence» og «Seasoned»
+  // klemte mot hverandre. 0,59 er der de leser som to nivåer i samme blokk.
+  // Det er en påminnelse om at 42 pt i to linjer tar mer plass enn
+  // punktstørrelsen tilsier, siden tekstboksen har egen innvendig marg.
+  K.eyebrow(s, "Startuplab EiR", { y: 2.35 });
+  // 46 pt brakk «Executives in Residence» ut av tekstboksen. 42 gir 1,2
+  // tommers klaring på den lengste linjen og er fortsatt plakat-størrelse.
+  s.addText(K.accented("Entrepreneurs and\nExecutives in [Residence]", { color: C.white, accent: C.red }), {
+    x: M.x, y: 2.8, w: 11.4, h: 1.3,
+    fontFace: F.display, fontSize: 42, lineSpacingMultiple: 0.98, margin: 0, valign: "top",
+  });
+  s.addText(
+    "Seasoned builders who have scaled fast and failed fast, " +
+    "ready to share what they learned.",
+    {
+      x: M.x, y: 4.45, w: 9.9, h: 0.95,
+      fontFace: F.body, fontSize: T.lead, color: C.muted,
+      lineSpacingMultiple: 1.25, margin: 0, valign: "top",
+    }
+  );
+  // Samme seks ordene som folke-veggen bruker, slik at de to slidene leser
+  // som én blokk når de står etter hverandre.
+  K.topicRow(s, ["Sales", "Go-to-market", "Fundraising", "Brand", "Product", "Leadership"], {
+    y: 5.85, color: C.white,
+  });
+  K.logo(s, "white");
+  s.addNotes(
+    "HERO FOR ET TILBUD. Bruk den til å introdusere et nettverk, et program " +
+    "eller en tjeneste ved navn. Tre nivåer: navnet stort, løftet i én setning " +
+    "under, fagområdene som rad nederst.\n\n" +
+    "Emneraden er de samme seks ordene som folke-veggen bruker, destillert fra " +
+    "Expertise-feltet i EiR-basen i Notion. Hold deg til seks ord eller færre: " +
+    "sju dytter raden mot høyre marg.\n\n" +
+    "Det røde ordet i tittelen er sidens ene røde element. Vil du flytte det: " +
+    "marker ordet og sett skriftfargen til rød (FF3333)."
+  );
+  return s;
+}
+
+module.exports = { cover, sectionDivider, statement, fullBleedPhoto, video, programCards, heroStat, chapter, photoRow, closing, offeringHero };
