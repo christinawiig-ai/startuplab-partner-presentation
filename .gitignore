@@ -1,3 +1,6 @@
 node_modules/
 .vercel
 .env*.local
+
+# Eget git-repo og eget Vercel-prosjekt (ruter-partnerskap-2026.vercel.app)
+ruter-onboarding-mars2026/
